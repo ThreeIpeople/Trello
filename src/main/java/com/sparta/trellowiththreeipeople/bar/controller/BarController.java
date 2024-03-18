@@ -26,19 +26,19 @@ public class BarController {
         return ResponseEntity.status(200).body(barResponseDtoList);
     }
 
-    @GetMapping("/{columnId}")
-    public ResponseEntity<BarResponseDto> getBar(@PathVariable Long boardId, @PathVariable Long columnId) {
-        BarResponseDto barResponseDto = barService.getBar(boardId, columnId);
+    @GetMapping("/{barId}")
+    public ResponseEntity<BarResponseDto> getBar(@PathVariable Long boardId, @PathVariable Long barId) {
+        BarResponseDto barResponseDto = barService.getBar(boardId, barId);
         return ResponseEntity.status(200).body(barResponseDto);
     }
 
-    @PutMapping("/{columnId}")
-    public void updateBar(@PathVariable Long boardId, @PathVariable Long columnId, @RequestBody BarRequestDto barRequestDto) {
-        barService.updateBar(boardId, columnId, barRequestDto);
+    @PutMapping("/{barId}")
+    public void updateBar(@PathVariable Long boardId, @PathVariable Long barId, @RequestBody BarRequestDto barRequestDto) {
+        barService.updateBar(boardId, barId, barRequestDto);
     }
 
-    @DeleteMapping("/{columnId}")
-    public void deleteBar(@PathVariable Long boardId, @PathVariable Long columnId) {
-        barService.deleteBar(boardId, columnId);
+    @DeleteMapping("/{barId}")
+    public void deleteBar(@PathVariable Long boardId, @PathVariable Long barId) {
+        barService.deleteBar(boardId, barId);
     }
 }
