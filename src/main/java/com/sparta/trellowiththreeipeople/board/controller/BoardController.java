@@ -63,7 +63,7 @@ public class BoardController {
     }
 
     @DeleteMapping("{boardId}")
-    public ResponseEntity<?> deleteBoard(
+    public ResponseEntity<String> deleteBoard(
             @PathVariable Long boardId,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ){
@@ -73,7 +73,7 @@ public class BoardController {
     }
 
     @PostMapping("{boardId}/invite")
-    public ResponseEntity<?> inviteUserToBoard(
+    public ResponseEntity<String> inviteUserToBoard(
             @PathVariable Long boardId,
             @RequestBody InviteRequestDto requestDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails

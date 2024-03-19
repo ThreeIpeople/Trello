@@ -40,15 +40,15 @@ public class Board extends baseEntity{
     @OneToMany(mappedBy = "board")
     private List<BoardUser> users = new ArrayList<>();
 
-    @Column(name = "created_board_by_user", nullable = false)
-    private Long createdBoardByUser;
+    @Column(name = "created_user", nullable = false)
+    private Long createdUser;
 
 
     public Board(String boardName,String boardInfo, User user) {
         this.boardName = boardName;
         this.boardInfo = boardInfo;
         this.users.add(new BoardUser(user, this));
-        this.createdBoardByUser = user.getId();
+        this.createdUser = user.getId();
 
     }
 

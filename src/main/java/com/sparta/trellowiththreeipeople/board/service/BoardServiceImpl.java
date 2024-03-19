@@ -44,7 +44,7 @@ public class BoardServiceImpl implements BoardService{
     public BoardResponseDto getBoardByBoardId(Long boardId, User user) {
         Board board = getBoard(boardId);
         BoardUser boardUser = boardUserRepository.findBoardUserByUserId(user.getId());
-        if(! board.getUsers().contains(boardUser)){
+        if(!isContainsBoardUser(board, boardUser)){
             throw new IllegalArgumentException("해당 보드는 초대받은 유저만 확인할 수 있습니다.");
         }
 
@@ -68,7 +68,7 @@ public class BoardServiceImpl implements BoardService{
     public BoardResponseDto updateBoard(Long boardId, BoardUpdateRequestDto requestDto, User user) {
         Board board = getBoard(boardId);
         BoardUser boardUser = boardUserRepository.findBoardUserByUserId(user.getId());
-        if(! board.getUsers().contains(boardUser)){
+        if(!isContainsBoardUser(board, boardUser)){
             throw new IllegalArgumentException("해당 보드는 보드 사용유저만 수정할 수 있습니다.");
         }
         board.update(requestDto);
@@ -82,7 +82,7 @@ public class BoardServiceImpl implements BoardService{
     @Transactional
     public void deleteBoard(Long boardId, User user) {
         Board board = getBoard(boardId);
-        if(!board.getCreatedBoardByUser().equals(user.getId())){
+        if(!board.getCreatedUser().equals(user.getId())){
             throw new ValidationException("보드 삭제는 보드 생성자만 삭제할 수 있습니다.");
         }
         List<BoardUser> boardUsers= boardUserRepository.getBoardUserByBoardId(boardId);
@@ -96,7 +96,7 @@ public class BoardServiceImpl implements BoardService{
     public void inviteUserToBoard(Long boardId, Long userId, User user) {
         Board board = getBoard(boardId);
         BoardUser boardUser = boardUserRepository.findBoardUserByUserId(user.getId());
-        if(!board.getUsers().contains(boardUser)){
+        if(!isContainsBoardUser(board, boardUser)){
             throw new IllegalArgumentException("보드 초대는 보드 사용자만 초대가능합니다.");
         }
         User invitedUser = userRepository.findById(userId).orElseThrow(
@@ -104,6 +104,10 @@ public class BoardServiceImpl implements BoardService{
         );
         board.inviteUser(invitedUser);
 
+    }
+
+    private static boolean isContainsBoardUser(Board board, BoardUser boardUser) {
+        return !board.getUsers().contains(boardUser);
     }
 
     private Board getBoard(Long boardId) {
