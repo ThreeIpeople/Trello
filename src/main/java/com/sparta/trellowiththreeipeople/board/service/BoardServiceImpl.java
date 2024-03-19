@@ -7,7 +7,9 @@ import com.sparta.trellowiththreeipeople.board.entity.Board;
 import com.sparta.trellowiththreeipeople.board.entity.BoardUser;
 import com.sparta.trellowiththreeipeople.board.repository.BoardRepository;
 import com.sparta.trellowiththreeipeople.board.repository.BoardUserRepository;
+import com.sparta.trellowiththreeipeople.exception.UserNotFoundException;
 import com.sparta.trellowiththreeipeople.user.entity.User;
+import com.sparta.trellowiththreeipeople.user.repository.UserRepository;
 import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,7 @@ public class BoardServiceImpl implements BoardService{
 
     private final BoardRepository boardRepository;
     private final BoardUserRepository boardUserRepository;
+    private final UserRepository userRepository;
 
     @Override
     @Transactional
@@ -85,6 +88,21 @@ public class BoardServiceImpl implements BoardService{
         List<BoardUser> boardUsers= boardUserRepository.getBoardUserByBoardId(boardId);
         boardUserRepository.deleteAllByBoardUsers(boardUsers);
         boardRepository.delete(board);
+
+    }
+
+    @Override
+    @Transactional
+    public void inviteUserToBoard(Long boardId, Long userId, User user) {
+        Board board = getBoard(boardId);
+        BoardUser boardUser = boardUserRepository.findBoardUserByUserId(user.getId());
+        if(!board.getUsers().contains(boardUser)){
+            throw new IllegalArgumentException("보드 초대는 보드 사용자만 초대가능합니다.");
+        }
+        User invitedUser = userRepository.findById(userId).orElseThrow(
+                ()-> new UserNotFoundException("해당하는 유저를 찾을 수 없습니다.")
+        );
+        board.inviteUser(invitedUser);
 
     }
 

@@ -1,9 +1,6 @@
 package com.sparta.trellowiththreeipeople.board.controller;
 
-import com.sparta.trellowiththreeipeople.board.dto.BoardListResponseDto;
-import com.sparta.trellowiththreeipeople.board.dto.BoardRequestDto;
-import com.sparta.trellowiththreeipeople.board.dto.BoardResponseDto;
-import com.sparta.trellowiththreeipeople.board.dto.BoardUpdateRequestDto;
+import com.sparta.trellowiththreeipeople.board.dto.*;
 import com.sparta.trellowiththreeipeople.board.service.BoardServiceImpl;
 import com.sparta.trellowiththreeipeople.security.UserDetailsImpl;
 import jakarta.validation.Valid;
@@ -73,6 +70,18 @@ public class BoardController {
         boardService.deleteBoard(boardId,userDetails.getUser());
 
         return ResponseEntity.ok().body("성공적으로 보드 삭제가 되었습니다.");
+    }
+
+    @PostMapping("{boardId}/invite")
+    public ResponseEntity<?> inviteUserToBoard(
+            @PathVariable Long boardId,
+            @RequestBody InviteRequestDto requestDto,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ){
+        boardService.inviteUserToBoard(boardId,requestDto.getUserId(),userDetails.getUser());
+
+        return ResponseEntity.ok().body("초대가 성공적으로 되었습니다.");
+
     }
 
 

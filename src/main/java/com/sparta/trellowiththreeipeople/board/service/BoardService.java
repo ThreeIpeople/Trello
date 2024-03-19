@@ -19,4 +19,6 @@ public interface BoardService {
     BoardResponseDto updateBoard(Long boardId, BoardUpdateRequestDto boardUpdateRequestDto, User user);
 
     void deleteBoard(Long boardId, User user);
+
+    void inviteUserToBoard(Long boardId, Long userId, User user);
 }
