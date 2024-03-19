@@ -1,0 +1,65 @@
+package com.sparta.trellowiththreeipeople.board.entity;
+
+import com.sparta.trellowiththreeipeople.bar.entity.Bar;
+import com.sparta.trellowiththreeipeople.board.dto.BoardUpdateRequestDto;
+import com.sparta.trellowiththreeipeople.user.entity.User;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Getter
+@Entity
+@Table(name = "board")
+@NoArgsConstructor
+@SQLDelete(sql = "UPDATE board SET deleted_at=CURRENT_TIMESTAMP where id=?")
+@Where(clause = "deleted_at IS NULL")
+public class Board extends baseEntity{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "board_id")
+    private Long boardId;
+
+    @Column(name = "board_name", nullable = false)
+    private String boardName;
+
+    @Column(name = "board_info", nullable = false)
+    private String boardInfo;
+
+    @Column(name = "color", nullable = false)
+    private BoardColorEnum colorEnum = BoardColorEnum.RED;
+
+    @OneToMany(mappedBy = "board")
+    private List<Bar> bars = new ArrayList<>();
+
+    @OneToMany(mappedBy = "board")
+    private List<BoardUser> users = new ArrayList<>();
+
+    @Column(name = "created_board_by_user", nullable = false)
+    private Long createdBoardByUser;
+
+
+    public Board(String boardName,String boardInfo, User user) {
+        this.boardName = boardName;
+        this.boardInfo = boardInfo;
+        this.users.add(new BoardUser(user, this));
+        this.createdBoardByUser = user.getId();
+
+    }
+
+
+    public void update(BoardUpdateRequestDto requestDto) {
+        this.boardName = requestDto.getBoardName();
+        this.boardInfo = requestDto.getBoardInfo();
+        this.colorEnum = BoardColorEnum.valueOf(requestDto.getBoardColorEnum());
+    }
+
+    public void inviteUser(User invitedUser) {
+        this.users.add(new BoardUser(invitedUser,this));
+    }
+}

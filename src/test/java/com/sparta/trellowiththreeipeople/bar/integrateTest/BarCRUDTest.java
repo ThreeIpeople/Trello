@@ -40,7 +40,7 @@ public class BarCRUDTest {
             boardRepository.save(board);
 
             BarRequestDto barRequestDto = new BarRequestDto("createBar_success");
-            barService.createBar(board.getId(), barRequestDto);
+            barService.createBar(board.getBoardId(), barRequestDto);
         }
     }
 
@@ -57,7 +57,7 @@ public class BarCRUDTest {
             Bar bar3 = new Bar("getBarList_success3", board);
             barRepository.saveAll(List.of(bar, bar2, bar3));
 
-            assert barService.getBarList(board.getId()).size() == 3;
+            assert barService.getBarList(board.getBoardId()).size() == 3;
         }
     }
 
@@ -72,7 +72,7 @@ public class BarCRUDTest {
             Bar bar = new Bar("getBar_success", board);
             barRepository.save(bar);
 
-            assert Objects.equals(barService.getBar(board.getId(), bar.getId()).getId(), bar.getId());
+            assert Objects.equals(barService.getBar(board.getBoardId(), bar.getId()).getId(), bar.getId());
         }
     }
 
@@ -87,7 +87,7 @@ public class BarCRUDTest {
             Bar bar = new Bar("getBar_success", board);
             barRepository.save(bar);
 
-            barService.updateBar(board.getId(), bar.getId(), new BarRequestDto("updateBar_success"));
+            barService.updateBar(board.getBoardId(), bar.getId(), new BarRequestDto("updateBar_success"));
 
             Bar findedBar = barRepository.findById(bar.getId()).orElse(new Bar());
 
@@ -107,8 +107,8 @@ public class BarCRUDTest {
             Bar bar = new Bar("deleteBar_success", board);
             barRepository.save(bar);
 
-            barService.deleteBar(board.getId(), bar.getId());
-            System.out.println(barService.getBarList(board.getId()));
+            barService.deleteBar(board.getBoardId(), bar.getId());
+            System.out.println(barService.getBarList(board.getBoardId()));
         }
 
     }
