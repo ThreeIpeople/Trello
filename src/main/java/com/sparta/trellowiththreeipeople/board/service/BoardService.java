@@ -7,6 +7,5 @@ import com.sparta.trellowiththreeipeople.user.entity.User;
 
 
 public interface BoardService {
-
     BoardResponseDto save(BoardRequestDto boardRequestDto, User user);
 }
