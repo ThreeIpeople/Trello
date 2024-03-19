@@ -1,10 +1,11 @@
 package com.sparta.trellowiththreeipeople.security;
 
 import com.sparta.trellowiththreeipeople.user.entity.User;
-import java.util.ArrayList;
-import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 
 public class UserDetailsImpl implements UserDetails {
