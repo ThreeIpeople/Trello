@@ -1,5 +1,6 @@
 package com.sparta.trellowiththreeipeople.board.entity;
 
+import com.sparta.trellowiththreeipeople.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,4 +24,8 @@ public class BoardUser extends baseEntity{
     @JoinColumn(name = "user_id")
     private User user;
 
+    public BoardUser(User user, Board board) {
+        this.board = board;
+        this.user =user;
+    }
 }

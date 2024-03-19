@@ -4,6 +4,7 @@ import com.sparta.trellowiththreeipeople.board.dto.BoardRequestDto;
 import com.sparta.trellowiththreeipeople.board.dto.BoardResponseDto;
 import com.sparta.trellowiththreeipeople.board.entity.Board;
 import com.sparta.trellowiththreeipeople.board.repository.BoardRepository;
+import com.sparta.trellowiththreeipeople.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,7 @@
 package com.sparta.trellowiththreeipeople.board.entity;
 
 import com.sparta.trellowiththreeipeople.board.dto.BoardRequestDto;
+import com.sparta.trellowiththreeipeople.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 
