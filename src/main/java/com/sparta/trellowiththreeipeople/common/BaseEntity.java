@@ -1,4 +1,4 @@
-package com.sparta.trellowiththreeipeople.board.entity;
+package com.sparta.trellowiththreeipeople.common;
 
 import jakarta.persistence.*;
 import lombok.Getter;

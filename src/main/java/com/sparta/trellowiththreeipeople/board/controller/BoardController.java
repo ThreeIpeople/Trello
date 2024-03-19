@@ -33,7 +33,7 @@ public class BoardController {
 
     }
 
-    @GetMapping("s")
+    @GetMapping("")
     public ResponseEntity<List<BoardListResponseDto>> getBoardListByUserId(
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ){

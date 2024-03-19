@@ -1,7 +1,9 @@
 package com.sparta.trellowiththreeipeople.board.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sparta.trellowiththreeipeople.bar.entity.Bar;
 import com.sparta.trellowiththreeipeople.board.dto.BoardUpdateRequestDto;
+import com.sparta.trellowiththreeipeople.common.BaseEntity;
 import com.sparta.trellowiththreeipeople.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -18,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @SQLDelete(sql = "UPDATE board SET deleted_at=CURRENT_TIMESTAMP where id=?")
 @Where(clause = "deleted_at IS NULL")
-public class Board extends baseEntity{
+public class Board extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,10 +36,12 @@ public class Board extends baseEntity{
     @Column(name = "color", nullable = false)
     private BoardColorEnum colorEnum = BoardColorEnum.RED;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "board")
     private List<Bar> bars = new ArrayList<>();
 
-    @OneToMany(mappedBy = "board")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BoardUser> users = new ArrayList<>();
 
     @Column(name = "created_user", nullable = false)

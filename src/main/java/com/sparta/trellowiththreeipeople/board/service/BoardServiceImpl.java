@@ -28,7 +28,7 @@ public class BoardServiceImpl implements BoardService{
     @Override
     @Transactional
     public BoardResponseDto save(String boardName, String boardInfo, User user){
-        if(boardRepository.findBoardByBoardName(boardName)){
+        if(boardRepository.existsBoardByBoardName(boardName)){
             throw new IllegalArgumentException("존재하는 보드 이름입니다.");
         }
         Board board = new Board(boardName, boardInfo, user);
@@ -43,8 +43,8 @@ public class BoardServiceImpl implements BoardService{
     @Transactional(readOnly = true)
     public BoardResponseDto getBoardByBoardId(Long boardId, User user) {
         Board board = getBoard(boardId);
-        BoardUser boardUser = boardUserRepository.findBoardUserByUserId(user.getId());
-        if(!isContainsBoardUser(board, boardUser)){
+        List<BoardUser> boardUsers = boardUserRepository.findBoardUserByUserId(user.getId());
+        if(!isContainsBoardUser(board, boardUsers)){
             throw new IllegalArgumentException("해당 보드는 초대받은 유저만 확인할 수 있습니다.");
         }
 
@@ -67,8 +67,8 @@ public class BoardServiceImpl implements BoardService{
     @Transactional
     public BoardResponseDto updateBoard(Long boardId, BoardUpdateRequestDto requestDto, User user) {
         Board board = getBoard(boardId);
-        BoardUser boardUser = boardUserRepository.findBoardUserByUserId(user.getId());
-        if(!isContainsBoardUser(board, boardUser)){
+        List<BoardUser> boardUsers = boardUserRepository.findBoardUserByUserId(user.getId());
+        if(!isContainsBoardUser(board, boardUsers)){
             throw new IllegalArgumentException("해당 보드는 보드 사용유저만 수정할 수 있습니다.");
         }
         board.update(requestDto);
@@ -95,8 +95,8 @@ public class BoardServiceImpl implements BoardService{
     @Transactional
     public void inviteUserToBoard(Long boardId, Long userId, User user) {
         Board board = getBoard(boardId);
-        BoardUser boardUser = boardUserRepository.findBoardUserByUserId(user.getId());
-        if(!isContainsBoardUser(board, boardUser)){
+        List<BoardUser> boardUsers = boardUserRepository.findBoardUserByUserId(user.getId());
+        if(!isContainsBoardUser(board, boardUsers)){
             throw new IllegalArgumentException("보드 초대는 보드 사용자만 초대가능합니다.");
         }
         User invitedUser = userRepository.findById(userId).orElseThrow(
@@ -106,9 +106,15 @@ public class BoardServiceImpl implements BoardService{
 
     }
 
-    private static boolean isContainsBoardUser(Board board, BoardUser boardUser) {
-        return !board.getUsers().contains(boardUser);
+    private static boolean isContainsBoardUser(Board board, List<BoardUser> boardUsers) {
+        for (BoardUser boardUser : boardUsers) {
+            if (boardUser.getBoard().equals(board)) {
+                return true;
+            }
+        }
+        return false;
     }
+
 
     private Board getBoard(Long boardId) {
         return boardRepository.findBoardByBoardId(boardId).orElseThrow(

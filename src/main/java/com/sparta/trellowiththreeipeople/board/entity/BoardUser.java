@@ -1,5 +1,7 @@
 package com.sparta.trellowiththreeipeople.board.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.sparta.trellowiththreeipeople.common.BaseEntity;
 import com.sparta.trellowiththreeipeople.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,16 +17,18 @@ import org.hibernate.annotations.Where;
 @Entity
 @SQLDelete(sql = "UPDATE board_user SET deleted_at=CURRENT_TIMESTAMP where id=?")
 @Where(clause = "deleted_at IS NULL")
-public class BoardUser extends baseEntity{
+public class BoardUser extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long boardUserid;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
