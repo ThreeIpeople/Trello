@@ -30,7 +30,7 @@ public class QBoardUser extends EntityPathBase<BoardUser> {
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
     //inherited
-    public final DateTimePath<java.time.LocalDateTime> deleteAt = _super.deleteAt;
+    public final DateTimePath<java.time.LocalDateTime> deletedAt = _super.deletedAt;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
