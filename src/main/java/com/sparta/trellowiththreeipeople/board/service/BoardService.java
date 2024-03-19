@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface BoardService {
 
-    BoardResponseDto save(String boardName,String boardInfo, User user);
+    BoardResponseDto save(String boardName, String boardInfo, User user);
 
     BoardResponseDto getBoardByBoardId(Long boardId, User user);
 

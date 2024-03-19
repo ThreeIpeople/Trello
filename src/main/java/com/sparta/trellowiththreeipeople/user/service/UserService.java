@@ -20,23 +20,23 @@ public class UserService {
     @Transactional
     public void createUser(CreateUserRequestDto createUserRequestDto) throws BadRequestException {
         User findUser = userRepository.findByUsername(createUserRequestDto.getUsername())
-            .orElse(null);
+                .orElse(null);
 
-        if(findUser != null){
+        if (findUser != null) {
             throw new BadRequestException("이미 존재하는 회원입니다");
         }
         String encryptpassword = passwordEncoder.encode(createUserRequestDto.getPassword());
-        User saveUser = new User(createUserRequestDto,encryptpassword);
+        User saveUser = new User(createUserRequestDto, encryptpassword);
         userRepository.save(saveUser);
     }
 
     @Transactional
-    public void updateUser(UpdateUserRequestDto updateUserRequestDto,User user)
-        throws BadRequestException {
+    public void updateUser(UpdateUserRequestDto updateUserRequestDto, User user)
+            throws BadRequestException {
         User findUser = userRepository.findByUsername(user.getUsername())
-            .orElseThrow(()-> new IllegalArgumentException("존재 하지 않은 유저입니다"));
+                .orElseThrow(() -> new IllegalArgumentException("존재 하지 않은 유저입니다"));
 
-        if(!passwordEncoder.matches(updateUserRequestDto.getPrePassword(),findUser.getPassword())){
+        if (!passwordEncoder.matches(updateUserRequestDto.getPrePassword(), findUser.getPassword())) {
             throw new BadRequestException("비밀번호가 일치 하지 않습니다.");
         }
 

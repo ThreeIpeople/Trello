@@ -35,6 +35,6 @@ public class BoardUser extends BaseEntity {
 
     public BoardUser(User user, Board board) {
         this.board = board;
-        this.user =user;
+        this.user = user;
     }
 }

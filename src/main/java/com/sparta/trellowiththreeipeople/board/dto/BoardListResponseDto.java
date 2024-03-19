@@ -8,7 +8,7 @@ public class BoardListResponseDto {
 
     private String boardName;
 
-    public BoardListResponseDto(Board board){
+    public BoardListResponseDto(Board board) {
         this.boardName = board.getBoardName();
     }
 }

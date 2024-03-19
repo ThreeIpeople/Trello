@@ -48,7 +48,7 @@ public class Board extends BaseEntity {
     private Long createdUser;
 
 
-    public Board(String boardName,String boardInfo, User user) {
+    public Board(String boardName, String boardInfo, User user) {
         this.boardName = boardName;
         this.boardInfo = boardInfo;
         this.users.add(new BoardUser(user, this));
@@ -64,6 +64,6 @@ public class Board extends BaseEntity {
     }
 
     public void inviteUser(User invitedUser) {
-        this.users.add(new BoardUser(invitedUser,this));
+        this.users.add(new BoardUser(invitedUser, this));
     }
 }
