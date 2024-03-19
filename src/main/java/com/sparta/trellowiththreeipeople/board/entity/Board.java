@@ -1,6 +1,7 @@
 package com.sparta.trellowiththreeipeople.board.entity;
 
 import com.sparta.trellowiththreeipeople.bar.entity.Bar;
+import com.sparta.trellowiththreeipeople.board.dto.BoardUpdateRequestDto;
 import com.sparta.trellowiththreeipeople.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -48,5 +49,9 @@ public class Board extends baseEntity{
     }
 
 
-
+    public void update(BoardUpdateRequestDto requestDto) {
+        this.boardName = requestDto.getBoardName();
+        this.boardInfo = requestDto.getBoardInfo();
+        this.colorEnum = BoardColorEnum.valueOf(requestDto.getBoardColorEnum());
+    }
 }

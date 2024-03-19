@@ -3,8 +3,10 @@ package com.sparta.trellowiththreeipeople.board.controller;
 import com.sparta.trellowiththreeipeople.board.dto.BoardListResponseDto;
 import com.sparta.trellowiththreeipeople.board.dto.BoardRequestDto;
 import com.sparta.trellowiththreeipeople.board.dto.BoardResponseDto;
+import com.sparta.trellowiththreeipeople.board.dto.BoardUpdateRequestDto;
 import com.sparta.trellowiththreeipeople.board.service.BoardServiceImpl;
 import com.sparta.trellowiththreeipeople.security.UserDetailsImpl;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -50,6 +52,17 @@ public class BoardController {
     ){
         BoardResponseDto responseDto = boardService.getBoardByBoardId(boardId,userDetails.getUser());
         return ResponseEntity.ok().body(responseDto);
+    }
+
+    @PutMapping("{boardId}")
+    public ResponseEntity<BoardResponseDto> updateBoard(
+            @PathVariable Long boardId,
+            @Valid @RequestBody BoardUpdateRequestDto requestDto,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ){
+       BoardResponseDto  responseDto = boardService.updateBoard(boardId,requestDto,userDetails.getUser());
+
+       return ResponseEntity.ok().body(responseDto);
     }
 
 
