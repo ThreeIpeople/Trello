@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 @Table(name = "board")
 @NoArgsConstructor
-@SQLDelete(sql = "UPDATE users SET deleted_at=CURRENT_TIMESTAMP where id=?")
+@SQLDelete(sql = "UPDATE board SET deleted_at=CURRENT_TIMESTAMP where id=?")
 @Where(clause = "deleted_at IS NULL")
 public class Board extends baseEntity{
 
@@ -40,11 +40,15 @@ public class Board extends baseEntity{
     @OneToMany(mappedBy = "board")
     private List<BoardUser> users = new ArrayList<>();
 
+    @Column(name = "created_board_by_user", nullable = false)
+    private Long createdBoardByUser;
+
 
     public Board(String boardName,String boardInfo, User user) {
         this.boardName = boardName;
         this.boardInfo = boardInfo;
         this.users.add(new BoardUser(user, this));
+        this.createdBoardByUser = user.getId();
 
     }
 

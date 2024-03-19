@@ -65,6 +65,16 @@ public class BoardController {
        return ResponseEntity.ok().body(responseDto);
     }
 
+    @DeleteMapping("{boardId}")
+    public ResponseEntity<?> deleteBoard(
+            @PathVariable Long boardId,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ){
+        boardService.deleteBoard(boardId,userDetails.getUser());
+
+        return ResponseEntity.ok().body("성공적으로 보드 삭제가 되었습니다.");
+    }
+
 
 
 

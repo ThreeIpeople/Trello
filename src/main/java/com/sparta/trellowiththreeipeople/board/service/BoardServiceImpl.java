@@ -8,6 +8,7 @@ import com.sparta.trellowiththreeipeople.board.entity.BoardUser;
 import com.sparta.trellowiththreeipeople.board.repository.BoardRepository;
 import com.sparta.trellowiththreeipeople.board.repository.BoardUserRepository;
 import com.sparta.trellowiththreeipeople.user.entity.User;
+import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,6 +61,7 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
+    @Transactional
     public BoardResponseDto updateBoard(Long boardId, BoardUpdateRequestDto requestDto, User user) {
         Board board = getBoard(boardId);
         BoardUser boardUser = boardUserRepository.findBoardUserByUserId(user.getId());
@@ -70,6 +72,19 @@ public class BoardServiceImpl implements BoardService{
 
         return new BoardResponseDto(board);
 
+
+    }
+
+    @Override
+    @Transactional
+    public void deleteBoard(Long boardId, User user) {
+        Board board = getBoard(boardId);
+        if(!board.getCreatedBoardByUser().equals(user.getId())){
+            throw new ValidationException("보드 삭제는 보드 생성자만 삭제할 수 있습니다.");
+        }
+        List<BoardUser> boardUsers= boardUserRepository.getBoardUserByBoardId(boardId);
+        boardUserRepository.deleteAllByBoardUsers(boardUsers);
+        boardRepository.delete(board);
 
     }
 

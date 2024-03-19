@@ -17,7 +17,6 @@ public class BoardUserRepositoryQueryImpl implements BoardUserRepositoryQuery{
 
     private final JPAQueryFactory queryFactory;
 
-
     @Override
     public List<Board> findBoardUserByUserIdAndFetchBoards(Long userId) {
         QBoardUser boardUser = QBoardUser.boardUser;
@@ -31,5 +30,23 @@ public class BoardUserRepositoryQueryImpl implements BoardUserRepositoryQuery{
         return boardUsers.stream()
                 .map(BoardUser::getBoard)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BoardUser> getBoardUserByBoardId(Long boardId){
+        QBoardUser boardUser = QBoardUser.boardUser;
+
+       return queryFactory.selectFrom(boardUser)
+               .where(boardUser.board.boardId.eq(boardId))
+               .fetch();
+    }
+
+    @Override
+    public void deleteAllByBoardUsers(List<BoardUser> boardUsers) {
+        QBoardUser boardUser = QBoardUser.boardUser;
+
+        queryFactory.delete(boardUser)
+                .where(boardUser.in(boardUsers))
+                .execute();
     }
 }
