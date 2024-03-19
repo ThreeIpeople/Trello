@@ -65,7 +65,7 @@ public class WebSecurityConfig {
                 .permitAll()// resources 접근 허용
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/users").permitAll()
+                .requestMatchers(HttpMethod.POST,"/api/users").permitAll()
                 .anyRequest().authenticated()
         );
 
