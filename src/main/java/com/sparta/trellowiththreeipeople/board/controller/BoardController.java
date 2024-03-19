@@ -13,12 +13,12 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/board")
+@RequestMapping("/api")
 public class BoardController {
 
     private final BoardServiceImpl boardService;
 
-    @PostMapping("")
+    @PostMapping("/board")
     public ResponseEntity<BoardResponseDto> inputBoard(
         @RequestBody BoardRequestDto requestDto,
         @AuthenticationPrincipal UserDetailsImpl userDetails
@@ -28,9 +28,7 @@ public class BoardController {
             requestDto.getBoardInfo(),
             userDetails.getUser()
         );
-
         return ResponseEntity.ok().body(responseDto);
-
     }
 
     @GetMapping("s")
