@@ -5,12 +5,16 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "board_user")
 @Entity
+@SQLDelete(sql = "UPDATE users SET deleted_at=CURRENT_TIMESTAMP where id=?")
+@Where(clause = "deleted_at IS NULL")
 public class BoardUser extends baseEntity{
 
     @Id

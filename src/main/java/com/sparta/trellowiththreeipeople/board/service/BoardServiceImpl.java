@@ -1,7 +1,6 @@
 package com.sparta.trellowiththreeipeople.board.service;
 
 import com.sparta.trellowiththreeipeople.board.dto.BoardListResponseDto;
-import com.sparta.trellowiththreeipeople.board.dto.BoardRequestDto;
 import com.sparta.trellowiththreeipeople.board.dto.BoardResponseDto;
 import com.sparta.trellowiththreeipeople.board.entity.Board;
 import com.sparta.trellowiththreeipeople.board.entity.BoardUser;
@@ -11,10 +10,7 @@ import com.sparta.trellowiththreeipeople.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.AccessDeniedException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

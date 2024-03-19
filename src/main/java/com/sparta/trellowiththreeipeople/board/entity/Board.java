@@ -1,10 +1,12 @@
 package com.sparta.trellowiththreeipeople.board.entity;
 
-import com.sparta.trellowiththreeipeople.board.dto.BoardRequestDto;
+import com.sparta.trellowiththreeipeople.bar.entity.Bar;
 import com.sparta.trellowiththreeipeople.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,8 @@ import java.util.List;
 @Entity
 @Table(name = "board")
 @NoArgsConstructor
+@SQLDelete(sql = "UPDATE users SET deleted_at=CURRENT_TIMESTAMP where id=?")
+@Where(clause = "deleted_at IS NULL")
 public class Board extends baseEntity{
 
     @Id
@@ -28,6 +32,9 @@ public class Board extends baseEntity{
 
     @Column(name = "color", nullable = false)
     private BoardColorEnum colorEnum = BoardColorEnum.RED;
+
+    @OneToMany(mappedBy = "board")
+    private List<Bar> bars = new ArrayList<>();
 
     @OneToMany(mappedBy = "board")
     private List<BoardUser> users = new ArrayList<>();

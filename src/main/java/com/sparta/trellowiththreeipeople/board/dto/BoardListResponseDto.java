@@ -1,7 +1,6 @@
 package com.sparta.trellowiththreeipeople.board.dto;
 
 import com.sparta.trellowiththreeipeople.board.entity.Board;
-import com.sparta.trellowiththreeipeople.board.entity.BoardUser;
 import lombok.Getter;
 
 @Getter
