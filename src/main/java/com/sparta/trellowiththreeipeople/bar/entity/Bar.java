@@ -40,7 +40,7 @@ public class Bar {
     }
 
     public Long getBoardId() {
-        return this.board.getId();
+        return this.board.getBoardId();
     }
 
     public void update(String title) {

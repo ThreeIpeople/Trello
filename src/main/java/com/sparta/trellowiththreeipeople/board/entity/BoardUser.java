@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "board_user")
 @Entity
 public class BoardUser extends baseEntity{
 

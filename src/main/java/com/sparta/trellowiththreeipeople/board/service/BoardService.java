@@ -8,5 +8,7 @@ import com.sparta.trellowiththreeipeople.user.entity.User;
 
 public interface BoardService {
 
-    BoardResponseDto save(BoardRequestDto boardRequestDto, User user);
+    BoardResponseDto save(String boardName,String boardInfo, User user);
+
+    BoardResponseDto getBoardByBoardId(Long boardId, User user);
 }

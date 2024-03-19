@@ -4,12 +4,15 @@ import com.sparta.trellowiththreeipeople.board.dto.BoardRequestDto;
 import com.sparta.trellowiththreeipeople.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Entity
+@Table(name = "board")
+@NoArgsConstructor
 public class Board extends baseEntity{
 
     @Id
@@ -30,9 +33,9 @@ public class Board extends baseEntity{
     private List<BoardUser> users = new ArrayList<>();
 
 
-    public Board(BoardRequestDto requestDto, User user) {
-        this.boardName = requestDto.getBoardName();
-        this.boardInfo = requestDto.getBoardInfo();
+    public Board(String boardName,String boardInfo, User user) {
+        this.boardName = boardName;
+        this.boardInfo = boardInfo;
         this.users.add(new BoardUser(user, this));
 
     }

@@ -7,10 +7,9 @@ import com.sparta.trellowiththreeipeople.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,14 +18,25 @@ public class BoardController {
 
     private final BoardServiceImpl boardService;
 
-    @RequestMapping("")
+    @PostMapping("")
     public ResponseEntity<BoardResponseDto> inputBoard(
             @RequestBody BoardRequestDto requestDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ){
-        BoardResponseDto responseDto = boardService.save(requestDto,userDetails.getUser());
+        BoardResponseDto responseDto = boardService.save(requestDto.getBoardName(),requestDto.getBoardInfo(),userDetails.getUser());
 
         return ResponseEntity.ok().body(responseDto);
 
     }
+
+    @GetMapping("{boardId}")
+    public ResponseEntity<BoardResponseDto> getBoardByBoardId(
+            @PathVariable Long boardId,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ){
+        BoardResponseDto responseDto = boardService.getBoardByBoardId(boardId,userDetails.getUser());
+        return ResponseEntity.ok().body(responseDto);
+    }
+
+
 }

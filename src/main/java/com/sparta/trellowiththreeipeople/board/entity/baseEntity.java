@@ -25,10 +25,8 @@ public abstract class baseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime modifiedAt;
 
-    @LastModifiedDate
-    @ColumnDefault(value = "0")
-    private LocalDateTime deleteAt;
-
+    @Column
+    private LocalDateTime deletedAt;
 
 
 
