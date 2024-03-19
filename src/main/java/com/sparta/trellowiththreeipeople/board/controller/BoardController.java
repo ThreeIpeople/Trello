@@ -1,5 +1,6 @@
 package com.sparta.trellowiththreeipeople.board.controller;
 
+import com.sparta.trellowiththreeipeople.board.dto.BoardListResponseDto;
 import com.sparta.trellowiththreeipeople.board.dto.BoardRequestDto;
 import com.sparta.trellowiththreeipeople.board.dto.BoardResponseDto;
 import com.sparta.trellowiththreeipeople.board.service.BoardServiceImpl;
@@ -10,6 +11,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,10 +26,23 @@ public class BoardController {
             @RequestBody BoardRequestDto requestDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ){
-        BoardResponseDto responseDto = boardService.save(requestDto.getBoardName(),requestDto.getBoardInfo(),userDetails.getUser());
+        BoardResponseDto responseDto = boardService.save(
+                requestDto.getBoardName(),
+                requestDto.getBoardInfo(),
+                userDetails.getUser()
+        );
 
         return ResponseEntity.ok().body(responseDto);
 
+    }
+
+    @GetMapping("s")
+    public ResponseEntity<List<BoardListResponseDto>> getBoardListByUserId(
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ){
+        List<BoardListResponseDto> listResponseDto = boardService.getBoardListByUserId(userDetails.getUser());
+
+        return ResponseEntity.ok().body(listResponseDto);
     }
 
     @GetMapping("{boardId}")
@@ -37,6 +53,8 @@ public class BoardController {
         BoardResponseDto responseDto = boardService.getBoardByBoardId(boardId,userDetails.getUser());
         return ResponseEntity.ok().body(responseDto);
     }
+
+
 
 
 }

@@ -1,5 +1,6 @@
 package com.sparta.trellowiththreeipeople.board.service;
 
+import com.sparta.trellowiththreeipeople.board.dto.BoardListResponseDto;
 import com.sparta.trellowiththreeipeople.board.dto.BoardRequestDto;
 import com.sparta.trellowiththreeipeople.board.dto.BoardResponseDto;
 import com.sparta.trellowiththreeipeople.board.entity.Board;
@@ -11,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,6 +47,15 @@ public class BoardServiceImpl implements BoardService{
         }
 
         return new BoardResponseDto(board);
+    }
+
+    @Override
+    public List<BoardListResponseDto> getBoardListByUserId(User user) {
+
+       return boardUserRepository.findBoardUserByUserIdAndFetchBoards(user.getId())
+               .stream()
+                .map(BoardListResponseDto::new)
+               .toList();
     }
 
 }
