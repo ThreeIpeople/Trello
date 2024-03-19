@@ -1,6 +1,5 @@
 package com.sparta.trellowiththreeipeople.board.dto;
 
-import com.sparta.trellowiththreeipeople.board.entity.BoardColorEnum;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;

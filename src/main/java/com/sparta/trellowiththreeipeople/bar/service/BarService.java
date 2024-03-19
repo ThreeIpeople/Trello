@@ -6,6 +6,7 @@ import com.sparta.trellowiththreeipeople.bar.entity.Bar;
 import com.sparta.trellowiththreeipeople.bar.repository.BarRepository;
 import com.sparta.trellowiththreeipeople.board.entity.Board;
 import com.sparta.trellowiththreeipeople.board.repository.BoardRepository;
+import com.sparta.trellowiththreeipeople.exception.BoardNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +24,7 @@ public class BarService {
     @Transactional
     public void createBar(Long boardId, BarRequestDto barRequestDto) {
         Board board = boardRepository.findById(boardId).orElseThrow(
-                () -> new NullPointerException("존재하지 않는 보드 아이디입니다.")
+                () -> new BoardNotFoundException("존재하지 않는 보드 아이디입니다.")
         );
         Bar bar = new Bar(barRequestDto.getTitle(), board);
         barRepository.save(bar);
@@ -31,7 +32,7 @@ public class BarService {
 
     public List<BarResponseDto> getBarList(Long boardId) {
         Board board = boardRepository.findById(boardId).orElseThrow(
-                () -> new NullPointerException("존재하지 않는 보드 아이디입니다.")
+                () -> new BoardNotFoundException("존재하지 않는 보드 아이디입니다.")
         );
         return barRepository.findAllByBoard(board)
                 .stream()
