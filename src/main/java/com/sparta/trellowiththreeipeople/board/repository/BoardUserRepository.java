@@ -9,4 +9,5 @@ public interface BoardUserRepository extends JpaRepository<BoardUser, Long>, Boa
     List<BoardUser> findBoardUserByUserId(Long id);
 
 
+
 }

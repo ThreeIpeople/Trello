@@ -18,6 +18,7 @@ public class BoardController {
 
     private final BoardServiceImpl boardService;
 
+
     @PostMapping("")
     public ResponseEntity<BoardResponseDto> inputBoard(
             @RequestBody BoardRequestDto requestDto,
@@ -29,9 +30,26 @@ public class BoardController {
                 userDetails.getUser()
         );
 
+    @GetMapping("{boardId}")
+    public ResponseEntity<BoardResponseDto> getBoardByBoardId(
+        @PathVariable Long boardId,
+        @AuthenticationPrincipal UserDetailsImpl userDetails
+    ){
+        BoardResponseDto responseDto = boardService.getBoardByBoardId(boardId,userDetails.getUser());
         return ResponseEntity.ok().body(responseDto);
-
     }
+
+    @PutMapping("{boardId}")
+    public ResponseEntity<BoardResponseDto> updateBoard(
+        @PathVariable Long boardId,
+        @Valid @RequestBody BoardUpdateRequestDto requestDto,
+        @AuthenticationPrincipal UserDetailsImpl userDetails
+    ){
+        BoardResponseDto  responseDto = boardService.updateBoard(boardId,requestDto,userDetails.getUser());
+
+        return ResponseEntity.ok().body(responseDto);
+    }
+
 
     @GetMapping("")
     public ResponseEntity<List<BoardListResponseDto>> getBoardListByUserId(
@@ -83,6 +101,5 @@ public class BoardController {
         return ResponseEntity.ok().body("초대가 성공적으로 되었습니다.");
 
     }
-
 
 }
