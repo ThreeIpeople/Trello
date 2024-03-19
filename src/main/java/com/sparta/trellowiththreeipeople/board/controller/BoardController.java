@@ -13,29 +13,27 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/board")
+@RequestMapping("/api")
 public class BoardController {
 
     private final BoardServiceImpl boardService;
 
-    @PostMapping("")
+    @PostMapping("/board")
     public ResponseEntity<BoardResponseDto> inputBoard(
-            @RequestBody BoardRequestDto requestDto,
-            @AuthenticationPrincipal UserDetailsImpl userDetails
+        @RequestBody BoardRequestDto requestDto,
+        @AuthenticationPrincipal UserDetailsImpl userDetails
     ){
         BoardResponseDto responseDto = boardService.save(
-                requestDto.getBoardName(),
-                requestDto.getBoardInfo(),
-                userDetails.getUser()
+            requestDto.getBoardName(),
+            requestDto.getBoardInfo(),
+            userDetails.getUser()
         );
-
         return ResponseEntity.ok().body(responseDto);
-
     }
 
     @GetMapping("s")
     public ResponseEntity<List<BoardListResponseDto>> getBoardListByUserId(
-            @AuthenticationPrincipal UserDetailsImpl userDetails
+        @AuthenticationPrincipal UserDetailsImpl userDetails
     ){
         List<BoardListResponseDto> listResponseDto = boardService.getBoardListByUserId(userDetails.getUser());
 
@@ -44,8 +42,8 @@ public class BoardController {
 
     @GetMapping("{boardId}")
     public ResponseEntity<BoardResponseDto> getBoardByBoardId(
-            @PathVariable Long boardId,
-            @AuthenticationPrincipal UserDetailsImpl userDetails
+        @PathVariable Long boardId,
+        @AuthenticationPrincipal UserDetailsImpl userDetails
     ){
         BoardResponseDto responseDto = boardService.getBoardByBoardId(boardId,userDetails.getUser());
         return ResponseEntity.ok().body(responseDto);
@@ -53,19 +51,19 @@ public class BoardController {
 
     @PutMapping("{boardId}")
     public ResponseEntity<BoardResponseDto> updateBoard(
-            @PathVariable Long boardId,
-            @Valid @RequestBody BoardUpdateRequestDto requestDto,
-            @AuthenticationPrincipal UserDetailsImpl userDetails
+        @PathVariable Long boardId,
+        @Valid @RequestBody BoardUpdateRequestDto requestDto,
+        @AuthenticationPrincipal UserDetailsImpl userDetails
     ){
-       BoardResponseDto  responseDto = boardService.updateBoard(boardId,requestDto,userDetails.getUser());
+        BoardResponseDto  responseDto = boardService.updateBoard(boardId,requestDto,userDetails.getUser());
 
-       return ResponseEntity.ok().body(responseDto);
+        return ResponseEntity.ok().body(responseDto);
     }
 
     @DeleteMapping("{boardId}")
     public ResponseEntity<?> deleteBoard(
-            @PathVariable Long boardId,
-            @AuthenticationPrincipal UserDetailsImpl userDetails
+        @PathVariable Long boardId,
+        @AuthenticationPrincipal UserDetailsImpl userDetails
     ){
         boardService.deleteBoard(boardId,userDetails.getUser());
 
@@ -74,9 +72,9 @@ public class BoardController {
 
     @PostMapping("{boardId}/invite")
     public ResponseEntity<?> inviteUserToBoard(
-            @PathVariable Long boardId,
-            @RequestBody InviteRequestDto requestDto,
-            @AuthenticationPrincipal UserDetailsImpl userDetails
+        @PathVariable Long boardId,
+        @RequestBody InviteRequestDto requestDto,
+        @AuthenticationPrincipal UserDetailsImpl userDetails
     ){
         boardService.inviteUserToBoard(boardId,requestDto.getUserId(),userDetails.getUser());
 

@@ -58,7 +58,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String role = auth.getAuthority();
 
-        String access = jwtUtil.createToken(username, role, 600000L);
+        String access = jwtUtil.createToken(username, role, 6000000L);
 
         response.setHeader("Authorization", access);
         response.setStatus(HttpStatus.OK.value());

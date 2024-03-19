@@ -57,10 +57,10 @@ public class BoardServiceImpl implements BoardService{
     @Transactional(readOnly = true)
     public List<BoardListResponseDto> getBoardListByUserId(User user) {
 
-       return boardUserRepository.findBoardUserByUserIdAndFetchBoards(user.getId())
-               .stream()
-                .map(BoardListResponseDto::new)
-               .toList();
+        return boardUserRepository.findBoardUserByUserIdAndFetchBoards(user.getId())
+            .stream()
+            .map(BoardListResponseDto::new)
+            .toList();
     }
 
     @Override
@@ -100,7 +100,7 @@ public class BoardServiceImpl implements BoardService{
             throw new IllegalArgumentException("보드 초대는 보드 사용자만 초대가능합니다.");
         }
         User invitedUser = userRepository.findById(userId).orElseThrow(
-                ()-> new UserNotFoundException("해당하는 유저를 찾을 수 없습니다.")
+            ()-> new UserNotFoundException("해당하는 유저를 찾을 수 없습니다.")
         );
         board.inviteUser(invitedUser);
 
@@ -108,7 +108,7 @@ public class BoardServiceImpl implements BoardService{
 
     private Board getBoard(Long boardId) {
         return boardRepository.findBoardByBoardId(boardId).orElseThrow(
-                ()-> new IllegalArgumentException("보드Id에 해당하는 보드를찾을 수 없습니다.")
+            ()-> new IllegalArgumentException("보드Id에 해당하는 보드를찾을 수 없습니다.")
         );
     }
 }

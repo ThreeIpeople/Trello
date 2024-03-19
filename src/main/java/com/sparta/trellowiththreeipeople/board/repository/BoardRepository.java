@@ -1,3 +1,4 @@
+
 package com.sparta.trellowiththreeipeople.board.repository;
 
 import com.sparta.trellowiththreeipeople.board.entity.Board;

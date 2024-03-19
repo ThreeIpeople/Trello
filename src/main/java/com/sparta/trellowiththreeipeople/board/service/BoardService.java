@@ -1,3 +1,4 @@
+
 package com.sparta.trellowiththreeipeople.board.service;
 
 import com.sparta.trellowiththreeipeople.board.dto.BoardListResponseDto;
