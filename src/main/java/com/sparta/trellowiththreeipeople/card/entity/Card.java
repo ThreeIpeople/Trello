@@ -16,28 +16,32 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name="cards")
+@Table(name="card")
+@SQLDelete(sql = "UPDATE card SET deleted_at=CURRENT_TIMESTAMP where id=?")
+@Where(clause = "deleted_at IS NULL")
 public class Card extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String title;
+
     private String content;
+
     @Column(name = "deadline", nullable = true)
     private LocalDateTime deadline;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
-    @Column(name = "deletedAT", nullable = true)
-    private LocalDateTime deletedAt;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
     @ManyToOne
-    @JoinColumn(name = "column_id")
+    @JoinColumn(name = "bar_id")
     private Bar bar;
 
 
