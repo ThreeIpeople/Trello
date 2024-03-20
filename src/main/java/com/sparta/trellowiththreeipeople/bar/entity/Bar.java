@@ -1,6 +1,7 @@
 package com.sparta.trellowiththreeipeople.bar.entity;
 
 import com.sparta.trellowiththreeipeople.board.entity.Board;
+import com.sparta.trellowiththreeipeople.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,8 +9,6 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -19,7 +18,7 @@ import java.time.LocalDateTime;
 @DynamicUpdate
 @SQLDelete(sql = "UPDATE bar SET deleted_at=CURRENT_TIMESTAMP where id=?")
 @SQLRestriction("deleted_at IS NULL")
-public class Bar {
+public class Bar extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +26,6 @@ public class Bar {
 
     @Column(nullable = false)
     private String title;
-
-    private LocalDateTime deletedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id", nullable = false)

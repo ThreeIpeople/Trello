@@ -1,22 +1,27 @@
 package com.sparta.trellowiththreeipeople.card.entity;
-
 import com.sparta.trellowiththreeipeople.bar.entity.Bar;
 import com.sparta.trellowiththreeipeople.card.dto.CardRequest;
+import com.sparta.trellowiththreeipeople.common.BaseEntity;
 import com.sparta.trellowiththreeipeople.user.entity.User;
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @Table(name="cards")
-public class Card {
-
+public class Card extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -26,6 +31,7 @@ public class Card {
     private LocalDateTime deadline;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
+    @Column(name = "deletedAT", nullable = true)
     private LocalDateTime deletedAt;
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -46,16 +52,6 @@ public class Card {
             LocalDate date = LocalDate.parse(cardRequest.getDeadline(), formatter);
             this.deadline = date.atStartOfDay(); // LocalDate를 LocalDateTime으로 변환
         }
-
-    }
-
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
-    @PreUpdate
-    protected void onUpdate() {
-        this.modifiedAt = LocalDateTime.now();
     }
     public void updateCard(CardRequest cardRequest){
         this.title = cardRequest.getTitle();
@@ -67,3 +63,12 @@ public class Card {
         }
     }
 }
+
+//    @PrePersist
+//    protected void onCreate() {
+//        this.createdAt = LocalDateTime.now();
+//    }
+//    @PreUpdate
+//    protected void onUpdate() {
+//        this.modifiedAt = LocalDateTime.now();
+//    }
