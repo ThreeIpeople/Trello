@@ -1,4 +1,4 @@
-package com.sparta.trellowiththreeipeople.board.entity;
+package com.sparta.trellowiththreeipeople.common;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -10,14 +10,14 @@ import com.querydsl.core.types.Path;
 
 
 /**
- * QbaseEntity is a Querydsl query type for baseEntity
+ * QBaseEntity is a Querydsl query type for BaseEntity
  */
 @Generated("com.querydsl.codegen.DefaultSupertypeSerializer")
-public class QbaseEntity extends EntityPathBase<baseEntity> {
+public class QBaseEntity extends EntityPathBase<BaseEntity> {
 
-    private static final long serialVersionUID = 80619511L;
+    private static final long serialVersionUID = 1766606359L;
 
-    public static final QbaseEntity baseEntity = new QbaseEntity("baseEntity");
+    public static final QBaseEntity baseEntity = new QBaseEntity("baseEntity");
 
     public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
 
@@ -25,16 +25,16 @@ public class QbaseEntity extends EntityPathBase<baseEntity> {
 
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = createDateTime("modifiedAt", java.time.LocalDateTime.class);
 
-    public QbaseEntity(String variable) {
-        super(baseEntity.class, forVariable(variable));
+    public QBaseEntity(String variable) {
+        super(BaseEntity.class, forVariable(variable));
     }
 
-    public QbaseEntity(Path<? extends baseEntity> path) {
+    public QBaseEntity(Path<? extends BaseEntity> path) {
         super(path.getType(), path.getMetadata());
     }
 
-    public QbaseEntity(PathMetadata metadata) {
-        super(baseEntity.class, metadata);
+    public QBaseEntity(PathMetadata metadata) {
+        super(BaseEntity.class, metadata);
     }
 
 }
