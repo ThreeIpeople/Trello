@@ -27,8 +27,10 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     @Transactional
+
     public BoardResponseDto save(String boardName, String boardInfo, User user) {
         if (boardRepository.existsBoardByBoardName(boardName)) {
+
             throw new IllegalArgumentException("존재하는 보드 이름입니다.");
         }
         Board board = new Board(boardName, boardInfo, user);
@@ -45,12 +47,12 @@ public class BoardServiceImpl implements BoardService {
         Board board = getBoard(boardId);
         List<BoardUser> boardUsers = boardUserRepository.findBoardUserByUserId(user.getId());
         if (!isContainsBoardUser(board, boardUsers)) {
+
             throw new IllegalArgumentException("해당 보드는 초대받은 유저만 확인할 수 있습니다.");
         }
 
         return new BoardResponseDto(board);
     }
-
 
     @Override
     @Transactional(readOnly = true)
@@ -66,8 +68,10 @@ public class BoardServiceImpl implements BoardService {
     @Transactional
     public BoardResponseDto updateBoard(Long boardId, BoardUpdateRequestDto requestDto, User user) {
         Board board = getBoard(boardId);
+
         List<BoardUser> boardUsers = boardUserRepository.findBoardUserByUserId(user.getId());
         if (!isContainsBoardUser(board, boardUsers)) {
+
             throw new IllegalArgumentException("해당 보드는 보드 사용유저만 수정할 수 있습니다.");
         }
         board.update(requestDto);
@@ -81,10 +85,12 @@ public class BoardServiceImpl implements BoardService {
     @Transactional
     public void deleteBoard(Long boardId, User user) {
         Board board = getBoard(boardId);
+
         if (!board.getCreatedUser().equals(user.getId())) {
             throw new ValidationException("보드 삭제는 보드 생성자만 삭제할 수 있습니다.");
         }
         List<BoardUser> boardUsers = boardUserRepository.getBoardUserByBoardId(boardId);
+
         boardUserRepository.deleteAllByBoardUsers(boardUsers);
         boardRepository.delete(board);
 
@@ -94,6 +100,7 @@ public class BoardServiceImpl implements BoardService {
     @Transactional
     public void inviteUserToBoard(Long boardId, Long userId, User user) {
         Board board = getBoard(boardId);
+
         List<BoardUser> boardUsers = boardUserRepository.findBoardUserByUserId(user.getId());
         if (!isContainsBoardUser(board, boardUsers)) {
             throw new IllegalArgumentException("보드 초대는 보드 사용자만 초대가능합니다.");
@@ -114,10 +121,10 @@ public class BoardServiceImpl implements BoardService {
         return false;
     }
 
-
     private Board getBoard(Long boardId) {
         return boardRepository.findBoardByBoardId(boardId).orElseThrow(
                 () -> new IllegalArgumentException("보드Id에 해당하는 보드를찾을 수 없습니다.")
+
         );
     }
 }

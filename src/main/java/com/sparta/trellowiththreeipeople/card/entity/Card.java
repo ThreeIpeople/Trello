@@ -26,12 +26,16 @@ import org.hibernate.annotations.Where;
 @SQLDelete(sql = "UPDATE card SET deleted_at=CURRENT_TIMESTAMP where id=?")
 @Where(clause = "deleted_at IS NULL")
 @Table(name="card")
+
 public class Card extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String title;
+
     private String content;
+
     @Column(name = "deadline", nullable = true)
     private LocalDateTime deadline;
 
@@ -40,7 +44,7 @@ public class Card extends BaseEntity {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "column_id")
+    @JoinColumn(name = "bar_id")
     private Bar bar;
 
 
