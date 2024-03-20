@@ -12,8 +12,6 @@ public class CardDTO {
     private String title;
     private String content;
     private LocalDateTime deadline;
-    // 필요한 다른 필드들을 추가
-
 
     public CardDTO(Long id, String title, String content,LocalDateTime deadline) {
         this.id = id;
