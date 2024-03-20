@@ -12,9 +12,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
-
+@RequiredArgsConstructor
 public class BoardUserRepositoryQueryImpl implements BoardUserRepositoryQuery {
-
 
     private final JPAQueryFactory queryFactory;
 
@@ -22,9 +21,8 @@ public class BoardUserRepositoryQueryImpl implements BoardUserRepositoryQuery {
     public List<Board> findBoardUserByUserIdAndFetchBoards(Long userId) {
         QBoardUser boardUser = QBoardUser.boardUser;
         QBoard board = QBoard.board;
-
         List<BoardUser> boardUsers = queryFactory.selectFrom(boardUser)
-    .leftJoin(boardUser.board, board)
+                .leftJoin(boardUser.board, board)
                 .where(boardUser.user.id.eq(userId))
                 .fetchJoin()
                 .fetch();
@@ -35,7 +33,6 @@ public class BoardUserRepositoryQueryImpl implements BoardUserRepositoryQuery {
     }
 
     @Override
-
     public List<BoardUser> getBoardUserByBoardId(Long boardId) {
         QBoardUser boardUser = QBoardUser.boardUser;
 

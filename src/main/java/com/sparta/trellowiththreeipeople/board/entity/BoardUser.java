@@ -19,7 +19,6 @@ import org.hibernate.annotations.Where;
 @Where(clause = "deleted_at IS NULL")
 public class BoardUser extends BaseEntity {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long boardUserid;
