@@ -63,7 +63,7 @@ public class Board extends BaseEntity {
         this.boardName = requestDto.getBoardName();
         this.boardInfo = requestDto.getBoardInfo();
         this.colorEnum = BoardColorEnum.valueOf(requestDto.getBoardColorEnum());
-        this.lastModifiedUser = boardUser.getBoardUserid();
+        this.lastModifiedUser = boardUser.getUser().getId();
     }
 
     public void inviteUser(User invitedUser) {
