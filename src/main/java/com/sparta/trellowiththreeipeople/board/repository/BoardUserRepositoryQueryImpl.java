@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
-
+@RequiredArgsConstructor
 public class BoardUserRepositoryQueryImpl implements BoardUserRepositoryQuery {
 
 
