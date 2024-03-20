@@ -10,4 +10,5 @@ public interface BoardUserRepository extends JpaRepository<BoardUser, Long>, Boa
 
 
 
+
 }

@@ -22,9 +22,10 @@ import org.hibernate.annotations.Where;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name="card")
 @SQLDelete(sql = "UPDATE card SET deleted_at=CURRENT_TIMESTAMP where id=?")
 @Where(clause = "deleted_at IS NULL")
+@Table(name="card")
+
 public class Card extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,6 +41,7 @@ public class Card extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
     @ManyToOne
     @JoinColumn(name = "bar_id")
     private Bar bar;
@@ -66,11 +68,8 @@ public class Card extends BaseEntity {
             this.deadline = date.atStartOfDay(); // LocalDate를 LocalDateTime으로 변환
         }
     }
-}
-
-//    @PrePersist
-//    protected void onCreate() {
-//        this.createdAt = LocalDateTime.now();
+//    public void deleteCard(){
+//        this.deletedAt = LocalDateTime.now();
 //    }
 //    @PreUpdate
 //    protected void onUpdate() {

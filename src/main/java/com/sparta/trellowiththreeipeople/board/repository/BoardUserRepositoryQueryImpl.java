@@ -35,6 +35,7 @@ public class BoardUserRepositoryQueryImpl implements BoardUserRepositoryQuery {
     }
 
     @Override
+
     public List<BoardUser> getBoardUserByBoardId(Long boardId) {
         QBoardUser boardUser = QBoardUser.boardUser;
 
