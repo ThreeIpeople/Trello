@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface BoardUserRepository extends JpaRepository<BoardUser, Long>, BoardUserRepositoryQuery {
-    List<BoardUser> findBoardUserByUserId(Long id);
+
 
 
 
