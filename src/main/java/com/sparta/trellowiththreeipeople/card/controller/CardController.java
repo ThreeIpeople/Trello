@@ -34,14 +34,9 @@ public class CardController{
         return ResponseEntity.ok().body(cardResponse);
     }
     //전체 카드 조회
-//    @GetMapping("/cards")
-//    public ResponseEntity<List<CardDTO>> getAllCards() {
-//        List<CardDTO> cardList = cardService.getAllCards();
-//        return ResponseEntity.ok().body(cardList);
-//    }
     @GetMapping("/cards")
-    public ResponseEntity<List<CardResponse>> getAllCards() {
-        List<CardResponse> cardList = cardService.getAllCards();
+    public ResponseEntity<List<CardDTO>> getAllCards() {
+        List<CardDTO> cardList = cardService.getAllCards();
         return ResponseEntity.ok().body(cardList);
     }
     //카드 선택조회

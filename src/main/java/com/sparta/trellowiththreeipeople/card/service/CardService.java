@@ -31,16 +31,10 @@ public class CardService{
         return cardResponse;
     }
 
-//    public List<CardDTO> getAllCards() {
-//        List<CardDTO> cardList = cardRepository.findAllCardsWithDTO();
-//        return cardList;
-//    }
-    public List<CardResponse> getAllCards() {
-      List<CardResponse> cardList = cardRepository.findAllWithUserAndBar()
-           .stream().map(CardResponse::new).toList();
+    public List<CardDTO> getAllCards() {
+        List<CardDTO> cardList = cardRepository.findAllCardsWithDTO();
         return cardList;
     }
-
     public CardResponse getCard(Long cardId) {
         Card card = cardRepository.findById(cardId).orElseThrow(()->new IllegalArgumentException("유저를 찾을수 없습니다."));
         return new CardResponse(card);
