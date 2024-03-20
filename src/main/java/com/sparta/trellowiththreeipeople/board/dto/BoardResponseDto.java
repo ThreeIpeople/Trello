@@ -19,8 +19,8 @@ public class BoardResponseDto {
     private List<Bar> bars;
 
 
-    public BoardResponseDto(Board board){
-        this.boardId =board.getBoardId();
+    public BoardResponseDto(Board board) {
+        this.boardId = board.getBoardId();
         this.boardName = board.getBoardName();
         this.boardInfo = board.getBoardInfo();
         this.colorEnum = board.getColorEnum();

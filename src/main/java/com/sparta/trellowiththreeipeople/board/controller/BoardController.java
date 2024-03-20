@@ -22,7 +22,7 @@ public class BoardController {
     public ResponseEntity<BoardResponseDto> inputBoard(
             @RequestBody BoardRequestDto requestDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails
-    ){
+    ) {
         BoardResponseDto responseDto = boardService.save(
                 requestDto.getBoardName(),
                 requestDto.getBoardInfo(),
@@ -33,10 +33,10 @@ public class BoardController {
 
     }
 
-    @GetMapping("s")
+    @GetMapping("")
     public ResponseEntity<List<BoardListResponseDto>> getBoardListByUserId(
             @AuthenticationPrincipal UserDetailsImpl userDetails
-    ){
+    ) {
         List<BoardListResponseDto> listResponseDto = boardService.getBoardListByUserId(userDetails.getUser());
 
         return ResponseEntity.ok().body(listResponseDto);
@@ -46,8 +46,8 @@ public class BoardController {
     public ResponseEntity<BoardResponseDto> getBoardByBoardId(
             @PathVariable Long boardId,
             @AuthenticationPrincipal UserDetailsImpl userDetails
-    ){
-        BoardResponseDto responseDto = boardService.getBoardByBoardId(boardId,userDetails.getUser());
+    ) {
+        BoardResponseDto responseDto = boardService.getBoardByBoardId(boardId, userDetails.getUser());
         return ResponseEntity.ok().body(responseDto);
     }
 
@@ -56,35 +56,33 @@ public class BoardController {
             @PathVariable Long boardId,
             @Valid @RequestBody BoardUpdateRequestDto requestDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails
-    ){
-       BoardResponseDto  responseDto = boardService.updateBoard(boardId,requestDto,userDetails.getUser());
+    ) {
+        BoardResponseDto responseDto = boardService.updateBoard(boardId, requestDto, userDetails.getUser());
 
-       return ResponseEntity.ok().body(responseDto);
+        return ResponseEntity.ok().body(responseDto);
     }
 
     @DeleteMapping("{boardId}")
-    public ResponseEntity<?> deleteBoard(
+    public ResponseEntity<String> deleteBoard(
             @PathVariable Long boardId,
             @AuthenticationPrincipal UserDetailsImpl userDetails
-    ){
-        boardService.deleteBoard(boardId,userDetails.getUser());
+    ) {
+        boardService.deleteBoard(boardId, userDetails.getUser());
 
         return ResponseEntity.ok().body("성공적으로 보드 삭제가 되었습니다.");
     }
 
     @PostMapping("{boardId}/invite")
-    public ResponseEntity<?> inviteUserToBoard(
+    public ResponseEntity<String> inviteUserToBoard(
             @PathVariable Long boardId,
             @RequestBody InviteRequestDto requestDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails
-    ){
-        boardService.inviteUserToBoard(boardId,requestDto.getUserId(),userDetails.getUser());
+    ) {
+        boardService.inviteUserToBoard(boardId, requestDto.getUserId(), userDetails.getUser());
 
         return ResponseEntity.ok().body("초대가 성공적으로 되었습니다.");
 
     }
-
-
 
 
 }

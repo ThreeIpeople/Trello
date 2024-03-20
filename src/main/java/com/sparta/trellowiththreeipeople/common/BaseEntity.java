@@ -1,4 +1,4 @@
-package com.sparta.trellowiththreeipeople.board.entity;
+package com.sparta.trellowiththreeipeople.common;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class baseEntity {
+public abstract class BaseEntity {
 
     @CreatedDate
     @Column(updatable = false)
@@ -26,7 +26,6 @@ public abstract class baseEntity {
     @Column
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime deletedAt;
-
 
 
 }

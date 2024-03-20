@@ -37,12 +37,12 @@ public class JwtUtil {
 
     public String createToken(String username, String role, Long expiration) {
         return Jwts.builder()
-            .claim("username", username)
-            .claim("role", role)
-            .signWith(key, signatureAlgorithm)
-            .setIssuedAt(new Date(System.currentTimeMillis()))
-            .setExpiration(new Date(System.currentTimeMillis() + expiration))
-            .compact();
+                .claim("username", username)
+                .claim("role", role)
+                .signWith(key, signatureAlgorithm)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .compact();
     }
 
     public String getJwtFromHeader(HttpServletRequest request) {
@@ -76,19 +76,19 @@ public class JwtUtil {
     public String getUsername(String token) {
 
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody()
-            .get("username", String.class);
+                .get("username", String.class);
     }
 
     public String getRole(String token) {
 
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody()
-            .get("role", String.class);
+                .get("role", String.class);
     }
 
     public Boolean isExpired(String token) {
 
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody()
-            .getExpiration().before(new Date());
+                .getExpiration().before(new Date());
     }
 
 }
