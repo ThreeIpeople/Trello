@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BarRepository extends JpaRepository<Bar, Long> {
+public interface BarRepository extends JpaRepository<Bar, Long>, BarQueryRepository {
     List<Bar> findAllByBoard(Board board);
 }
