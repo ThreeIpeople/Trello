@@ -53,10 +53,10 @@ public class Board extends BaseEntity {
         this.boardInfo = boardInfo;
         this.users.add(new BoardUser(user, this));
         this.createdUser = user.getId();
+    }
 
 
-
-    public void update(BoardUpdateRequestDto requestDto) {
+    public void update(BoardUpdateRequestDto requestDto){
         this.boardName = requestDto.getBoardName();
         this.boardInfo = requestDto.getBoardInfo();
         this.colorEnum = BoardColorEnum.valueOf(requestDto.getBoardColorEnum());
