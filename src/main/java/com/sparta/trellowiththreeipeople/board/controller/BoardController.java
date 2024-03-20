@@ -1,7 +1,7 @@
 package com.sparta.trellowiththreeipeople.board.controller;
 
 import com.sparta.trellowiththreeipeople.board.dto.*;
-import com.sparta.trellowiththreeipeople.board.service.BoardServiceImpl;
+import com.sparta.trellowiththreeipeople.board.service.BoardService;
 import com.sparta.trellowiththreeipeople.security.UserDetailsImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,10 +13,10 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/board")
+@RequestMapping("/api/boards")
 public class BoardController {
 
-    private final BoardServiceImpl boardService;
+    private final BoardService boardService;
 
     @PostMapping("")
     public ResponseEntity<BoardResponseDto> inputBoard(
