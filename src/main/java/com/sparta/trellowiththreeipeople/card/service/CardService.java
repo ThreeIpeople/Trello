@@ -10,9 +10,10 @@ import com.sparta.trellowiththreeipeople.card.repository.CardRepository;
 import com.sparta.trellowiththreeipeople.user.entity.User;
 import com.sparta.trellowiththreeipeople.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
