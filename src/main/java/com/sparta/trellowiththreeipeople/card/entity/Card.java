@@ -16,11 +16,16 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+import org.springframework.cglib.core.Local;
 
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name="cards")
+@SQLDelete(sql = "UPDATE card SET deleted_at=CURRENT_TIMESTAMP where id=?")
+@Where(clause = "deleted_at IS NULL")
+@Table(name="card")
 public class Card extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,13 +34,11 @@ public class Card extends BaseEntity {
     private String content;
     @Column(name = "deadline", nullable = true)
     private LocalDateTime deadline;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
-    @Column(name = "deletedAT", nullable = true)
-    private LocalDateTime deletedAt;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
     @ManyToOne
     @JoinColumn(name = "column_id")
     private Bar bar;
@@ -62,13 +65,7 @@ public class Card extends BaseEntity {
             this.deadline = date.atStartOfDay(); // LocalDate를 LocalDateTime으로 변환
         }
     }
+//    public void deleteCard(){
+//        this.deletedAt = LocalDateTime.now();
+//    }
 }
-
-//    @PrePersist
-//    protected void onCreate() {
-//        this.createdAt = LocalDateTime.now();
-//    }
-//    @PreUpdate
-//    protected void onUpdate() {
-//        this.modifiedAt = LocalDateTime.now();
-//    }

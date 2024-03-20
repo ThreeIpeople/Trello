@@ -3,6 +3,7 @@ package com.sparta.trellowiththreeipeople.card.service;
 
 import com.sparta.trellowiththreeipeople.bar.entity.Bar;
 import com.sparta.trellowiththreeipeople.bar.repository.BarRepository;
+import com.sparta.trellowiththreeipeople.card.dto.CardDTO;
 import com.sparta.trellowiththreeipeople.card.dto.CardRequest;
 import com.sparta.trellowiththreeipeople.card.dto.CardResponse;
 import com.sparta.trellowiththreeipeople.card.entity.Card;
@@ -21,18 +22,22 @@ public class CardService{
     private final CardRepository cardRepository;
     private final BarRepository barRepository;
     private final UserRepository userRepository;
-    public CardResponse createCard(Long columId,CardRequest cardRequest,Long userId) {
+    public CardResponse createCard(Long barId,CardRequest cardRequest,Long userId) {
         User checkUser = userRepository.findById(userId).orElseThrow(()->new IllegalArgumentException("유저를 찾을수 없습니다"));
-        Bar checkBar = barRepository.findById(columId).orElseThrow(()->new IllegalArgumentException("컬럼을 찾을수 없습니다"));
+        Bar checkBar = barRepository.findById(barId).orElseThrow(()->new IllegalArgumentException("컬럼을 찾을수 없습니다"));
         Card card = new Card(checkUser,checkBar,cardRequest);
         cardRepository.save(card);
         CardResponse cardResponse = new CardResponse(card);
         return cardResponse;
     }
 
+//    public List<CardDTO> getAllCards() {
+//        List<CardDTO> cardList = cardRepository.findAllCardsWithDTO();
+//        return cardList;
+//    }
     public List<CardResponse> getAllCards() {
-        List<CardResponse> cardList = cardRepository.findAll()
-            .stream().map(CardResponse::new).toList();
+      List<CardResponse> cardList = cardRepository.findAllWithUserAndBar()
+           .stream().map(CardResponse::new).toList();
         return cardList;
     }
 
