@@ -1,11 +1,14 @@
 package com.sparta.trellowiththreeipeople.board.dto;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class BoardRequestDto {
+
     private String boardName;
+
     private String boardInfo;
+
 }

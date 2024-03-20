@@ -20,7 +20,7 @@ public class QBoard extends EntityPathBase<Board> {
 
     public static final QBoard board = new QBoard("board");
 
-    public final QbaseEntity _super = new QbaseEntity(this);
+    public final com.sparta.trellowiththreeipeople.common.QBaseEntity _super = new com.sparta.trellowiththreeipeople.common.QBaseEntity(this);
 
     public final ListPath<com.sparta.trellowiththreeipeople.bar.entity.Bar, com.sparta.trellowiththreeipeople.bar.entity.QBar> bars = this.<com.sparta.trellowiththreeipeople.bar.entity.Bar, com.sparta.trellowiththreeipeople.bar.entity.QBar>createList("bars", com.sparta.trellowiththreeipeople.bar.entity.Bar.class, com.sparta.trellowiththreeipeople.bar.entity.QBar.class, PathInits.DIRECT2);
 
@@ -35,7 +35,7 @@ public class QBoard extends EntityPathBase<Board> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
-    public final NumberPath<Long> createdBoardByUser = createNumber("createdBoardByUser", Long.class);
+    public final NumberPath<Long> createdUser = createNumber("createdUser", Long.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> deletedAt = _super.deletedAt;

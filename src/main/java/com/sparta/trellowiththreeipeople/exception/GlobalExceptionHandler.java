@@ -1,5 +1,6 @@
 package com.sparta.trellowiththreeipeople.exception;
 
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -8,13 +9,31 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<?> IllegalArgumentException(IllegalArgumentException e){
+    public ResponseEntity<String> IllegalArgumentException(IllegalArgumentException e) {
+        return ResponseEntity.badRequest()
+                .body(e.getMessage());
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<String> NullPointerException(NullPointerException e) {
         return ResponseEntity.badRequest()
                 .body(e.getMessage());
     }
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<?> IllegalArgumentException(UserNotFoundException e){
+    public ResponseEntity<String> UserNotFoundException(UserNotFoundException e) {
+        return ResponseEntity.badRequest()
+                .body(e.getMessage());
+    }
+
+    @ExceptionHandler(BoardNotFoundException.class)
+    public ResponseEntity<String> BoardNotFoundException(BoardNotFoundException e) {
+        return ResponseEntity.badRequest()
+                .body(e.getMessage());
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<String> BadRequestException(BadRequestException e) {
         return ResponseEntity.badRequest()
                 .body(e.getMessage());
     }

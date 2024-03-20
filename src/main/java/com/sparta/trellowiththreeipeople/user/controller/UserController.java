@@ -19,15 +19,15 @@ public class UserController {
 
     @PostMapping
     public void createUser(
-        @RequestBody @Valid CreateUserRequestDto createUserRequestDto
+            @RequestBody @Valid CreateUserRequestDto createUserRequestDto
     ) throws BadRequestException {
         userService.createUser(createUserRequestDto);
     }
 
     @PutMapping
     public void updateUser(
-        @RequestBody @Valid UpdateUserRequestDto updateUserRequestDto,
-        @AuthenticationPrincipal UserDetailsImpl userDetails
+            @RequestBody @Valid UpdateUserRequestDto updateUserRequestDto,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
     ) throws BadRequestException {
         userService.updateUser(updateUserRequestDto, userDetails.getUser());
     }

@@ -1,8 +1,7 @@
 package com.sparta.trellowiththreeipeople.card.entity;
-
 import com.sparta.trellowiththreeipeople.bar.entity.Bar;
-import com.sparta.trellowiththreeipeople.board.entity.baseEntity;
 import com.sparta.trellowiththreeipeople.card.dto.CardRequest;
+import com.sparta.trellowiththreeipeople.common.BaseEntity;
 import com.sparta.trellowiththreeipeople.user.entity.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Table(name="cards")
-public class Card extends baseEntity {
+public class Card extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

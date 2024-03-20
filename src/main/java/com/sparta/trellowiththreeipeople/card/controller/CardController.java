@@ -1,7 +1,6 @@
 package com.sparta.trellowiththreeipeople.card.controller;
 
 
-import com.sparta.trellowiththreeipeople.board.entity.baseEntity;
 import com.sparta.trellowiththreeipeople.card.dto.CardRequest;
 import com.sparta.trellowiththreeipeople.card.dto.CardResponse;
 import com.sparta.trellowiththreeipeople.card.service.CardService;

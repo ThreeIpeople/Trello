@@ -22,17 +22,17 @@ public class QBoardUser extends EntityPathBase<BoardUser> {
 
     public static final QBoardUser boardUser = new QBoardUser("boardUser");
 
-    public final QbaseEntity _super = new QbaseEntity(this);
+    public final com.sparta.trellowiththreeipeople.common.QBaseEntity _super = new com.sparta.trellowiththreeipeople.common.QBaseEntity(this);
 
     public final QBoard board;
+
+    public final NumberPath<Long> boardUserid = createNumber("boardUserid", Long.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> deletedAt = _super.deletedAt;
-
-    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
