@@ -1,5 +1,6 @@
 package com.sparta.trellowiththreeipeople.user.entity;
 
+import com.sparta.trellowiththreeipeople.common.BaseEntity;
 import com.sparta.trellowiththreeipeople.user.dto.request.CreateUserRequestDto;
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,10 +15,10 @@ import java.util.Objects;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@SQLDelete(sql = "UPDATE users SET deleted_at=CURRENT_TIMESTAMP where id=?")
+@SQLDelete(sql = "UPDATE user SET deleted_at=CURRENT_TIMESTAMP where id=?")
 @Where(clause = "deleted_at IS NULL")
-@Table(name = "users")
-public class User {
+@Table(name = "user")
+public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,9 +33,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRoleEnum role;
 
-    @Column
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime deletedAt;
 
     public User(CreateUserRequestDto createUserRequestDto, String encryptpassword) {
         this.username = createUserRequestDto.getUsername();
