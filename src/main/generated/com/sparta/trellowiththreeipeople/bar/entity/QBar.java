@@ -22,11 +22,20 @@ public class QBar extends EntityPathBase<Bar> {
 
     public static final QBar bar = new QBar("bar");
 
+    public final com.sparta.trellowiththreeipeople.common.QBaseEntity _super = new com.sparta.trellowiththreeipeople.common.QBaseEntity(this);
+
     public final com.sparta.trellowiththreeipeople.board.entity.QBoard board;
 
-    public final DateTimePath<java.time.LocalDateTime> deletedAt = createDateTime("deletedAt", java.time.LocalDateTime.class);
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> deletedAt = _super.deletedAt;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 
     public final StringPath title = createString("title");
 
