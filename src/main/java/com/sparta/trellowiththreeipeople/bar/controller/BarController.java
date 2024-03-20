@@ -3,8 +3,10 @@ package com.sparta.trellowiththreeipeople.bar.controller;
 import com.sparta.trellowiththreeipeople.bar.dto.BarRequestDto;
 import com.sparta.trellowiththreeipeople.bar.dto.BarResponseDto;
 import com.sparta.trellowiththreeipeople.bar.service.BarService;
+import com.sparta.trellowiththreeipeople.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,33 +18,51 @@ public class BarController {
     private final BarService barService;
 
     @PostMapping
-    public ResponseEntity<String> createBar(@PathVariable Long boardId, @RequestBody BarRequestDto barRequestDto) {
-        barService.createBar(boardId, barRequestDto);
+    public ResponseEntity<String> createBar(
+            @PathVariable Long boardId,
+            @RequestBody BarRequestDto barRequestDto,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        barService.createBar(boardId, barRequestDto, userDetails.getUser());
         return ResponseEntity.ok().body("Bar가 정상적으로 생성되었습니다.");
     }
 
     @GetMapping
-    public ResponseEntity<List<BarResponseDto>> getBarList(@PathVariable Long boardId) {
+    public ResponseEntity<List<BarResponseDto>> getBarList(
+            @PathVariable Long boardId
+    ) {
         List<BarResponseDto> barResponseDtoList = barService.getBarList(boardId);
         return ResponseEntity.ok().body(barResponseDtoList);
     }
 
     @GetMapping("/{barId}")
-    public ResponseEntity<BarResponseDto> getBar(@PathVariable Long boardId, @PathVariable Long barId) {
+    public ResponseEntity<BarResponseDto> getBar(
+            @PathVariable Long boardId,
+            @PathVariable Long barId
+    ) {
         BarResponseDto barResponseDto = barService.getBar(boardId, barId);
         return ResponseEntity.ok().body(barResponseDto);
     }
 
     @PutMapping("/{barId}")
-    public ResponseEntity<String> updateBar(@PathVariable Long boardId, @PathVariable Long barId, @RequestBody BarRequestDto barRequestDto) {
-        barService.updateBar(boardId, barId, barRequestDto);
+    public ResponseEntity<String> updateBar(
+            @PathVariable Long boardId,
+            @PathVariable Long barId,
+            @RequestBody BarRequestDto barRequestDto,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        barService.updateBar(boardId, barId, barRequestDto, userDetails.getUser());
         return ResponseEntity.ok().body("Bar가 정상적으로 수정되었습니다.");
 
     }
 
     @DeleteMapping("/{barId}")
-    public ResponseEntity<String> deleteBar(@PathVariable Long boardId, @PathVariable Long barId) {
-        barService.deleteBar(boardId, barId);
+    public ResponseEntity<String> deleteBar(
+            @PathVariable Long boardId,
+            @PathVariable Long barId,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        barService.deleteBar(boardId, barId, userDetails.getUser());
         return ResponseEntity.ok().body("Bar가 정상적으로 삭제되었습니다.");
     }
 }
