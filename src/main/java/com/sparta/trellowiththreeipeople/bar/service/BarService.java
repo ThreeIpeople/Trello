@@ -32,10 +32,10 @@ public class BarService {
 
     @Transactional(readOnly = true)
     public List<BarResponseDto> getBarList(Long boardId) {
-        Board board = boardRepository.findById(boardId).orElseThrow(
+        boardRepository.findById(boardId).orElseThrow(
                 () -> new BoardNotFoundException("존재하지 않는 보드 아이디입니다.")
         );
-        return barRepository.findAllByBoard(board)
+        return barRepository.findAllByBoard(boardId)
                 .stream()
                 .map(bar -> new BarResponseDto(bar.getId(), bar.getTitle()))
                 .toList();

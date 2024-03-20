@@ -94,4 +94,21 @@ class BarServiceTest {
             barService.createBar(board.getBoardId(), new BarRequestDto("create" + i), user);
         }
     }
+
+    @Test
+    @DisplayName("Entity말고 DTO로 데이터 조회하기")
+    void test05() {
+        CreateUserRequestDto createUserRequestDto = new CreateUserRequestDto("username", "password");
+        User user = new User(createUserRequestDto, "encryptedPassword");
+        userRepository.save(user);
+
+        Board board = new Board("testBoard", "testBoard01", user);
+        boardRepository.save(board);
+
+        for (int i = 0; i < 100; i++) {
+            barService.createBar(board.getBoardId(), new BarRequestDto("create" + i), user);
+        }
+
+        barService.getBarList(board.getBoardId());
+    }
 }
