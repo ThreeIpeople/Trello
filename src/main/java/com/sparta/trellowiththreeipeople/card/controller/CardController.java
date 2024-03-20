@@ -1,6 +1,7 @@
 package com.sparta.trellowiththreeipeople.card.controller;
 
 
+import com.sparta.trellowiththreeipeople.board.entity.baseEntity;
 import com.sparta.trellowiththreeipeople.card.dto.CardRequest;
 import com.sparta.trellowiththreeipeople.card.dto.CardResponse;
 import com.sparta.trellowiththreeipeople.card.service.CardService;
@@ -20,39 +21,36 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/boards/{boardId}/columns/{columnsId}/")
-public class CardController {
-
+@RequestMapping("/api/boards/{boardId}/bars/{barId}")
+public class CardController{
     private final CardService cardService;
-    //카드 등록
-    @PostMapping("cards")
+    @PostMapping("/cards")
     public ResponseEntity<CardResponse> createCard(
         @PathVariable Long columnsId,
         @RequestBody CardRequest cardRequest,
         @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
-        CardResponse cardResponse = cardService.createCard(columnsId, cardRequest,
-            userDetails.getUser().getId());
+        CardResponse cardResponse = cardService.createCard(columnsId, cardRequest, userDetails.getUser().getId());
         return ResponseEntity.ok().body(cardResponse);
     }
     //전체 카드 조회
-    @GetMapping("cards")
+    @GetMapping("/cards")
     public ResponseEntity<List<CardResponse>> getAllCards() {
         List<CardResponse> cardList = cardService.getAllCards();
         return ResponseEntity.ok().body(cardList);
     }
     //카드 선택조회
-    @GetMapping("cards/{cardId}")
+    @GetMapping("/cards/{cardId}")
     public ResponseEntity<CardResponse> getCard(@PathVariable Long cardId) {
         CardResponse cardResponse = cardService.getCard(cardId);
         return ResponseEntity.ok().body(cardResponse);
     }
-    @PutMapping("cards/{cardId}")
+    @PutMapping("/cards/{cardId}")
     public ResponseEntity<CardResponse> updateCard(@PathVariable Long cardId, @RequestBody CardRequest cardRequest) {
         CardResponse cardResponse = cardService.updateCard(cardId, cardRequest);
         return ResponseEntity.ok().body(cardResponse);
     }
-    @DeleteMapping("cards/{cardId}")
+    @DeleteMapping("/cards/{cardId}")
     public ResponseEntity<?> deleteCard(@PathVariable Long cardId){
         cardService.deleteCard(cardId);
         return ResponseEntity.ok().body("삭제가 완료되었습니다.");
