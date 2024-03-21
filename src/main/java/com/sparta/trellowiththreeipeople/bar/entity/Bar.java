@@ -1,5 +1,6 @@
 package com.sparta.trellowiththreeipeople.bar.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sparta.trellowiththreeipeople.board.entity.Board;
 import com.sparta.trellowiththreeipeople.common.BaseEntity;
 import jakarta.persistence.*;
@@ -25,6 +26,7 @@ public class Bar extends BaseEntity {
     @Column(nullable = false)
     private String title;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id", nullable = false)
     private Board board;
