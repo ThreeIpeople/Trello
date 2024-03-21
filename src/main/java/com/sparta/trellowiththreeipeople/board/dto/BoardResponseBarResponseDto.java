@@ -10,8 +10,15 @@ public class BoardResponseBarResponseDto {
 
     private final String title;
 
-    public BoardResponseBarResponseDto(Bar bar){
+    //private final List<CardNameResponseDto> cards;
+
+    public BoardResponseBarResponseDto(
+            Bar bar
+
+    ) {
         this.barId = bar.getId();
         this.title = bar.getTitle();
+        //this.cards = ;
+
     }
 }

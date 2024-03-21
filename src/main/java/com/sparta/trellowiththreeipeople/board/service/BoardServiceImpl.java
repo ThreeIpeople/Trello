@@ -1,9 +1,6 @@
 package com.sparta.trellowiththreeipeople.board.service;
 
-import com.sparta.trellowiththreeipeople.board.dto.BoardListResponseDto;
-import com.sparta.trellowiththreeipeople.board.dto.BoardResponseDto;
-import com.sparta.trellowiththreeipeople.board.dto.BoardResponseUsersResponseDto;
-import com.sparta.trellowiththreeipeople.board.dto.BoardUpdateRequestDto;
+import com.sparta.trellowiththreeipeople.board.dto.*;
 import com.sparta.trellowiththreeipeople.board.entity.Board;
 import com.sparta.trellowiththreeipeople.board.entity.BoardUser;
 import com.sparta.trellowiththreeipeople.board.repository.BoardRepository;
@@ -29,20 +26,15 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     @Transactional
-
-    public BoardResponseDto save(String boardName, String boardInfo, User user) {
-        if (boardRepository.existsBoardByBoardName(boardName)) {
+    public Long save(BoardRequestDto requestDto, User user) {
+        if (boardRepository.existsBoardByBoardName(requestDto.getBoardName())) {
 
             throw new IllegalArgumentException("존재하는 보드 이름입니다.");
         }
-        Board board = new Board(boardName, boardInfo, user);
+        Board board = new Board(requestDto, user);
         boardRepository.save(board);
 
-        List<BoardResponseUsersResponseDto> users = board.getUsers().stream()
-                .map(BoardResponseUsersResponseDto::new)
-                .toList();
-
-        return new BoardResponseDto(board, users);
+        return board.getBoardId();
 
 
     }
@@ -60,7 +52,11 @@ public class BoardServiceImpl implements BoardService {
                 .map(BoardResponseUsersResponseDto::new)
                 .toList();
 
-        return new BoardResponseDto(board, users);
+        List<BoardResponseBarResponseDto> bars = board.getBars().stream()
+                .map(BoardResponseBarResponseDto::new)
+                .toList();
+
+        return new BoardResponseDto(board, users, bars);
     }
 
     @Override
@@ -75,7 +71,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     @Transactional
-    public BoardResponseDto updateBoard(Long boardId, BoardUpdateRequestDto requestDto, User user) {
+    public Long updateBoard(Long boardId, BoardUpdateRequestDto requestDto, User user) {
         Board board = getBoard(boardId);
 
         BoardUser boardUser = getBoardUser(boardId, user);
@@ -85,15 +81,10 @@ public class BoardServiceImpl implements BoardService {
         }
         board.update(requestDto, boardUser);
 
-        List<BoardResponseUsersResponseDto> users = board.getUsers().stream()
-                .map(BoardResponseUsersResponseDto::new)
-                .toList();
-
-        return new BoardResponseDto(board, users);
+        return board.getBoardId();
 
 
     }
-
 
     @Override
     @Transactional
@@ -105,7 +96,6 @@ public class BoardServiceImpl implements BoardService {
         }
         List<BoardUser> boardUsers = boardUserRepository.getBoardUserByBoardId(boardId);
 
-        boardUserRepository.deleteAllByBoardUsers(boardUsers);
         boardRepository.delete(board);
 
     }

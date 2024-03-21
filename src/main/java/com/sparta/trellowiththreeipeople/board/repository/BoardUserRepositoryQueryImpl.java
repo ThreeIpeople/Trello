@@ -54,12 +54,4 @@ public class BoardUserRepositoryQueryImpl implements BoardUserRepositoryQuery {
                 .fetchOne());
     }
 
-    @Override
-    public void deleteAllByBoardUsers(List<BoardUser> boardUsers) {
-        QBoardUser boardUser = QBoardUser.boardUser;
-
-        queryFactory.delete(boardUser)
-                .where(boardUser.in(boardUsers))
-                .execute();
-    }
 }
