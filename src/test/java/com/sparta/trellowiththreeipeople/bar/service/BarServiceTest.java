@@ -5,6 +5,7 @@ import com.sparta.trellowiththreeipeople.bar.entity.Bar;
 import com.sparta.trellowiththreeipeople.bar.repository.BarRepository;
 import com.sparta.trellowiththreeipeople.board.entity.Board;
 import com.sparta.trellowiththreeipeople.board.repository.BoardRepository;
+import com.sparta.trellowiththreeipeople.board.service.BoardService;
 import com.sparta.trellowiththreeipeople.user.dto.request.CreateUserRequestDto;
 import com.sparta.trellowiththreeipeople.user.entity.User;
 import com.sparta.trellowiththreeipeople.user.repository.UserRepository;
@@ -31,6 +32,9 @@ class BarServiceTest {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    BoardService boardService;
+
     @Test
     @DisplayName("bar가 잘 생성되는지")
     void test01() {
@@ -38,10 +42,15 @@ class BarServiceTest {
         User user = new User(createUserRequestDto, "encryptedPassword");
         userRepository.save(user);
 
+        User user2 = new User(createUserRequestDto, "encryptedPassword2");
+        userRepository.save(user2);
+
         Board board = new Board("testBoard", "testBoard01", user);
         boardRepository.save(board);
 
-        barService.createBar(board.getBoardId(), new BarRequestDto("create"), user);
+        boardService.inviteUserToBoard(board.getBoardId(),user2.getId(),user);
+
+        barService.createBar(board.getBoardId(), "testBar", user2.getId());
     }
 
     @Test
@@ -57,7 +66,7 @@ class BarServiceTest {
         Bar bar = new Bar("created", board, user.getId());
         barRepository.save(bar);
 
-        barService.updateBar(board.getBoardId(), bar.getId(), new BarRequestDto("updated"), user);
+        barService.updateBar(board.getBoardId(), bar.getId(), "updated", user.getId());
     }
 
     @Test
@@ -77,7 +86,9 @@ class BarServiceTest {
         Bar bar = new Bar("created", board, user.getId());
         barRepository.save(bar);
 
-        barService.deleteBar(board.getBoardId(), bar.getId(), user2);
+        boardService.inviteUserToBoard(board.getBoardId(), user2.getId(), user);
+
+        barService.deleteBar(board.getBoardId(), bar.getId(), user2.getId());
     }
 
     @Test
@@ -91,7 +102,7 @@ class BarServiceTest {
         boardRepository.save(board);
 
         for (int i = 0; i < 1000; i++) {
-            barService.createBar(board.getBoardId(), new BarRequestDto("create" + i), user);
+            barService.createBar(board.getBoardId(), "create", user.getId());
         }
     }
 
@@ -106,10 +117,10 @@ class BarServiceTest {
         boardRepository.save(board);
 
         for (int i = 0; i < 100; i++) {
-            barService.createBar(board.getBoardId(), new BarRequestDto("create" + i), user);
+            barService.createBar(board.getBoardId(), "create", user.getId());
         }
 
-        barService.getBarList(board.getBoardId());
+        barService.getBarList(board.getBoardId(), user.getId());
     }
     @Test
     @DisplayName("exist 효과 보기")
@@ -122,9 +133,9 @@ class BarServiceTest {
         boardRepository.save(board);
 
         for (int i = 0; i < 5; i++) {
-            barService.createBar(board.getBoardId(), new BarRequestDto("create" + i), user);
+            barService.createBar(board.getBoardId(), "create" + i, user.getId());
         }
 
-        barService.getBarList(board.getBoardId());
+        barService.getBarList(board.getBoardId(), user.getId());
     }
 }
