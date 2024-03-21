@@ -1,6 +1,5 @@
 package com.sparta.trellowiththreeipeople.bar.service;
 
-import com.sparta.trellowiththreeipeople.bar.dto.BarRequestDto;
 import com.sparta.trellowiththreeipeople.bar.entity.Bar;
 import com.sparta.trellowiththreeipeople.bar.repository.BarRepository;
 import com.sparta.trellowiththreeipeople.board.entity.Board;
@@ -48,7 +47,7 @@ class BarServiceTest {
         Board board = new Board("testBoard", "testBoard01", user);
         boardRepository.save(board);
 
-        boardService.inviteUserToBoard(board.getBoardId(),user2.getId(),user);
+//        boardService.inviteUserToBoard(board.getBoardId(),user2.getId(),user);
 
         barService.createBar(board.getBoardId(), "testBar", user2.getId());
     }
@@ -122,6 +121,7 @@ class BarServiceTest {
 
         barService.getBarList(board.getBoardId(), user.getId());
     }
+
     @Test
     @DisplayName("exist 효과 보기")
     void test06() {
