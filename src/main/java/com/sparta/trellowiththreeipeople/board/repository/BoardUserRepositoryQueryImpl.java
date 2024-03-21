@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class BoardUserRepositoryQueryImpl implements BoardUserRepositoryQuery {
 
-
     private final JPAQueryFactory queryFactory;
 
     @Override
@@ -36,7 +35,6 @@ public class BoardUserRepositoryQueryImpl implements BoardUserRepositoryQuery {
     }
 
     @Override
-
     public List<BoardUser> getBoardUserByBoardId(Long boardId) {
         QBoardUser boardUser = QBoardUser.boardUser;
 

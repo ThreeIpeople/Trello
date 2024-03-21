@@ -1,6 +1,5 @@
 package com.sparta.trellowiththreeipeople.bar.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sparta.trellowiththreeipeople.board.entity.Board;
 import com.sparta.trellowiththreeipeople.common.BaseEntity;
 import jakarta.persistence.*;

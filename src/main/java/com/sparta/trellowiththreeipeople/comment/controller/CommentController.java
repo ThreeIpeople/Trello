@@ -9,13 +9,7 @@ import com.sparta.trellowiththreeipeople.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,7 +19,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping
-    public ResponseEntity createComment(
+    public ResponseEntity<CommentResponseDto> createComment(
         @PathVariable Long boardId,
         @PathVariable Long columnId,
         @PathVariable Long cardId,
@@ -39,10 +33,11 @@ public class CommentController {
     }
 
     @PutMapping("/{commentId}")
-    public ResponseEntity updateComment(
+    public ResponseEntity<UpdateCommentResponseDto> updateComment(
         @PathVariable Long boardId,
         @PathVariable Long columnId,
         @PathVariable Long cardId,
+        @PathVariable Long commentId,
         @RequestBody UpdateCommentRequestDto requestDto,
         @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
@@ -52,10 +47,11 @@ public class CommentController {
     }
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity deleteComment(
+    public ResponseEntity<String> deleteComment(
         @PathVariable Long boardId,
         @PathVariable Long columnId,
         @PathVariable Long cardId,
+        @PathVariable Long commentId,
         @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         commentService.deleteComment(boardId, columnId, cardId, userDetails.getUser());

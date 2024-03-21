@@ -1,6 +1,5 @@
 package com.sparta.trellowiththreeipeople.board.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sparta.trellowiththreeipeople.bar.entity.Bar;
 import com.sparta.trellowiththreeipeople.board.dto.BoardRequestDto;
 import com.sparta.trellowiththreeipeople.board.dto.BoardUpdateRequestDto;
@@ -55,6 +54,10 @@ public class Board extends BaseEntity {
         this.boardInfo = requestDto.getBoardInfo();
         this.users.add(new BoardUser(user, this));
         this.createdUser = user.getId();
+    }
+
+    public static Board from(BoardRequestDto requestDto, User user) {
+        return new Board(requestDto, user);
     }
 
 
