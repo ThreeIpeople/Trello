@@ -28,7 +28,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping
-    public ResponseEntity createComment(
+    public ResponseEntity<String> createComment(
         @PathVariable Long boardId,
         @PathVariable Long barId,
         @PathVariable Long cardId,
@@ -46,7 +46,7 @@ public class CommentController {
     }
 
     @GetMapping()
-    public ResponseEntity getComments(
+    public ResponseEntity<List<CommentResponseDto>> getComments(
         @PathVariable Long boardId,
         @PathVariable Long barId,
         @PathVariable Long cardId
@@ -56,7 +56,7 @@ public class CommentController {
     }
 
     @GetMapping("/{commentId}")
-    public ResponseEntity getComment(
+    public ResponseEntity<CommentResponseDto> getComment(
         @PathVariable Long boardId,
         @PathVariable Long barId,
         @PathVariable Long cardId,
@@ -67,7 +67,7 @@ public class CommentController {
     }
 
     @PutMapping("/{commentId}")
-    public ResponseEntity updateComment(
+    public ResponseEntity<String> updateComment(
         @PathVariable Long boardId,
         @PathVariable Long barId,
         @PathVariable Long cardId,
@@ -84,7 +84,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity deleteComment(
+    public ResponseEntity<String> deleteComment(
         @PathVariable Long boardId,
         @PathVariable Long barId,
         @PathVariable Long cardId,
