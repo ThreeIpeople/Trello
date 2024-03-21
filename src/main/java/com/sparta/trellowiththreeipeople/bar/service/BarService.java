@@ -6,12 +6,15 @@ import com.sparta.trellowiththreeipeople.bar.repository.BarRepository;
 import com.sparta.trellowiththreeipeople.board.entity.BoardUser;
 import com.sparta.trellowiththreeipeople.board.repository.BoardUserRepository;
 import com.sparta.trellowiththreeipeople.exception.BoardUserNotFoundException;
+import com.sparta.trellowiththreeipeople.exception.ExceptionStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+
+import static com.sparta.trellowiththreeipeople.exception.ExceptionStatus.NOT_FOUND_BOARD_USER;
 
 @Service
 @RequiredArgsConstructor
@@ -76,6 +79,6 @@ public class BarService {
 
     public BoardUser getBoardUser(Long boardId, Long userId) {
         return boardUserRepository.findBoardUserByBoardIdAndUserId(boardId, userId).orElseThrow(
-                ()-> new BoardUserNotFoundException("해당 하는 보드 유저를 찾을 수 없습니다."));
+                ()-> new BoardUserNotFoundException(NOT_FOUND_BOARD_USER));
     }
 }

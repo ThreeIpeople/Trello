@@ -51,15 +51,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<String> UserNotFoundException(ApiException e) {
         log.error(e.getMessage());
-        return ResponseEntity.badRequest()
-                .body(e.getMessage());
+        return ResponseEntity.status(ExceptionStatus.NOT_FOUND_USER.getStatusCode())
+                .body(ExceptionStatus.NOT_FOUND_USER.getMessage());
     }
 
-    @ExceptionHandler(BoardNotFoundException.class)
-    public ResponseEntity<String> BoardNotFoundException(BoardNotFoundException e) {
+    @ExceptionHandler(ApiException.class)
+    public ResponseEntity<String> BoardNotFoundException(ApiException e) {
         log.error(e.getMessage());
-        return ResponseEntity.badRequest()
-                .body(e.getMessage());
+        return ResponseEntity.status(ExceptionStatus.NOT_FOUND_BOARD.getStatusCode())
+                .body(ExceptionStatus.NOT_FOUND_BOARD.getMessage());
     }
 
     @ExceptionHandler(BadRequestException.class)
@@ -69,24 +69,25 @@ public class GlobalExceptionHandler {
                 .body(e.getMessage());
     }
 
-    @ExceptionHandler(BoardUserNotFoundException.class)
-    public ResponseEntity<String> BoardUserNotFoundException(BoardUserNotFoundException e) {
-
-        return ResponseEntity.badRequest()
-                .body(e.getMessage());
-    }
-
-    @ExceptionHandler(BoardUserExistException.class)
-    public ResponseEntity<String> BoardUserExistException(BoardUserExistException e) {
+    @ExceptionHandler(ApiException.class)
+    public ResponseEntity<String> BoardUserNotFoundException(ApiException e) {
         log.error(e.getMessage());
-        return ResponseEntity.badRequest()
-                .body(e.getMessage());
+        return ResponseEntity.status(ExceptionStatus.NOT_FOUND_BOARD_USER.getStatusCode())
+                .body(ExceptionStatus.NOT_FOUND_BOARD_USER.getMessage());
     }
 
-    @ExceptionHandler(ValidationException.class)
-    public ResponseEntity<String> ValidationException(ValidationException e) {
-
-        return ResponseEntity.badRequest()
-                .body(e.getMessage());
+    @ExceptionHandler(ApiException.class)
+    public ResponseEntity<String> BoardUserExistException(ApiException e) {
+        log.error(e.getMessage());
+        return ResponseEntity.status(ExceptionStatus.EXIST_BoardUser.getStatusCode())
+                .body(ExceptionStatus.EXIST_BoardUser.getMessage());
     }
+
+    @ExceptionHandler(ApiException.class)
+    public ResponseEntity<String> AuthNotExistException(ApiException e) {
+        log.error(e.getMessage());
+        return ResponseEntity.status(ExceptionStatus.NOT_EXIST_AUTH.getStatusCode())
+                .body(ExceptionStatus.NOT_EXIST_AUTH.getMessage());
+    }
+
 }

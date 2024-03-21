@@ -1,7 +1,7 @@
 package com.sparta.trellowiththreeipeople.exception;
 
-public class BoardUserExistException extends RuntimeException {
-    public BoardUserExistException(String message) {
-        super(message);
+public class BoardUserExistException extends ApiException {
+    public BoardUserExistException(ExceptionStatus ex) {
+        super(ex);
     }
 }
