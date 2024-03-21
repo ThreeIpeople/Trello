@@ -23,24 +23,26 @@ public class BarController {
             @RequestBody BarRequestDto barRequestDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
-        barService.createBar(boardId, barRequestDto, userDetails.getUser());
+        barService.createBar(boardId, barRequestDto.getTitle(), userDetails.getUserId());
         return ResponseEntity.ok().body("Bar가 정상적으로 생성되었습니다.");
     }
 
     @GetMapping
     public ResponseEntity<List<BarResponseDto>> getBarList(
-            @PathVariable Long boardId
+            @PathVariable Long boardId,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
-        List<BarResponseDto> barResponseDtoList = barService.getBarList(boardId);
+        List<BarResponseDto> barResponseDtoList = barService.getBarList(boardId, userDetails.getUserId());
         return ResponseEntity.ok().body(barResponseDtoList);
     }
 
     @GetMapping("/{barId}")
     public ResponseEntity<BarResponseDto> getBar(
             @PathVariable Long boardId,
-            @PathVariable Long barId
+            @PathVariable Long barId,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
-        BarResponseDto barResponseDto = barService.getBar(boardId, barId);
+        BarResponseDto barResponseDto = barService.getBar(boardId, barId, userDetails.getUserId());
         return ResponseEntity.ok().body(barResponseDto);
     }
 
@@ -51,9 +53,8 @@ public class BarController {
             @RequestBody BarRequestDto barRequestDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
-        barService.updateBar(boardId, barId, barRequestDto, userDetails.getUser());
+        barService.updateBar(boardId, barId, barRequestDto.getTitle(), userDetails.getUserId());
         return ResponseEntity.ok().body("Bar가 정상적으로 수정되었습니다.");
-
     }
 
     @DeleteMapping("/{barId}")
@@ -62,7 +63,7 @@ public class BarController {
             @PathVariable Long barId,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
-        barService.deleteBar(boardId, barId, userDetails.getUser());
+        barService.deleteBar(boardId, barId, userDetails.getUserId());
         return ResponseEntity.ok().body("Bar가 정상적으로 삭제되었습니다.");
     }
 }
