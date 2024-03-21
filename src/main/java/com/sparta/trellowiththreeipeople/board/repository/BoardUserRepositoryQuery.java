@@ -16,7 +16,7 @@ public interface BoardUserRepositoryQuery {
 
     Optional<BoardUser> findBoardUserByBoardIdAndUserId(Long boardId, Long userId);
 
-    void deleteAllByBoardUsers(List<BoardUser> boardUsers);
+
 
 
 }
