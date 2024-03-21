@@ -59,7 +59,7 @@ public class BoardController {
     ) {
         Long updatedBoardId = boardService.updateBoard(boardId, requestDto, userDetails.getUser());
 
-        return ResponseEntity.created(URI.create("api/boards"+updatedBoardId))
+        return ResponseEntity.created(URI.create("api/boards/"+updatedBoardId))
                 .body("보드가 수정되었습니다.");
     }
 
