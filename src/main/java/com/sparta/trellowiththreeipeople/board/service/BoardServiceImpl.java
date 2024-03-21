@@ -1,9 +1,6 @@
 package com.sparta.trellowiththreeipeople.board.service;
 
-import com.sparta.trellowiththreeipeople.board.dto.BoardListResponseDto;
-import com.sparta.trellowiththreeipeople.board.dto.BoardResponseDto;
-import com.sparta.trellowiththreeipeople.board.dto.BoardResponseUsersResponseDto;
-import com.sparta.trellowiththreeipeople.board.dto.BoardUpdateRequestDto;
+import com.sparta.trellowiththreeipeople.board.dto.*;
 import com.sparta.trellowiththreeipeople.board.entity.Board;
 import com.sparta.trellowiththreeipeople.board.entity.BoardUser;
 import com.sparta.trellowiththreeipeople.board.repository.BoardRepository;
@@ -42,7 +39,11 @@ public class BoardServiceImpl implements BoardService {
                 .map(BoardResponseUsersResponseDto::new)
                 .toList();
 
-        return new BoardResponseDto(board, users);
+        List<BoardResponseBarResponseDto> bars = board.getBars().stream()
+                .map(BoardResponseBarResponseDto::new)
+                .toList();
+
+        return new BoardResponseDto(board, users, bars);
 
 
     }
@@ -60,7 +61,11 @@ public class BoardServiceImpl implements BoardService {
                 .map(BoardResponseUsersResponseDto::new)
                 .toList();
 
-        return new BoardResponseDto(board, users);
+        List<BoardResponseBarResponseDto> bars = board.getBars().stream()
+                .map(BoardResponseBarResponseDto::new)
+                .toList();
+
+        return new BoardResponseDto(board, users, bars);
     }
 
     @Override
@@ -89,11 +94,14 @@ public class BoardServiceImpl implements BoardService {
                 .map(BoardResponseUsersResponseDto::new)
                 .toList();
 
-        return new BoardResponseDto(board, users);
+        List<BoardResponseBarResponseDto> bars = board.getBars().stream()
+                .map(BoardResponseBarResponseDto::new)
+                .toList();
+
+        return new BoardResponseDto(board, users, bars);
 
 
     }
-
 
     @Override
     @Transactional
@@ -130,7 +138,7 @@ public class BoardServiceImpl implements BoardService {
         return boardUser.getBoard().equals(board);
     }
 
-    private BoardUser getBoardUser(Long boardId, User user) {
+    public BoardUser getBoardUser(Long boardId, User user) {
         return boardUserRepository.findBoardUserByBoardIdAndUserId(boardId, user.getId()).orElseThrow(
                 ()-> new BoardUserNotFoundException("해당 하는 보드 유저를 찾을 수 없습니다."));
     }

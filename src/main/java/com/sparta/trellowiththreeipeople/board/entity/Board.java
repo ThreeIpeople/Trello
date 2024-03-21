@@ -36,10 +36,8 @@ public class Board extends BaseEntity {
     @Column(name = "color", nullable = false)
     private BoardColorEnum colorEnum = BoardColorEnum.RED;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "board")
     private List<Bar> bars = new ArrayList<>();
-
 
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BoardUser> users = new ArrayList<>();
