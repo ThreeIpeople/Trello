@@ -5,6 +5,7 @@ import com.sparta.trellowiththreeipeople.bar.entity.Bar;
 import com.sparta.trellowiththreeipeople.bar.repository.BarRepository;
 import com.sparta.trellowiththreeipeople.board.entity.BoardUser;
 import com.sparta.trellowiththreeipeople.board.repository.BoardUserRepository;
+import com.sparta.trellowiththreeipeople.exception.BoardUserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,35 +21,20 @@ public class BarService {
 
     @Transactional
     public void createBar(Long boardId, String title, Long userId) {
-        BoardUser boardUser = boardUserRepository.findBoardUserByBoardIdAndUserId(userId, boardId);
-
-        if (boardUser == null) {
-            throw new IllegalArgumentException("초대받지 않았거나, 존재하지 않는 보드입니다.");
-        }
-
+        BoardUser boardUser = getBoardUser(boardId, userId);
         Bar bar = new Bar(title, boardUser.getBoard(), userId);
         barRepository.save(bar);
     }
 
     @Transactional(readOnly = true)
     public List<BarResponseDto> getBarList(Long boardId, Long userId) {
-        BoardUser boardUser = boardUserRepository.findBoardUserByBoardIdAndUserId(userId, boardId);
-
-        if (boardUser == null) {
-            throw new IllegalArgumentException("초대받지 않았거나, 존재하지 않는 보드입니다.");
-        }
-
+        getBoardUser(boardId, userId);
         return barRepository.findAllByBoard(boardId);
     }
 
     @Transactional(readOnly = true)
     public BarResponseDto getBar(Long boardId, Long barId, Long userId) {
-        BoardUser boardUser = boardUserRepository.findBoardUserByBoardIdAndUserId(userId, boardId);
-
-        if (boardUser == null) {
-            throw new IllegalArgumentException("초대받지 않았습니다.");
-        }
-
+        getBoardUser(boardId, userId);
         Bar bar = barRepository.findById(barId).orElseThrow(
                 () -> new NullPointerException("존재하지 않는 바 아이디입니다.")
         );
@@ -62,12 +48,7 @@ public class BarService {
 
     @Transactional
     public void updateBar(Long boardId, Long barId, String title, Long userId) {
-        BoardUser boardUser = boardUserRepository.findBoardUserByBoardIdAndUserId(userId, boardId);
-
-        if (boardUser == null) {
-            throw new IllegalArgumentException("초대받지 않았습니다.");
-        }
-
+        getBoardUser(boardId, userId);
         Bar bar = barRepository.findById(barId).orElseThrow(
                 () -> new NullPointerException("존재하지 않는 바 아이디입니다.")
         );
@@ -81,12 +62,7 @@ public class BarService {
 
     @Transactional
     public void deleteBar(Long boardId, Long barId, Long userId) {
-        BoardUser boardUser = boardUserRepository.findBoardUserByBoardIdAndUserId(userId, boardId);
-
-        if (boardUser == null) {
-            throw new IllegalArgumentException("초대받지 않았습니다.");
-        }
-
+        getBoardUser(boardId, userId);
         Bar bar = barRepository.findById(barId).orElseThrow(
                 () -> new NullPointerException("존재하지 않는 바 아이디입니다.")
         );
@@ -96,5 +72,10 @@ public class BarService {
         }
 
         barRepository.updateBarAndDeletedBy(barId, userId);
+    }
+
+    public BoardUser getBoardUser(Long boardId, Long userId) {
+        return boardUserRepository.findBoardUserByBoardIdAndUserId(boardId, userId).orElseThrow(
+                ()-> new BoardUserNotFoundException("해당 하는 보드 유저를 찾을 수 없습니다."));
     }
 }
