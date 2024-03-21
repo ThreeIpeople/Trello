@@ -111,4 +111,20 @@ class BarServiceTest {
 
         barService.getBarList(board.getBoardId());
     }
+    @Test
+    @DisplayName("exist 효과 보기")
+    void test06() {
+        CreateUserRequestDto createUserRequestDto = new CreateUserRequestDto("username", "password");
+        User user = new User(createUserRequestDto, "encryptedPassword");
+        userRepository.save(user);
+
+        Board board = new Board("testBoard", "testBoard01", user);
+        boardRepository.save(board);
+
+        for (int i = 0; i < 5; i++) {
+            barService.createBar(board.getBoardId(), new BarRequestDto("create" + i), user);
+        }
+
+        barService.getBarList(board.getBoardId());
+    }
 }

@@ -35,10 +35,8 @@ public class BarService {
         boardRepository.findById(boardId).orElseThrow(
                 () -> new BoardNotFoundException("존재하지 않는 보드 아이디입니다.")
         );
-        return barRepository.findAllByBoard(boardId)
-                .stream()
-                .map(bar -> new BarResponseDto(bar.getId(), bar.getTitle()))
-                .toList();
+
+        return barRepository.findAllByBoard(boardId);
     }
 
     @Transactional(readOnly = true)
