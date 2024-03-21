@@ -46,6 +46,17 @@ public class BarController {
         return ResponseEntity.ok().body(barResponseDto);
     }
 
+    @GetMapping("/{barId}/{switchedBarID}")
+    public ResponseEntity<String> switchOrder(
+            @PathVariable Long boardId,
+            @PathVariable Long barId,
+            @PathVariable Long switchedBarID,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        barService.switchOrder(boardId, barId, switchedBarID, userDetails.getUserId());
+        return ResponseEntity.ok().body("순서가 변경되었습니다.");
+    }
+
     @PutMapping("/{barId}")
     public ResponseEntity<String> updateBar(
             @PathVariable Long boardId,

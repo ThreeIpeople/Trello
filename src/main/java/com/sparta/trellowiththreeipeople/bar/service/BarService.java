@@ -24,6 +24,7 @@ public class BarService {
         BoardUser boardUser = getBoardUser(boardId, userId);
         Bar bar = new Bar(title, boardUser.getBoard(), userId);
         barRepository.save(bar);
+        bar.setOrderNum(bar.getId());
     }
 
     @Transactional(readOnly = true)
@@ -74,8 +75,26 @@ public class BarService {
         barRepository.updateBarAndDeletedBy(barId, userId);
     }
 
-    public BoardUser getBoardUser(Long boardId, Long userId) {
+    @Transactional
+    public void switchOrder(Long boardId, Long barId, Long switchedBarId, Long userId) {
+        getBoardUser(boardId, userId);
+
+        Bar bar = barRepository.findById(barId).orElseThrow(
+                () -> new NullPointerException("존재하지 않는 바 아이디입니다.")
+        );
+
+        Bar switchedBar = barRepository.findById(switchedBarId).orElseThrow(
+                () -> new NullPointerException("존재하지 않는 바 아이디입니다.")
+        );
+
+        Long temp = bar.getOrderNum();
+
+        bar.setOrderNum(switchedBar.getOrderNum());
+        switchedBar.setOrderNum(temp);
+    }
+
+    private BoardUser getBoardUser(Long boardId, Long userId) {
         return boardUserRepository.findBoardUserByBoardIdAndUserId(boardId, userId).orElseThrow(
-                ()-> new BoardUserNotFoundException("해당 하는 보드 유저를 찾을 수 없습니다."));
+                () -> new BoardUserNotFoundException("해당 하는 보드 유저를 찾을 수 없습니다."));
     }
 }
