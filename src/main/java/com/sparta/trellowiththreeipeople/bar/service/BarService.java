@@ -20,11 +20,12 @@ public class BarService {
     private final BoardUserRepository boardUserRepository;
 
     @Transactional
-    public void createBar(Long boardId, String title, Long userId) {
+    public Long createBar(Long boardId, String title, Long userId) {
         BoardUser boardUser = getBoardUser(boardId, userId);
         Bar bar = new Bar(title, boardUser.getBoard(), userId);
         barRepository.save(bar);
         bar.setOrderNum(bar.getId());
+        return bar.getId();
     }
 
     @Transactional(readOnly = true)

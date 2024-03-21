@@ -2,6 +2,7 @@ package com.sparta.trellowiththreeipeople.bar.service;
 
 import com.sparta.trellowiththreeipeople.bar.entity.Bar;
 import com.sparta.trellowiththreeipeople.bar.repository.BarRepository;
+import com.sparta.trellowiththreeipeople.board.dto.BoardRequestDto;
 import com.sparta.trellowiththreeipeople.board.entity.Board;
 import com.sparta.trellowiththreeipeople.board.repository.BoardRepository;
 import com.sparta.trellowiththreeipeople.board.repository.BoardUserRepository;
@@ -48,7 +49,7 @@ class BarServiceTest {
         User user2 = new User(createUserRequestDto, "encryptedPassword2");
         userRepository.save(user2);
 
-        Board board = new Board("testBoard", "testBoard01", user);
+        Board board = new Board(new BoardRequestDto(), user);
         boardRepository.save(board);
 
         boardService.inviteUserToBoard(board.getBoardId(), user2.getId(), user);
@@ -63,7 +64,7 @@ class BarServiceTest {
         User user = new User(createUserRequestDto, "encryptedPassword");
         userRepository.save(user);
 
-        Board board = new Board("testBoard", "testBoard01", user);
+        Board board = new Board(new BoardRequestDto(), user);
         boardRepository.save(board);
 
         Bar bar = new Bar("created", board, user.getId());
@@ -83,7 +84,7 @@ class BarServiceTest {
         User user2 = new User(createUserRequestDto2, "encryptedPassword");
         userRepository.save(user2);
 
-        Board board = new Board("testBoard", "testBoard01", user);
+        Board board = new Board(new BoardRequestDto(), user);
         boardRepository.save(board);
 
         Bar bar = new Bar("created", board, user.getId());
@@ -101,7 +102,7 @@ class BarServiceTest {
         User user = new User(createUserRequestDto, "encryptedPassword");
         userRepository.save(user);
 
-        Board board = new Board("testBoard", "testBoard01", user);
+        Board board = new Board(new BoardRequestDto(), user);
         boardRepository.save(board);
 
         for (int i = 0; i < 1000; i++) {
@@ -116,7 +117,7 @@ class BarServiceTest {
         User user = new User(createUserRequestDto, "encryptedPassword");
         userRepository.save(user);
 
-        Board board = new Board("testBoard", "testBoard01", user);
+        Board board = new Board(new BoardRequestDto(), user);
         boardRepository.save(board);
 
         for (int i = 0; i < 4; i++) {
@@ -134,7 +135,7 @@ class BarServiceTest {
         User user = new User(createUserRequestDto, "encryptedPassword");
         userRepository.save(user);
 
-        Board board = new Board("testBoard", "testBoard01", user);
+        Board board = new Board(new BoardRequestDto(), user);
         boardRepository.save(board);
 
         for (int i = 0; i < 5; i++) {

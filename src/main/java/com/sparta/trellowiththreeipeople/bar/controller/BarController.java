@@ -2,6 +2,7 @@ package com.sparta.trellowiththreeipeople.bar.controller;
 
 import com.sparta.trellowiththreeipeople.bar.dto.BarRequestDto;
 import com.sparta.trellowiththreeipeople.bar.dto.BarResponseDto;
+import com.sparta.trellowiththreeipeople.bar.dto.OrderNumDto;
 import com.sparta.trellowiththreeipeople.bar.service.BarService;
 import com.sparta.trellowiththreeipeople.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -23,8 +25,10 @@ public class BarController {
             @RequestBody BarRequestDto barRequestDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
-        barService.createBar(boardId, barRequestDto.getTitle(), userDetails.getUserId());
-        return ResponseEntity.ok().body("Bar가 정상적으로 생성되었습니다.");
+        Long barId = barService.createBar(boardId, barRequestDto.getTitle(), userDetails.getUserId());
+        return ResponseEntity
+                .created(URI.create("/api/boards/"+ boardId+"/bars/"+barId))
+                .body("Bar가 정상적으로 생성되었습니다.");
     }
 
     @GetMapping
@@ -46,14 +50,14 @@ public class BarController {
         return ResponseEntity.ok().body(barResponseDto);
     }
 
-    @GetMapping("/{barId}/{switchedBarID}")
+    @PatchMapping("/{barId}")
     public ResponseEntity<String> switchOrder(
             @PathVariable Long boardId,
             @PathVariable Long barId,
-            @PathVariable Long switchedBarID,
+            @RequestBody OrderNumDto orderNumDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
-        barService.switchOrder(boardId, barId, switchedBarID, userDetails.getUserId());
+        barService.switchOrder(boardId, barId, orderNumDto.getSwitchedBarId(), userDetails.getUserId());
         return ResponseEntity.ok().body("순서가 변경되었습니다.");
     }
 
@@ -65,7 +69,9 @@ public class BarController {
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         barService.updateBar(boardId, barId, barRequestDto.getTitle(), userDetails.getUserId());
-        return ResponseEntity.ok().body("Bar가 정상적으로 수정되었습니다.");
+        return ResponseEntity
+                .created(URI.create("/api/boards/"+ boardId+"/bars/"+barId))
+                .body("Bar가 정상적으로 수정되었습니다.");
     }
 
     @DeleteMapping("/{barId}")
