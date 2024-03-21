@@ -16,7 +16,8 @@ import java.util.Objects;
 @Getter
 @Entity
 @Table(name = "comment", indexes = {
-    @Index(name = "idx_card_id", columnList = "card_id")
+    @Index(name = "idx_card_id", columnList = "card_id"),
+    @Index(name = "idx_user_id", columnList = "user_id")
 })
 @NoArgsConstructor
 @SQLDelete(sql = "UPDATE comment SET deleted_at=CURRENT_TIMESTAMP where id=?")
