@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/boards/{boardId}/columns/{columnId}/cards/{cardId}")
+@RequestMapping("/api/boards/{boardId}/columns/{columnId}/cards/{cardId}/comments")
 public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping("/comments")
+    @PostMapping
     public ResponseEntity createComment(
         @PathVariable Long boardId,
         @PathVariable Long columnId,
@@ -38,7 +38,7 @@ public class CommentController {
         return ResponseEntity.ok(result);
     }
 
-    @PutMapping("/comments/{commentId}")
+    @PutMapping("/{commentId}")
     public ResponseEntity updateComment(
         @PathVariable Long boardId,
         @PathVariable Long columnId,
@@ -51,7 +51,7 @@ public class CommentController {
         return ResponseEntity.ok(result);
     }
 
-    @DeleteMapping("/comments/{commentId}")
+    @DeleteMapping("/{commentId}")
     public ResponseEntity deleteComment(
         @PathVariable Long boardId,
         @PathVariable Long columnId,
