@@ -34,6 +34,7 @@ public class BarQueryRepositoryImpl implements BarQueryRepository {
                 ))
                 .from(bar)
                 .where(bar.board.boardId.eq(boardId))
+                .orderBy(bar.orderNum.asc())
                 .fetch();
     }
 }

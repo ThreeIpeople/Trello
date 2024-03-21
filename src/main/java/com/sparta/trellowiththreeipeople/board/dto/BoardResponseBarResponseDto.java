@@ -15,7 +15,7 @@ public class BoardResponseBarResponseDto {
     public BoardResponseBarResponseDto(
             Bar bar
 
-    ){
+    ) {
         this.barId = bar.getId();
         this.title = bar.getTitle();
         //this.cards = ;
