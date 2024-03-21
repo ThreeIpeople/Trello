@@ -1,7 +1,7 @@
 package com.sparta.trellowiththreeipeople.exception;
 
-public class BoardNotFoundException extends RuntimeException {
-    public BoardNotFoundException(String message) {
-        super(message);
+public class BoardNotFoundException extends ApiException {
+    public BoardNotFoundException(ExceptionStatus ex) {
+        super (ex);
     }
 }

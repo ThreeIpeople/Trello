@@ -6,9 +6,9 @@ import lombok.Getter;
 @Getter
 public class BoardListResponseDto {
 
-    private Long boardId;
+    private final Long boardId;
 
-    private String boardName;
+    private final String boardName;
 
     public BoardListResponseDto(Board board) {
 
