@@ -20,10 +20,11 @@ public class BarService {
 
     @Transactional
     public void createBar(Long boardId, String title, Long userId) {
-        BoardUser boardUser = boardUserRepository.findBoardUserByUserIdAndBoardId(userId, boardId)
-                .orElseThrow(
-                        () -> new NullPointerException("초대받지 않았거나, 유효하지 않은 보드아이디입니다.")
-                );
+        BoardUser boardUser = boardUserRepository.findBoardUserByBoardIdAndUserId(userId, boardId);
+
+        if (boardUser == null) {
+            throw new IllegalArgumentException("초대받지 않았거나, 존재하지 않는 보드입니다.");
+        }
 
         Bar bar = new Bar(title, boardUser.getBoard(), userId);
         barRepository.save(bar);
@@ -31,20 +32,22 @@ public class BarService {
 
     @Transactional(readOnly = true)
     public List<BarResponseDto> getBarList(Long boardId, Long userId) {
-        boardUserRepository.findBoardUserByUserIdAndBoardId(userId, boardId)
-                .orElseThrow(
-                        () -> new NullPointerException("초대받지 않았거나, 유효하지 않은 보드아이디입니다.")
-                );
+        BoardUser boardUser = boardUserRepository.findBoardUserByBoardIdAndUserId(userId, boardId);
+
+        if (boardUser == null) {
+            throw new IllegalArgumentException("초대받지 않았거나, 존재하지 않는 보드입니다.");
+        }
 
         return barRepository.findAllByBoard(boardId);
     }
 
     @Transactional(readOnly = true)
     public BarResponseDto getBar(Long boardId, Long barId, Long userId) {
-        BoardUser boardUser = boardUserRepository.findBoardUserByUserIdAndBoardId(userId, boardId)
-                .orElseThrow(
-                        () -> new NullPointerException("초대받지 않았거나, 유효하지 않은 보드아이디입니다.")
-                );
+        BoardUser boardUser = boardUserRepository.findBoardUserByBoardIdAndUserId(userId, boardId);
+
+        if (boardUser == null) {
+            throw new IllegalArgumentException("초대받지 않았습니다.");
+        }
 
         Bar bar = barRepository.findById(barId).orElseThrow(
                 () -> new NullPointerException("존재하지 않는 바 아이디입니다.")
@@ -59,10 +62,11 @@ public class BarService {
 
     @Transactional
     public void updateBar(Long boardId, Long barId, String title, Long userId) {
-        BoardUser boardUser = boardUserRepository.findBoardUserByUserIdAndBoardId(userId, boardId)
-                .orElseThrow(
-                        () -> new NullPointerException("초대받지 않았거나, 유효하지 않은 보드아이디입니다.")
-                );
+        BoardUser boardUser = boardUserRepository.findBoardUserByBoardIdAndUserId(userId, boardId);
+
+        if (boardUser == null) {
+            throw new IllegalArgumentException("초대받지 않았습니다.");
+        }
 
         Bar bar = barRepository.findById(barId).orElseThrow(
                 () -> new NullPointerException("존재하지 않는 바 아이디입니다.")
@@ -77,10 +81,11 @@ public class BarService {
 
     @Transactional
     public void deleteBar(Long boardId, Long barId, Long userId) {
-        BoardUser boardUser = boardUserRepository.findBoardUserByUserIdAndBoardId(userId, boardId)
-                .orElseThrow(
-                        () -> new NullPointerException("초대받지 않았거나, 유효하지 않은 보드아이디입니다.")
-                );
+        BoardUser boardUser = boardUserRepository.findBoardUserByBoardIdAndUserId(userId, boardId);
+
+        if (boardUser == null) {
+            throw new IllegalArgumentException("초대받지 않았습니다.");
+        }
 
         Bar bar = barRepository.findById(barId).orElseThrow(
                 () -> new NullPointerException("존재하지 않는 바 아이디입니다.")
