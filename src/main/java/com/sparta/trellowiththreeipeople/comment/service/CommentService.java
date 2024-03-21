@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class CommentService {
 
@@ -89,9 +90,7 @@ public class CommentService {
 
     private void isOwner(Comment comment, User user) {
         if (!(user.getId() == comment.getUser().getId())) {
-            throw new IllegalArgumentException("댓글은 작성자만 수정 삭제");
+            throw new IllegalArgumentException("댓글은 작성자만 수정 삭제할 수 있습니다.");
         }
     }
-
-
 }
