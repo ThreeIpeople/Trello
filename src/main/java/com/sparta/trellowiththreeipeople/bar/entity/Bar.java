@@ -35,6 +35,8 @@ public class Bar extends BaseEntity {
 
     private Long lastModifierId;
 
+    private Long orderNum;
+
     public Bar(String title, Board board, Long createrId) {
         this.title = title;
         this.board = board;
@@ -48,5 +50,9 @@ public class Bar extends BaseEntity {
     public void update(String title, Long lastModifierId) {
         this.title = title;
         this.lastModifierId = lastModifierId;
+    }
+
+    public void setOrderNum(Long orderNum) {
+        this.orderNum = orderNum;
     }
 }

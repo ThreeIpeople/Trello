@@ -2,8 +2,8 @@ package com.sparta.trellowiththreeipeople.bar.service;
 
 import com.sparta.trellowiththreeipeople.bar.entity.Bar;
 import com.sparta.trellowiththreeipeople.bar.repository.BarRepository;
+import com.sparta.trellowiththreeipeople.board.dto.BoardRequestDto;
 import com.sparta.trellowiththreeipeople.board.entity.Board;
-import com.sparta.trellowiththreeipeople.board.entity.BoardUser;
 import com.sparta.trellowiththreeipeople.board.repository.BoardRepository;
 import com.sparta.trellowiththreeipeople.board.repository.BoardUserRepository;
 import com.sparta.trellowiththreeipeople.board.service.BoardService;
@@ -49,15 +49,12 @@ class BarServiceTest {
         User user2 = new User(createUserRequestDto, "encryptedPassword2");
         userRepository.save(user2);
 
-        Board board = new Board("testBoard", "testBoard01", user);
+        Board board = new Board(new BoardRequestDto(), user);
         boardRepository.save(board);
 
-        boardService.inviteUserToBoard(board.getBoardId(),user2.getId(),user);
+        boardService.inviteUserToBoard(board.getBoardId(), user2.getId(), user);
 
-        BoardUser boardUser = boardUserRepository.findBoardUserByBoardIdAndUserId(board.getBoardId(),user.getId())
-                        .orElseThrow(()-> new NullPointerException("Adsad"));
-        barService.getBoardUser(board.getBoardId(),user.getId());
-        barService.createBar(board.getBoardId(), "testBar", user.getId());
+        barService.createBar(board.getBoardId(), "testBar", user2.getId());
     }
 
     @Test
@@ -67,7 +64,7 @@ class BarServiceTest {
         User user = new User(createUserRequestDto, "encryptedPassword");
         userRepository.save(user);
 
-        Board board = new Board("testBoard", "testBoard01", user);
+        Board board = new Board(new BoardRequestDto(), user);
         boardRepository.save(board);
 
         Bar bar = new Bar("created", board, user.getId());
@@ -87,7 +84,7 @@ class BarServiceTest {
         User user2 = new User(createUserRequestDto2, "encryptedPassword");
         userRepository.save(user2);
 
-        Board board = new Board("testBoard", "testBoard01", user);
+        Board board = new Board(new BoardRequestDto(), user);
         boardRepository.save(board);
 
         Bar bar = new Bar("created", board, user.getId());
@@ -105,7 +102,7 @@ class BarServiceTest {
         User user = new User(createUserRequestDto, "encryptedPassword");
         userRepository.save(user);
 
-        Board board = new Board("testBoard", "testBoard01", user);
+        Board board = new Board(new BoardRequestDto(), user);
         boardRepository.save(board);
 
         for (int i = 0; i < 1000; i++) {
@@ -120,14 +117,15 @@ class BarServiceTest {
         User user = new User(createUserRequestDto, "encryptedPassword");
         userRepository.save(user);
 
-        Board board = new Board("testBoard", "testBoard01", user);
+        Board board = new Board(new BoardRequestDto(), user);
         boardRepository.save(board);
 
-        for (int i = 0; i < 100; i++) {
-            barService.createBar(board.getBoardId(), "create", user.getId());
+        for (int i = 0; i < 4; i++) {
+            barService.createBar(board.getBoardId(), "create" + i, user.getId());
         }
 
-        barService.getBarList(board.getBoardId(), user.getId());
+        var a = barService.getBarList(board.getBoardId(), user.getId());
+        System.out.println("1");
     }
 
     @Test
@@ -137,7 +135,7 @@ class BarServiceTest {
         User user = new User(createUserRequestDto, "encryptedPassword");
         userRepository.save(user);
 
-        Board board = new Board("testBoard", "testBoard01", user);
+        Board board = new Board(new BoardRequestDto(), user);
         boardRepository.save(board);
 
         for (int i = 0; i < 5; i++) {

@@ -1,11 +1,7 @@
 package com.sparta.trellowiththreeipeople.board.dto;
 
 import com.sparta.trellowiththreeipeople.bar.entity.Bar;
-import com.sparta.trellowiththreeipeople.card.dto.CardNameResponseDto;
-import com.sparta.trellowiththreeipeople.card.entity.Card;
 import lombok.Getter;
-
-import java.util.List;
 
 @Getter
 public class BoardResponseBarResponseDto {
@@ -19,7 +15,7 @@ public class BoardResponseBarResponseDto {
     public BoardResponseBarResponseDto(
             Bar bar
 
-    ){
+    ) {
         this.barId = bar.getId();
         this.title = bar.getTitle();
         //this.cards = ;
