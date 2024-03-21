@@ -6,10 +6,13 @@ import lombok.Getter;
 @Getter
 public class BoardListResponseDto {
 
+    private Long boardId;
+
     private String boardName;
 
     public BoardListResponseDto(Board board) {
 
+        this.boardId = board.getBoardId();
         this.boardName = board.getBoardName();
     }
 }
