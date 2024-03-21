@@ -52,14 +52,15 @@ public class BoardController {
     }
 
     @PutMapping("{boardId}")
-    public ResponseEntity<Void> updateBoard(
+    public ResponseEntity<String> updateBoard(
             @PathVariable Long boardId,
             @Valid @RequestBody BoardUpdateRequestDto requestDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         Long updatedBoardId = boardService.updateBoard(boardId, requestDto, userDetails.getUser());
 
-        return ResponseEntity.created(URI.create("api/boards"+updatedBoardId)).build();
+        return ResponseEntity.created(URI.create("api/boards"+updatedBoardId))
+                .body("보드가 수정되었습니다.");
     }
 
     @DeleteMapping("{boardId}")
