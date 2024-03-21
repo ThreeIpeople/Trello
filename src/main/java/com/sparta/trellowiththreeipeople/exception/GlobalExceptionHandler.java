@@ -19,6 +19,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NullPointerException.class)
     public ResponseEntity<String> NullPointerException(NullPointerException e) {
+        log.error(e.getMessage());
         return ResponseEntity.badRequest()
                 .body(e.getMessage());
     }
@@ -26,19 +27,21 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UserNotFoundException.class)
 
     public ResponseEntity<String> UserNotFoundException(UserNotFoundException e) {
+        log.error(e.getMessage());
         return ResponseEntity.badRequest()
                 .body(e.getMessage());
     }
 
     @ExceptionHandler(BoardNotFoundException.class)
     public ResponseEntity<String> BoardNotFoundException(BoardNotFoundException e) {
-
+        log.error(e.getMessage());
         return ResponseEntity.badRequest()
                 .body(e.getMessage());
     }
 
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<String> BadRequestException(BadRequestException e) {
+        log.error(e.getMessage());
         return ResponseEntity.badRequest()
                 .body(e.getMessage());
     }
@@ -52,7 +55,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BoardUserExistException.class)
     public ResponseEntity<String> BoardUserExistException(BoardUserExistException e) {
-
+        log.error(e.getMessage());
         return ResponseEntity.badRequest()
                 .body(e.getMessage());
     }

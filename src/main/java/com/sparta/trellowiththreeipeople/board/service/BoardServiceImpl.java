@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.sparta.trellowiththreeipeople.exception.ExceptionStatus.DUPLICATED_BOARD;
+
 @Service
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {

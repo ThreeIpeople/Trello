@@ -1,6 +1,5 @@
 package com.sparta.trellowiththreeipeople.board.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sparta.trellowiththreeipeople.bar.entity.Bar;
 import com.sparta.trellowiththreeipeople.board.dto.BoardRequestDto;
 import com.sparta.trellowiththreeipeople.board.dto.BoardUpdateRequestDto;
