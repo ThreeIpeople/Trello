@@ -2,11 +2,13 @@ package com.sparta.trellowiththreeipeople.board.service;
 
 import com.sparta.trellowiththreeipeople.board.dto.BoardListResponseDto;
 import com.sparta.trellowiththreeipeople.board.dto.BoardResponseDto;
+import com.sparta.trellowiththreeipeople.board.dto.BoardResponseUsersResponseDto;
 import com.sparta.trellowiththreeipeople.board.dto.BoardUpdateRequestDto;
 import com.sparta.trellowiththreeipeople.board.entity.Board;
 import com.sparta.trellowiththreeipeople.board.entity.BoardUser;
 import com.sparta.trellowiththreeipeople.board.repository.BoardRepository;
 import com.sparta.trellowiththreeipeople.board.repository.BoardUserRepository;
+import com.sparta.trellowiththreeipeople.exception.BoardUserNotFoundException;
 import com.sparta.trellowiththreeipeople.exception.UserNotFoundException;
 import com.sparta.trellowiththreeipeople.user.entity.User;
 import com.sparta.trellowiththreeipeople.user.repository.UserRepository;
@@ -36,7 +38,11 @@ public class BoardServiceImpl implements BoardService {
         Board board = new Board(boardName, boardInfo, user);
         boardRepository.save(board);
 
-        return new BoardResponseDto(board);
+        List<BoardResponseUsersResponseDto> users = board.getUsers().stream()
+                .map(BoardResponseUsersResponseDto::new)
+                .toList();
+
+        return new BoardResponseDto(board, users);
 
 
     }
@@ -45,13 +51,16 @@ public class BoardServiceImpl implements BoardService {
     @Transactional(readOnly = true)
     public BoardResponseDto getBoardByBoardId(Long boardId, User user) {
         Board board = getBoard(boardId);
-        BoardUser boardUser = boardUserRepository.findBoardUserByBoardIdAndUserId(boardId, user.getId());
+        BoardUser boardUser = getBoardUser(boardId, user);
         if (!isContainsBoardUser(board, boardUser)) {
 
             throw new IllegalArgumentException("해당 보드는 초대받은 유저만 확인할 수 있습니다.");
         }
+        List<BoardResponseUsersResponseDto> users = board.getUsers().stream()
+                .map(BoardResponseUsersResponseDto::new)
+                .toList();
 
-        return new BoardResponseDto(board);
+        return new BoardResponseDto(board, users);
     }
 
     @Override
@@ -69,17 +78,22 @@ public class BoardServiceImpl implements BoardService {
     public BoardResponseDto updateBoard(Long boardId, BoardUpdateRequestDto requestDto, User user) {
         Board board = getBoard(boardId);
 
-        BoardUser boardUser = boardUserRepository.findBoardUserByBoardIdAndUserId(boardId, user.getId());
+        BoardUser boardUser = getBoardUser(boardId, user);
         if (!isContainsBoardUser(board, boardUser)) {
 
             throw new IllegalArgumentException("해당 보드는 보드 사용유저만 수정할 수 있습니다.");
         }
         board.update(requestDto, boardUser);
 
-        return new BoardResponseDto(board);
+        List<BoardResponseUsersResponseDto> users = board.getUsers().stream()
+                .map(BoardResponseUsersResponseDto::new)
+                .toList();
+
+        return new BoardResponseDto(board, users);
 
 
     }
+
 
     @Override
     @Transactional
@@ -101,7 +115,7 @@ public class BoardServiceImpl implements BoardService {
     public void inviteUserToBoard(Long boardId, Long userId, User user) {
         Board board = getBoard(boardId);
 
-        BoardUser boardUser = boardUserRepository.findBoardUserByBoardIdAndUserId(boardId,user.getId());
+        BoardUser boardUser = getBoardUser(boardId, user);
         if (!isContainsBoardUser(board, boardUser)) {
             throw new IllegalArgumentException("보드 초대는 보드 사용자만 초대가능합니다.");
         }
@@ -114,6 +128,11 @@ public class BoardServiceImpl implements BoardService {
 
     private static boolean isContainsBoardUser(Board board,BoardUser boardUser) {
         return boardUser.getBoard().equals(board);
+    }
+
+    private BoardUser getBoardUser(Long boardId, User user) {
+        return boardUserRepository.findBoardUserByBoardIdAndUserId(boardId, user.getId()).orElseThrow(
+                ()-> new BoardUserNotFoundException("해당 하는 보드 유저를 찾을 수 없습니다."));
     }
 
     private Board getBoard(Long boardId) {

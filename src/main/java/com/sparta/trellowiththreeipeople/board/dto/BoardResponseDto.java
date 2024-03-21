@@ -11,20 +11,22 @@ import java.util.List;
 @Getter
 public class BoardResponseDto {
 
-    private Long boardId;
-    private String boardName;
-    private String boardInfo;
-    private BoardColorEnum colorEnum;
-    private List<BoardUser> users;
-    private List<Bar> bars;
+    private final Long boardId;
+    private final String boardName;
+    private final String boardInfo;
+    private final BoardColorEnum colorEnum;
+    private final List<BoardResponseUsersResponseDto> users;
+    private final List<Bar> bars;
 
 
-    public BoardResponseDto(Board board) {
+    public BoardResponseDto(
+            Board board,
+            List<BoardResponseUsersResponseDto> usersResponseDto) {
         this.boardId = board.getBoardId();
         this.boardName = board.getBoardName();
         this.boardInfo = board.getBoardInfo();
         this.colorEnum = board.getColorEnum();
-        this.users = board.getUsers();
+        this.users = usersResponseDto;
         this.bars = board.getBars();
     }
 

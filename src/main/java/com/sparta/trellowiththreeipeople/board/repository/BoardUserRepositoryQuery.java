@@ -5,6 +5,7 @@ import com.sparta.trellowiththreeipeople.board.entity.BoardUser;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BoardUserRepositoryQuery {
@@ -13,7 +14,9 @@ public interface BoardUserRepositoryQuery {
 
     List<BoardUser> getBoardUserByBoardId(Long BoardId);
 
-    BoardUser findBoardUserByBoardIdAndUserId(Long boardId, Long userId);
+    Optional<BoardUser> findBoardUserByBoardIdAndUserId(Long boardId, Long userId);
 
     void deleteAllByBoardUsers(List<BoardUser> boardUsers);
+
+
 }
