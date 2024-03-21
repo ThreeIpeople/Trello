@@ -1,5 +1,6 @@
 package com.sparta.trellowiththreeipeople.exception;
 
+import jakarta.validation.ValidationException;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -51,6 +52,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BoardUserExistException.class)
     public ResponseEntity<String> BoardUserExistException(BoardUserExistException e) {
+
+        return ResponseEntity.badRequest()
+                .body(e.getMessage());
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<String> ValidationException(ValidationException e) {
 
         return ResponseEntity.badRequest()
                 .body(e.getMessage());

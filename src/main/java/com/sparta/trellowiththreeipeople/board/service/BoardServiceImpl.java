@@ -5,6 +5,7 @@ import com.sparta.trellowiththreeipeople.board.entity.Board;
 import com.sparta.trellowiththreeipeople.board.entity.BoardUser;
 import com.sparta.trellowiththreeipeople.board.repository.BoardRepository;
 import com.sparta.trellowiththreeipeople.board.repository.BoardUserRepository;
+import com.sparta.trellowiththreeipeople.exception.BoardNotFoundException;
 import com.sparta.trellowiththreeipeople.exception.BoardUserExistException;
 import com.sparta.trellowiththreeipeople.exception.BoardUserNotFoundException;
 import com.sparta.trellowiththreeipeople.exception.UserNotFoundException;
@@ -134,7 +135,7 @@ public class BoardServiceImpl implements BoardService {
 
     private Board getBoard(Long boardId) {
         return boardRepository.findBoardByBoardId(boardId).orElseThrow(
-                () -> new IllegalArgumentException("보드Id에 해당하는 보드를찾을 수 없습니다.")
+                () -> new BoardNotFoundException("보드Id에 해당하는 보드를찾을 수 없습니다.")
 
         );
     }
