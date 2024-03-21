@@ -26,24 +26,15 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     @Transactional
-
-    public BoardResponseDto save(String boardName, String boardInfo, User user) {
-        if (boardRepository.existsBoardByBoardName(boardName)) {
+    public Long save(BoardRequestDto requestDto, User user) {
+        if (boardRepository.existsBoardByBoardName(requestDto.getBoardName())) {
 
             throw new IllegalArgumentException("존재하는 보드 이름입니다.");
         }
-        Board board = new Board(boardName, boardInfo, user);
+        Board board = new Board(requestDto, user);
         boardRepository.save(board);
 
-        List<BoardResponseUsersResponseDto> users = board.getUsers().stream()
-                .map(BoardResponseUsersResponseDto::new)
-                .toList();
-
-        List<BoardResponseBarResponseDto> bars = board.getBars().stream()
-                .map(BoardResponseBarResponseDto::new)
-                .toList();
-
-        return new BoardResponseDto(board, users, bars);
+        return board.getBoardId();
 
 
     }
@@ -80,7 +71,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     @Transactional
-    public BoardResponseDto updateBoard(Long boardId, BoardUpdateRequestDto requestDto, User user) {
+    public Long updateBoard(Long boardId, BoardUpdateRequestDto requestDto, User user) {
         Board board = getBoard(boardId);
 
         BoardUser boardUser = getBoardUser(boardId, user);
@@ -90,15 +81,7 @@ public class BoardServiceImpl implements BoardService {
         }
         board.update(requestDto, boardUser);
 
-        List<BoardResponseUsersResponseDto> users = board.getUsers().stream()
-                .map(BoardResponseUsersResponseDto::new)
-                .toList();
-
-        List<BoardResponseBarResponseDto> bars = board.getBars().stream()
-                .map(BoardResponseBarResponseDto::new)
-                .toList();
-
-        return new BoardResponseDto(board, users, bars);
+        return board.getBoardId();
 
 
     }
@@ -113,7 +96,6 @@ public class BoardServiceImpl implements BoardService {
         }
         List<BoardUser> boardUsers = boardUserRepository.getBoardUserByBoardId(boardId);
 
-        boardUserRepository.deleteAllByBoardUsers(boardUsers);
         boardRepository.delete(board);
 
     }
@@ -138,7 +120,7 @@ public class BoardServiceImpl implements BoardService {
         return boardUser.getBoard().equals(board);
     }
 
-    public BoardUser getBoardUser(Long boardId, User user) {
+    private BoardUser getBoardUser(Long boardId, User user) {
         return boardUserRepository.findBoardUserByBoardIdAndUserId(boardId, user.getId()).orElseThrow(
                 ()-> new BoardUserNotFoundException("해당 하는 보드 유저를 찾을 수 없습니다."));
     }
