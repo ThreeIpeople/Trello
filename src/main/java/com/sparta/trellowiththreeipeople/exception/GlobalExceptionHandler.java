@@ -48,15 +48,15 @@ public class GlobalExceptionHandler {
                 .body(e.getMessage());
     }
 
-    @ExceptionHandler(ApiException.class)
-    public ResponseEntity<String> UserNotFoundException(ApiException e) {
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> UserNotFoundException(UserNotFoundException e) {
         log.error(e.getMessage());
         return ResponseEntity.status(ExceptionStatus.NOT_FOUND_USER.getStatusCode())
                 .body(ExceptionStatus.NOT_FOUND_USER.getMessage());
     }
 
-    @ExceptionHandler(ApiException.class)
-    public ResponseEntity<String> BoardNotFoundException(ApiException e) {
+    @ExceptionHandler(BoardNotFoundException.class)
+    public ResponseEntity<String> BoardNotFoundException(BoardNotFoundException e) {
         log.error(e.getMessage());
         return ResponseEntity.status(ExceptionStatus.NOT_FOUND_BOARD.getStatusCode())
                 .body(ExceptionStatus.NOT_FOUND_BOARD.getMessage());
@@ -69,22 +69,22 @@ public class GlobalExceptionHandler {
                 .body(e.getMessage());
     }
 
-    @ExceptionHandler(ApiException.class)
-    public ResponseEntity<String> BoardUserNotFoundException(ApiException e) {
+    @ExceptionHandler(BoardUserNotFoundException.class)
+    public ResponseEntity<String> BoardUserNotFoundException(BoardUserNotFoundException e) {
         log.error(e.getMessage());
         return ResponseEntity.status(ExceptionStatus.NOT_FOUND_BOARD_USER.getStatusCode())
                 .body(ExceptionStatus.NOT_FOUND_BOARD_USER.getMessage());
     }
 
-    @ExceptionHandler(ApiException.class)
-    public ResponseEntity<String> BoardUserExistException(ApiException e) {
+    @ExceptionHandler(BoardUserExistException.class)
+    public ResponseEntity<String> BoardUserExistException(BoardUserExistException e) {
         log.error(e.getMessage());
         return ResponseEntity.status(ExceptionStatus.EXIST_BoardUser.getStatusCode())
                 .body(ExceptionStatus.EXIST_BoardUser.getMessage());
     }
 
-    @ExceptionHandler(ApiException.class)
-    public ResponseEntity<String> AuthNotExistException(ApiException e) {
+    @ExceptionHandler(AuthNotExistException.class)
+    public ResponseEntity<String> AuthNotExistException(AuthNotExistException e) {
         log.error(e.getMessage());
         return ResponseEntity.status(ExceptionStatus.NOT_EXIST_AUTH.getStatusCode())
                 .body(ExceptionStatus.NOT_EXIST_AUTH.getMessage());
