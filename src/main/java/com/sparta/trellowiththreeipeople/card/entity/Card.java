@@ -1,5 +1,4 @@
 package com.sparta.trellowiththreeipeople.card.entity;
-
 import com.sparta.trellowiththreeipeople.bar.entity.Bar;
 import com.sparta.trellowiththreeipeople.card.dto.CardRequest;
 import com.sparta.trellowiththreeipeople.common.BaseEntity;
@@ -49,7 +48,7 @@ public class Card extends BaseEntity {
 
 
     //문자열 형식의 날짜 ex)20240319 를 LocalDateTime 형식으로 변환
-    public Card(User user, Bar bar,CardRequest cardRequest) {
+    public Card(User user, Bar bar, CardRequest cardRequest) {
         this.title = cardRequest.getTitle();
         this.content = cardRequest.getContent();
         this.user = user;
@@ -60,16 +59,21 @@ public class Card extends BaseEntity {
             this.deadline = date.atStartOfDay(); // LocalDate를 LocalDateTime으로 변환
         }
     }
-    public void updateCard(CardRequest cardRequest){
+
+    public void updateCard(CardRequest cardRequest) {
         this.title = cardRequest.getTitle();
         this.content = cardRequest.getContent();
-        if(cardRequest.getDeadline()!=null&&!cardRequest.getDeadline().isEmpty()){
+        if (cardRequest.getDeadline() != null && !cardRequest.getDeadline().isEmpty()) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
             LocalDate date = LocalDate.parse(cardRequest.getDeadline(), formatter);
             this.deadline = date.atStartOfDay(); // LocalDate를 LocalDateTime으로 변환
         }
     }
+}
 //    public void deleteCard(){
 //        this.deletedAt = LocalDateTime.now();
 //    }
-}
+//    @PreUpdate
+//    protected void onUpdate() {
+//        this.modifiedAt = LocalDateTime.now();
+//    }

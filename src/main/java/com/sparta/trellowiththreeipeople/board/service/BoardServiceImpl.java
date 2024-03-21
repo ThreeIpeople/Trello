@@ -45,8 +45,8 @@ public class BoardServiceImpl implements BoardService {
     @Transactional(readOnly = true)
     public BoardResponseDto getBoardByBoardId(Long boardId, User user) {
         Board board = getBoard(boardId);
-        List<BoardUser> boardUsers = boardUserRepository.findBoardUserByUserId(user.getId());
-        if (!isContainsBoardUser(board, boardUsers)) {
+        BoardUser boardUser = boardUserRepository.findBoardUserByBoardIdAndUserId(boardId, user.getId());
+        if (!isContainsBoardUser(board, boardUser)) {
 
             throw new IllegalArgumentException("해당 보드는 초대받은 유저만 확인할 수 있습니다.");
         }
@@ -69,12 +69,12 @@ public class BoardServiceImpl implements BoardService {
     public BoardResponseDto updateBoard(Long boardId, BoardUpdateRequestDto requestDto, User user) {
         Board board = getBoard(boardId);
 
-        List<BoardUser> boardUsers = boardUserRepository.findBoardUserByUserId(user.getId());
-        if (!isContainsBoardUser(board, boardUsers)) {
+        BoardUser boardUser = boardUserRepository.findBoardUserByBoardIdAndUserId(boardId, user.getId());
+        if (!isContainsBoardUser(board, boardUser)) {
 
             throw new IllegalArgumentException("해당 보드는 보드 사용유저만 수정할 수 있습니다.");
         }
-        board.update(requestDto);
+        board.update(requestDto, boardUser);
 
         return new BoardResponseDto(board);
 
@@ -101,8 +101,8 @@ public class BoardServiceImpl implements BoardService {
     public void inviteUserToBoard(Long boardId, Long userId, User user) {
         Board board = getBoard(boardId);
 
-        List<BoardUser> boardUsers = boardUserRepository.findBoardUserByUserId(user.getId());
-        if (!isContainsBoardUser(board, boardUsers)) {
+        BoardUser boardUser = boardUserRepository.findBoardUserByBoardIdAndUserId(boardId,user.getId());
+        if (!isContainsBoardUser(board, boardUser)) {
             throw new IllegalArgumentException("보드 초대는 보드 사용자만 초대가능합니다.");
         }
         User invitedUser = userRepository.findById(userId).orElseThrow(
@@ -112,13 +112,8 @@ public class BoardServiceImpl implements BoardService {
 
     }
 
-    private static boolean isContainsBoardUser(Board board, List<BoardUser> boardUsers) {
-        for (BoardUser boardUser : boardUsers) {
-            if (boardUser.getBoard().equals(board)) {
-                return true;
-            }
-        }
-        return false;
+    private static boolean isContainsBoardUser(Board board,BoardUser boardUser) {
+        return boardUser.getBoard().equals(board);
     }
 
     private Board getBoard(Long boardId) {

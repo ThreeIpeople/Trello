@@ -43,6 +43,15 @@ public class BoardUserRepositoryQueryImpl implements BoardUserRepositoryQuery {
                 .where(boardUser.board.boardId.eq(boardId))
                 .fetch();
     }
+    @Override
+    public BoardUser findBoardUserByBoardIdAndUserId(Long boardId, Long userId){
+        QBoardUser boardUser = QBoardUser.boardUser;
+
+        return queryFactory.selectFrom(boardUser)
+                .where(boardUser.board.boardId.eq(boardId)
+                        .and(boardUser.user.id.eq(userId)))
+                .fetchOne();
+    }
 
     @Override
     public void deleteAllByBoardUsers(List<BoardUser> boardUsers) {

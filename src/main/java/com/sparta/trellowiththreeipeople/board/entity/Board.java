@@ -47,6 +47,9 @@ public class Board extends BaseEntity {
     @Column(name = "created_user", nullable = false)
     private Long createdUser;
 
+    @Column(name = "last_modified_user")
+    private Long lastModifiedUser;
+
 
     public Board(String boardName, String boardInfo, User user) {
         this.boardName = boardName;
@@ -56,10 +59,11 @@ public class Board extends BaseEntity {
     }
 
 
-    public void update(BoardUpdateRequestDto requestDto){
+    public void update(BoardUpdateRequestDto requestDto, BoardUser boardUser){
         this.boardName = requestDto.getBoardName();
         this.boardInfo = requestDto.getBoardInfo();
         this.colorEnum = BoardColorEnum.valueOf(requestDto.getBoardColorEnum());
+        this.lastModifiedUser = boardUser.getUser().getId();
     }
 
     public void inviteUser(User invitedUser) {
