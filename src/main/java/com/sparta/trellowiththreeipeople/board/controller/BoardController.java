@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -19,17 +21,15 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping("")
-    public ResponseEntity<BoardResponseDto> inputBoard(
+    public ResponseEntity<String> inputBoard(
             @RequestBody BoardRequestDto requestDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
-        BoardResponseDto responseDto = boardService.save(
-                requestDto.getBoardName(),
-                requestDto.getBoardInfo(),
-                userDetails.getUser()
+        Long boardId = boardService.save(requestDto, userDetails.getUser()
         );
 
-        return ResponseEntity.ok().body(responseDto);
+        return ResponseEntity.created(URI.create("/api/boards/"+ boardId))
+                .body("보드가 정상적으로 생성되었습니다.");
 
     }
 
@@ -52,14 +52,15 @@ public class BoardController {
     }
 
     @PutMapping("{boardId}")
-    public ResponseEntity<BoardResponseDto> updateBoard(
+    public ResponseEntity<String> updateBoard(
             @PathVariable Long boardId,
             @Valid @RequestBody BoardUpdateRequestDto requestDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
-        BoardResponseDto responseDto = boardService.updateBoard(boardId, requestDto, userDetails.getUser());
+        Long updatedBoardId = boardService.updateBoard(boardId, requestDto, userDetails.getUser());
 
-        return ResponseEntity.ok().body(responseDto);
+        return ResponseEntity.created(URI.create("api/boards"+updatedBoardId))
+                .body("보드가 수정되었습니다.");
     }
 
     @DeleteMapping("{boardId}")
