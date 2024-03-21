@@ -73,7 +73,7 @@ public class BoardController {
         return ResponseEntity.ok().body("성공적으로 보드 삭제가 되었습니다.");
     }
 
-    @PostMapping("{boardId}/invite")
+    @PatchMapping("{boardId}/invite")
     public ResponseEntity<String> inviteUserToBoard(
             @PathVariable Long boardId,
             @RequestBody InviteRequestDto requestDto,

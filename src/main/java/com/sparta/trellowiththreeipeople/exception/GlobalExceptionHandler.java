@@ -48,4 +48,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest()
                 .body(e.getMessage());
     }
+
+    @ExceptionHandler(BoardUserExistException.class)
+    public ResponseEntity<String> BoardUserExistException(BoardUserExistException e) {
+
+        return ResponseEntity.badRequest()
+                .body(e.getMessage());
+    }
 }

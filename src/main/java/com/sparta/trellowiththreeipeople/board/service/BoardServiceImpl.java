@@ -5,6 +5,7 @@ import com.sparta.trellowiththreeipeople.board.entity.Board;
 import com.sparta.trellowiththreeipeople.board.entity.BoardUser;
 import com.sparta.trellowiththreeipeople.board.repository.BoardRepository;
 import com.sparta.trellowiththreeipeople.board.repository.BoardUserRepository;
+import com.sparta.trellowiththreeipeople.exception.BoardUserExistException;
 import com.sparta.trellowiththreeipeople.exception.BoardUserNotFoundException;
 import com.sparta.trellowiththreeipeople.exception.UserNotFoundException;
 import com.sparta.trellowiththreeipeople.user.entity.User;
@@ -112,6 +113,12 @@ public class BoardServiceImpl implements BoardService {
         User invitedUser = userRepository.findById(userId).orElseThrow(
                 () -> new UserNotFoundException("해당하는 유저를 찾을 수 없습니다.")
         );
+        for(BoardUser boardUser1 : board.getUsers()){
+            if(boardUser1.getUser().getId().equals(userId)){
+                throw new BoardUserExistException("이 유저는 이미 보드에 초대된 유저입니다.");
+            }
+        }
+
         board.inviteUser(invitedUser);
 
     }

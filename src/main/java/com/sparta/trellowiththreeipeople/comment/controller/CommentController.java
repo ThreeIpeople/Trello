@@ -25,7 +25,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping
-    public ResponseEntity createComment(
+    public ResponseEntity<CommentResponseDto> createComment(
         @PathVariable Long boardId,
         @PathVariable Long columnId,
         @PathVariable Long cardId,
@@ -39,10 +39,11 @@ public class CommentController {
     }
 
     @PutMapping("/{commentId}")
-    public ResponseEntity updateComment(
+    public ResponseEntity<UpdateCommentResponseDto> updateComment(
         @PathVariable Long boardId,
         @PathVariable Long columnId,
         @PathVariable Long cardId,
+        @PathVariable Long commentId,
         @RequestBody UpdateCommentRequestDto requestDto,
         @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
@@ -52,10 +53,11 @@ public class CommentController {
     }
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity deleteComment(
+    public ResponseEntity<String> deleteComment(
         @PathVariable Long boardId,
         @PathVariable Long columnId,
         @PathVariable Long cardId,
+        @PathVariable Long commentId,
         @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         commentService.deleteComment(boardId, columnId, cardId, userDetails.getUser());
