@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -44,13 +45,13 @@ public class BoardUserRepositoryQueryImpl implements BoardUserRepositoryQuery {
                 .fetch();
     }
     @Override
-    public BoardUser findBoardUserByBoardIdAndUserId(Long boardId, Long userId){
+    public Optional<BoardUser> findBoardUserByBoardIdAndUserId(Long boardId, Long userId){
         QBoardUser boardUser = QBoardUser.boardUser;
 
-        return queryFactory.selectFrom(boardUser)
+        return Optional.ofNullable(queryFactory.selectFrom(boardUser)
                 .where(boardUser.board.boardId.eq(boardId)
                         .and(boardUser.user.id.eq(userId)))
-                .fetchOne();
+                .fetchOne());
     }
 
     @Override

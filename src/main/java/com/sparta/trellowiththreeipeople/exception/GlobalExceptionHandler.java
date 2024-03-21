@@ -41,4 +41,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest()
                 .body(e.getMessage());
     }
+
+    @ExceptionHandler(BoardUserNotFoundException.class)
+    public ResponseEntity<String> BoardUserNotFoundException(BoardUserNotFoundException e) {
+
+        return ResponseEntity.badRequest()
+                .body(e.getMessage());
+    }
 }

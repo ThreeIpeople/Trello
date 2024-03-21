@@ -40,7 +40,7 @@ public class Board extends BaseEntity {
     @OneToMany(mappedBy = "board")
     private List<Bar> bars = new ArrayList<>();
 
-    @JsonManagedReference
+
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BoardUser> users = new ArrayList<>();
 
