@@ -35,5 +35,10 @@ out/
 ### VS Code ###
 .vscode/
 
-src/**/application.yml
-src/main/generated/**
+### Property ###
+/src/**/*.properties
+/src/**/*.yml
+/src/**/*.yaml
+
+### Querydsl ###
+src/generated/

@@ -56,6 +56,10 @@ public class Board extends BaseEntity {
         this.createdUser = user.getId();
     }
 
+    public static Board from(BoardRequestDto requestDto, User user) {
+        return new Board(requestDto, user);
+    }
+
 
     public void update(BoardUpdateRequestDto requestDto, BoardUser boardUser){
         this.boardName = requestDto.getBoardName();

@@ -5,10 +5,7 @@ import com.sparta.trellowiththreeipeople.board.entity.Board;
 import com.sparta.trellowiththreeipeople.board.entity.BoardUser;
 import com.sparta.trellowiththreeipeople.board.repository.BoardRepository;
 import com.sparta.trellowiththreeipeople.board.repository.BoardUserRepository;
-import com.sparta.trellowiththreeipeople.exception.BoardNotFoundException;
-import com.sparta.trellowiththreeipeople.exception.BoardUserExistException;
-import com.sparta.trellowiththreeipeople.exception.BoardUserNotFoundException;
-import com.sparta.trellowiththreeipeople.exception.UserNotFoundException;
+import com.sparta.trellowiththreeipeople.exception.*;
 import com.sparta.trellowiththreeipeople.user.entity.User;
 import com.sparta.trellowiththreeipeople.user.repository.UserRepository;
 import jakarta.validation.ValidationException;
@@ -31,16 +28,16 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public Long save(BoardRequestDto requestDto, User user) {
-        if (boardRepository.existsBoardByBoardName(requestDto.getBoardName())) {
-
-            throw new IllegalArgumentException("존재하는 보드 이름입니다.");
-        }
-        Board board = new Board(requestDto, user);
+        checkIfBoardAlreadyExists(requestDto.getBoardName());
+        Board board = Board.from(requestDto, user); // new 키워드 x -> static factory methods
         boardRepository.save(board);
-
         return board.getBoardId();
+    }
 
-
+    private void checkIfBoardAlreadyExists(String boardName) {
+        if (boardRepository.existsBoardByBoardName(boardName)) {
+            throw new DuplicatedException(DUPLICATED_BOARD);
+        }
     }
 
     @Override
@@ -126,7 +123,7 @@ public class BoardServiceImpl implements BoardService {
 
     }
 
-    private static boolean isContainsBoardUser(Board board,BoardUser boardUser) {
+    private boolean isContainsBoardUser(Board board, BoardUser boardUser) {
         return boardUser.getBoard().equals(board);
     }
 
