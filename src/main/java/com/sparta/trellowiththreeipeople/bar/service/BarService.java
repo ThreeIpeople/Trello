@@ -1,18 +1,19 @@
 package com.sparta.trellowiththreeipeople.bar.service;
 
-import static com.sparta.trellowiththreeipeople.exception.ExceptionStatus.NOT_FOUND_BOARD_USER;
-
 import com.sparta.trellowiththreeipeople.bar.dto.BarResponseDto;
 import com.sparta.trellowiththreeipeople.bar.entity.Bar;
 import com.sparta.trellowiththreeipeople.bar.repository.BarRepository;
 import com.sparta.trellowiththreeipeople.board.entity.BoardUser;
 import com.sparta.trellowiththreeipeople.board.repository.BoardUserRepository;
 import com.sparta.trellowiththreeipeople.exception.BoardUserNotFoundException;
-import java.util.List;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Objects;
+
+import static com.sparta.trellowiththreeipeople.exception.ExceptionStatus.NOT_FOUND_BOARD_USER;
 
 @Service
 @RequiredArgsConstructor

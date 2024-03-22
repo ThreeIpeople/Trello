@@ -67,13 +67,12 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public Long updateBoard(Long boardId, BoardUpdateRequestDto requestDto, User user) {
-        BoardUser boardUser = getBoardUser(boardId, user);
         Board board = getBoard(boardId);
+        BoardUser boardUser = getBoardUser(boardId, user);
 
         board.update(requestDto, boardUser);
 
         return board.getBoardId();
-
 
     }
 
@@ -106,10 +105,6 @@ public class BoardServiceImpl implements BoardService {
             }
         }
         board.inviteUser(invitedUser);
-    }
-
-    private boolean isContainsBoardUser(Board board, BoardUser boardUser) {
-        return boardUser.getBoard().equals(board);
     }
 
     private void checkIfBoardAlreadyExists(String boardName) {

@@ -19,7 +19,7 @@ import java.time.format.DateTimeFormatter;
 @NoArgsConstructor
 @SQLDelete(sql = "UPDATE card SET deleted_at=CURRENT_TIMESTAMP where id=?")
 @Where(clause = "deleted_at IS NULL")
-@Table(name="card", indexes = @Index(name = "idx_card_deleted_at", columnList = "deleted_at"))
+@Table(name = "card", indexes = @Index(name = "idx_card_deleted_at", columnList = "deleted_at"))
 
 public class Card extends BaseEntity {
     @Id
@@ -32,9 +32,6 @@ public class Card extends BaseEntity {
 
     @Column(name = "deadline", nullable = true)
     private LocalDateTime deadline;
-
-    @Column(name = "deleted_at")
-    private LocalDateTime deletedAt;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -67,7 +64,8 @@ public class Card extends BaseEntity {
             this.deadline = date.atStartOfDay(); // LocalDate를 LocalDateTime으로 변환
         }
     }
-    public long getBarId(){
+
+    public long getBarId() {
         return this.bar.getId();
     }
 }

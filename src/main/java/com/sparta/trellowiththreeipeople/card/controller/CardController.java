@@ -6,19 +6,13 @@ import com.sparta.trellowiththreeipeople.card.dto.CardRequest;
 import com.sparta.trellowiththreeipeople.card.dto.CardResponse;
 import com.sparta.trellowiththreeipeople.card.service.CardService;
 import com.sparta.trellowiththreeipeople.security.UserDetailsImpl;
-import java.net.URI;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,23 +22,24 @@ public class CardController {
 
     @PostMapping("/cards")
     public ResponseEntity<String> createCard(
-        @PathVariable Long boardId,
-        @PathVariable Long barId,
-        @RequestBody CardRequest cardRequest,
-        @AuthenticationPrincipal UserDetailsImpl userDetails
+            @PathVariable Long boardId,
+            @PathVariable Long barId,
+            @RequestBody CardRequest cardRequest,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         Long cardId = cardService.createCard(barId, cardRequest, userDetails.getUserId());
-        return ResponseEntity.created(URI.create("/api/boards/"+ boardId+"/bars/"+barId+"/cards/"+cardId))
-            .body("카드가 생성 되었습니다.");
+        return ResponseEntity.created(URI.create("/api/boards/" + boardId + "/bars/" + barId + "/cards/" + cardId))
+                .body("카드가 생성 되었습니다.");
     }
 
     //전체 카드 조회
     @GetMapping("/cards")
     public ResponseEntity<List<CardDTO>> getAllCards(
-        @PathVariable Long boardId,
-        @AuthenticationPrincipal UserDetailsImpl userDetails
+            @PathVariable String barId,
+            @PathVariable Long boardId,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
-        List<CardDTO> cardList = cardService.getAllCards(boardId,userDetails.getUserId());
+        List<CardDTO> cardList = cardService.getAllCards(boardId, userDetails.getUserId());
         return ResponseEntity.ok().body(cardList);
     }
 
@@ -56,27 +51,31 @@ public class CardController {
             @PathVariable Long cardId,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
-        CardResponse cardResponse = cardService.getCard(cardId,barId,boardId,userDetails.getUserId());
+        CardResponse cardResponse = cardService.getCard(cardId, barId, boardId, userDetails.getUserId());
         return ResponseEntity.ok().body(cardResponse);
     }
 
     @PutMapping("/cards/{cardId}")
-    public ResponseEntity<CardResponse> updateCard(
+    public ResponseEntity<String> updateCard(
             @PathVariable Long cardId,
             @PathVariable Long boardId,
+            @PathVariable String barId,
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestBody CardRequest cardRequest) {
-        CardResponse cardResponse = cardService.updateCard(cardId, cardRequest,userDetails.getUserId(),boardId);
-        return ResponseEntity.ok().body(cardResponse);
+        CardResponse cardResponse = cardService.updateCard(cardId, cardRequest, userDetails.getUserId(), boardId);
+        return ResponseEntity.created(URI.create("/api/boards/" + boardId + "/bars/" + barId + "/cards/" + cardId))
+                .body("카드가 수정 되었습니다.");
     }
 
     @DeleteMapping("/cards/{cardId}")
     public ResponseEntity<String> deleteCard(
-        @PathVariable Long cardId,
-        @PathVariable Long boardId,
-        @AuthenticationPrincipal UserDetailsImpl userDetails
-    ){
-        cardService.deleteCard(cardId,userDetails.getUserId(),boardId);
+            @PathVariable Long boardId,
+            @PathVariable Long barId,
+            @PathVariable Long cardId,
+
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        cardService.deleteCard(cardId, userDetails.getUserId(), boardId);
         return ResponseEntity.ok().body("삭제가 완료되었습니다.");
     }
 }
