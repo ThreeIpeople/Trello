@@ -25,7 +25,7 @@ https://documenter.getpostman.com/view/32380793/2sA35A85a1
 <table>
   <tbody>
     <tr>
-      <td align="center"><a href="https://github.com/eondi"><img src="https://avatars.githubusercontent.com/u/87860163?v=4"width=100px;" alt=""/><br /><sub><b>팀장 : 김민상 </b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/pastjung"><img src="https://avatars.githubusercontent.com/u/148612321?v=4" width="100px;" alt=""/><br /><sub><b>팀원 : 구동현 </b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/beunchoi"><img src="https://avatars.githubusercontent.com/u/38320524?v=4" width="100px;" alt=""/><br /><sub><b> 팀원 : 박용민 </b></sub></a><br /></td>
-            <td align="center"><a href="https://github.com/KIM-TABLE-NEXT"><img src="https://avatars.githubusercontent.com/u/47919911?v=4" width="100px;" alt=""/><br /><sub><b> 팀원 : 윤종일 </b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/eondi"><img src="https://avatars.githubusercontent.com/u/87860163?v=4"width=100px;" alt=""/><br /><sub><b>팀장 : 김민상 </b></sub></a><br /><b>보드 도메인</b></td>
+      <td align="center"><a href="https://github.com/pastjung"><img src="https://avatars.githubusercontent.com/u/148612321?v=4" width="100px;" alt=""/><br /><sub><b>팀원 : 구동현 </b></sub></a><br /><b>바 도메인 </b></td>
+      <td align="center"><a href="https://github.com/beunchoi"><img src="https://avatars.githubusercontent.com/u/38320524?v=4" width="100px;" alt=""/><br /><sub><b> 팀원 : 박용민 </b></sub></a><br /><b>유저 및 로그인 도메인 </b></td>
+            <td align="center"><a href="https://github.com/KIM-TABLE-NEXT"><img src="https://avatars.githubusercontent.com/u/47919911?v=4" width="100px;" alt=""/><br /><sub><b> 팀원 : 윤종일 </b></sub></a><br /><b>카드 도메인 </b></td>
