@@ -13,6 +13,6 @@ public interface CardRepository extends JpaRepository<Card,Long> {
     @Query("SELECT DISTINCT c FROM Card c JOIN FETCH c.user u JOIN FETCH c.bar b WHERE c.deletedAt IS NULL")
     List<Card> findAllWithUserAndBar();
     //DTO 매핑 방식
-    @Query("SELECT new com.sparta.trellowiththreeipeople.card.dto.CardDTO(c.id, c.title, c.content, c.deadline) FROM Card c")
+    @Query("SELECT new com.sparta.trellowiththreeipeople.card.dto.CardDTO(c.id, c.title, c.content, c.deadline) FROM Card c WHERE c.deletedAt IS NULL")
     List<CardDTO> findAllCardsWithDTO();
 }
