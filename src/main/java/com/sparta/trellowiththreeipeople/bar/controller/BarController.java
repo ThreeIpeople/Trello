@@ -27,7 +27,7 @@ public class BarController {
     ) {
         Long barId = barService.createBar(boardId, barRequestDto.getTitle(), userDetails.getUserId());
         return ResponseEntity
-                .created(URI.create("/api/boards/"+ boardId+"/bars/"+barId))
+                .created(URI.create("/api/boards/" + boardId + "/bars/" + barId))
                 .body("Bar가 정상적으로 생성되었습니다.");
     }
 
@@ -70,7 +70,7 @@ public class BarController {
     ) {
         barService.updateBar(boardId, barId, barRequestDto.getTitle(), userDetails.getUserId());
         return ResponseEntity
-                .created(URI.create("/api/boards/"+ boardId+"/bars/"+barId))
+                .created(URI.create("/api/boards/" + boardId + "/bars/" + barId))
                 .body("Bar가 정상적으로 수정되었습니다.");
     }
 

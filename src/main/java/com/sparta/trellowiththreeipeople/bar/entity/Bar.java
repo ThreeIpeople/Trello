@@ -1,6 +1,7 @@
 package com.sparta.trellowiththreeipeople.bar.entity;
 
 import com.sparta.trellowiththreeipeople.board.entity.Board;
+import com.sparta.trellowiththreeipeople.card.entity.Card;
 import com.sparta.trellowiththreeipeople.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,6 +9,9 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLRestriction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -28,6 +32,9 @@ public class Bar extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id", nullable = false)
     private Board board;
+
+    @OneToMany(mappedBy = "bar", fetch = FetchType.LAZY)
+    private final List<Card> cards = new ArrayList<>();
 
     @Column(nullable = false)
     private Long createrId;

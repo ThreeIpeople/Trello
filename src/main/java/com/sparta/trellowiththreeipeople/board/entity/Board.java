@@ -18,7 +18,7 @@ import java.util.List;
 @Entity
 @Table(name = "board")
 @NoArgsConstructor
-@SQLDelete(sql = "UPDATE board SET deleted_at=CURRENT_TIMESTAMP where id=?")
+@SQLDelete(sql = "UPDATE board SET deleted_at=CURRENT_TIMESTAMP where board_id=?")
 @Where(clause = "deleted_at IS NULL")
 public class Board extends BaseEntity {
 
@@ -61,7 +61,7 @@ public class Board extends BaseEntity {
     }
 
 
-    public void update(BoardUpdateRequestDto requestDto, BoardUser boardUser){
+    public void update(BoardUpdateRequestDto requestDto, BoardUser boardUser) {
         this.boardName = requestDto.getBoardName();
         this.boardInfo = requestDto.getBoardInfo();
         this.colorEnum = BoardColorEnum.valueOf(requestDto.getBoardColorEnum());

@@ -18,14 +18,15 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CardService{
+public class CardService {
     private final CardRepository cardRepository;
     private final BarRepository barRepository;
     private final UserRepository userRepository;
-    public CardResponse createCard(Long barId,CardRequest cardRequest,Long userId) {
-        User checkUser = userRepository.findById(userId).orElseThrow(()->new IllegalArgumentException("유저를 찾을수 없습니다"));
-        Bar checkBar = barRepository.findById(barId).orElseThrow(()->new IllegalArgumentException("컬럼을 찾을수 없습니다"));
-        Card card = new Card(checkUser,checkBar,cardRequest);
+
+    public CardResponse createCard(Long barId, CardRequest cardRequest, Long userId) {
+        User checkUser = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("유저를 찾을수 없습니다"));
+        Bar checkBar = barRepository.findById(barId).orElseThrow(() -> new IllegalArgumentException("바를 찾을수 없습니다"));
+        Card card = new Card(checkUser, checkBar, cardRequest);
         cardRepository.save(card);
         CardResponse cardResponse = new CardResponse(card);
         return cardResponse;
@@ -35,20 +36,22 @@ public class CardService{
         List<CardDTO> cardList = cardRepository.findAllCardsWithDTO();
         return cardList;
     }
+
     public CardResponse getCard(Long cardId) {
-        Card card = cardRepository.findById(cardId).orElseThrow(()->new IllegalArgumentException("유저를 찾을수 없습니다."));
+        Card card = cardRepository.findById(cardId).orElseThrow(() -> new IllegalArgumentException("유저를 찾을수 없습니다."));
         return new CardResponse(card);
     }
+
     @Transactional
-    public CardResponse updateCard(Long cardId,CardRequest cardRequest) {
-        Card card = cardRepository.findById(cardId).orElseThrow(()->new IllegalArgumentException("유저를 찾을수 없습니다."));
+    public CardResponse updateCard(Long cardId, CardRequest cardRequest) {
+        Card card = cardRepository.findById(cardId).orElseThrow(() -> new IllegalArgumentException("유저를 찾을수 없습니다."));
         card.updateCard(cardRequest);
         return new CardResponse(card);
 
     }
 
     public void deleteCard(Long cardId) {
-        Card card = cardRepository.findById(cardId).orElseThrow(()->new IllegalArgumentException("유저를 찾을수 없습니다."));
+        Card card = cardRepository.findById(cardId).orElseThrow(() -> new IllegalArgumentException("유저를 찾을수 없습니다."));
         cardRepository.delete(card);
     }
 }

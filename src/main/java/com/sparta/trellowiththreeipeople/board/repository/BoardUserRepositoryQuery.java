@@ -10,13 +10,11 @@ import java.util.Optional;
 @Repository
 public interface BoardUserRepositoryQuery {
 
-    List<Board> findBoardUserByUserIdAndFetchBoards(Long userId);
+    List<Board> findBoardListByUserIdFetchBoardUser(Long userId);
 
     List<BoardUser> getBoardUserByBoardId(Long BoardId);
 
     Optional<BoardUser> findBoardUserByBoardIdAndUserId(Long boardId, Long userId);
-
-
 
 
 }

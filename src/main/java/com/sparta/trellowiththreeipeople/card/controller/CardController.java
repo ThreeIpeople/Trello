@@ -16,18 +16,20 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/boards/{boardId}/bars/{barId}")
-public class CardController{
+public class CardController {
     private final CardService cardService;
+
     @PostMapping("/cards")
     public ResponseEntity<CardResponse> createCard(
-        @PathVariable Long boardId,
-        @PathVariable Long barId,
-        @RequestBody CardRequest cardRequest,
-        @AuthenticationPrincipal UserDetailsImpl userDetails
+            @PathVariable Long boardId,
+            @PathVariable Long barId,
+            @RequestBody CardRequest cardRequest,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         CardResponse cardResponse = cardService.createCard(barId, cardRequest, userDetails.getUser().getId());
         return ResponseEntity.ok().body(cardResponse);
     }
+
     //전체 카드 조회
     @GetMapping("/cards")
     public ResponseEntity<List<CardDTO>> getAllCards(
@@ -37,6 +39,7 @@ public class CardController{
         List<CardDTO> cardList = cardService.getAllCards();
         return ResponseEntity.ok().body(cardList);
     }
+
     //카드 선택조회
     @GetMapping("/cards/{cardId}")
     public ResponseEntity<CardResponse> getCard(
@@ -47,6 +50,7 @@ public class CardController{
         CardResponse cardResponse = cardService.getCard(cardId);
         return ResponseEntity.ok().body(cardResponse);
     }
+
     @PutMapping("/cards/{cardId}")
     public ResponseEntity<CardResponse> updateCard(
             @PathVariable Long boardId,
@@ -56,12 +60,13 @@ public class CardController{
         CardResponse cardResponse = cardService.updateCard(cardId, cardRequest);
         return ResponseEntity.ok().body(cardResponse);
     }
+
     @DeleteMapping("/cards/{cardId}")
     public ResponseEntity<String> deleteCard(
             @PathVariable Long boardId,
             @PathVariable Long barId,
             @PathVariable Long cardId
-    ){
+    ) {
         cardService.deleteCard(cardId);
         return ResponseEntity.ok().body("삭제가 완료되었습니다.");
     }

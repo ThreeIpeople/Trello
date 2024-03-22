@@ -5,6 +5,7 @@ import com.sparta.trellowiththreeipeople.board.entity.Board;
 import com.sparta.trellowiththreeipeople.board.entity.BoardUser;
 import com.sparta.trellowiththreeipeople.board.repository.BoardRepository;
 import com.sparta.trellowiththreeipeople.board.repository.BoardUserRepository;
+import com.sparta.trellowiththreeipeople.card.entity.Card;
 import com.sparta.trellowiththreeipeople.exception.*;
 import com.sparta.trellowiththreeipeople.user.entity.User;
 import com.sparta.trellowiththreeipeople.user.repository.UserRepository;
@@ -33,27 +34,18 @@ public class BoardServiceImpl implements BoardService {
         return board.getBoardId();
     }
 
-    private void checkIfBoardAlreadyExists(String boardName) {
-        if (boardRepository.existsBoardByBoardName(boardName)) {
-            throw new DuplicatedException(DUPLICATED_BOARD);
-        }
-    }
-
     @Override
     @Transactional(readOnly = true)
     public BoardResponseDto getBoardByBoardId(Long boardId, User user) {
-        Board board = getBoard(boardId);
         BoardUser boardUser = getBoardUser(boardId, user);
-        if (!isContainsBoardUser(board, boardUser)) {
+        Board board = getBoard(boardId);
 
-            throw new IllegalArgumentException("해당 보드는 초대받은 유저만 확인할 수 있습니다.");
-        }
+
         List<BoardResponseUsersResponseDto> users = board.getUsers().stream()
                 .map(BoardResponseUsersResponseDto::new)
                 .toList();
-
         List<BoardResponseBarResponseDto> bars = board.getBars().stream()
-                .map(BoardResponseBarResponseDto::new)
+                .map(bar -> new BoardResponseBarResponseDto(bar, createCardListDto(bar.getCards())))
                 .toList();
 
         return new BoardResponseDto(board, users, bars);
@@ -63,8 +55,11 @@ public class BoardServiceImpl implements BoardService {
     @Transactional(readOnly = true)
     public List<BoardListResponseDto> getBoardListByUserId(User user) {
 
-        return boardUserRepository.findBoardUserByUserIdAndFetchBoards(user.getId())
-                .stream()
+        List<Board> boards = boardUserRepository.findBoardListByUserIdFetchBoardUser(user.getId());
+        if (boards == null) {
+            throw new BoardNotFoundException(NOT_FOUND_BOARD);
+        }
+        return boards.stream()
                 .map(BoardListResponseDto::new)
                 .toList();
     }
@@ -72,13 +67,9 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public Long updateBoard(Long boardId, BoardUpdateRequestDto requestDto, User user) {
+        BoardUser boardUser = getBoardUser(boardId, user);
         Board board = getBoard(boardId);
 
-        BoardUser boardUser = getBoardUser(boardId, user);
-        if (!isContainsBoardUser(board, boardUser)) {
-
-            throw new AuthNotExistException(NOT_EXIST_AUTH);
-        }
         board.update(requestDto, boardUser);
 
         return board.getBoardId();
@@ -104,35 +95,42 @@ public class BoardServiceImpl implements BoardService {
     @Transactional
     public void inviteUserToBoard(Long boardId, Long userId, User user) {
         Board board = getBoard(boardId);
-
         BoardUser boardUser = getBoardUser(boardId, user);
-        if (!isContainsBoardUser(board, boardUser)) {
-            throw new AuthNotExistException(NOT_EXIST_AUTH);
-        }
+
         User invitedUser = userRepository.findById(userId).orElseThrow(
                 () -> new UserNotFoundException(NOT_FOUND_USER)
         );
-        for(BoardUser boardUser1 : board.getUsers()){
-            if(boardUser1.getUser().getId().equals(userId)){
+        for (BoardUser boardUser1 : board.getUsers()) {
+            if (boardUser1.getUser().getId().equals(userId)) {
                 throw new BoardUserExistException(EXIST_BoardUser);
             }
         }
-
         board.inviteUser(invitedUser);
-
     }
 
     private boolean isContainsBoardUser(Board board, BoardUser boardUser) {
         return boardUser.getBoard().equals(board);
     }
 
+    private void checkIfBoardAlreadyExists(String boardName) {
+        if (boardRepository.existsBoardByBoardName(boardName)) {
+            throw new DuplicatedException(DUPLICATED_BOARD);
+        }
+    }
+
     private BoardUser getBoardUser(Long boardId, User user) {
         return boardUserRepository.findBoardUserByBoardIdAndUserId(boardId, user.getId()).orElseThrow(
-                ()-> new BoardUserNotFoundException(NOT_FOUND_BOARD_USER));
+                () -> new AuthNotExistException(NOT_EXIST_AUTH));
     }
 
     private Board getBoard(Long boardId) {
         return boardRepository.findBoardByBoardId(boardId).orElseThrow(
                 () -> new BoardNotFoundException(NOT_FOUND_BOARD));
+    }
+
+    private List<BoardResponseCardResponseDto> createCardListDto(List<Card> cards) {
+        return cards.stream()
+                .map(BoardResponseCardResponseDto::new)
+                .toList();
     }
 }
