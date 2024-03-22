@@ -42,7 +42,7 @@ public class CommentController {
                 URI.create(
                     "/api/boards/" + boardId + "/bars/" + barId + "/cards/" + cardId + "/comments/"
                         + result.getId()))
-            .body("댓글 생성 완료");
+            .body("댓글 생성 완료 됐습니다.");
     }
 
     @GetMapping()
@@ -80,7 +80,7 @@ public class CommentController {
             requestDto, userDetails.getUser());
         return ResponseEntity.created(URI.create(
             "/api/boards/" + boardId + "/bars/" + barId + "/cards/" + cardId + "/comments/"
-                + result.getId())).body("댓글 수정 완료");
+                + result.getId())).body("댓글 수정 완료 됐습니다.");
     }
 
     @DeleteMapping("/{commentId}")
