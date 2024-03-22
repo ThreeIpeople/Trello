@@ -11,7 +11,7 @@ public class BoardResponseUsersResponseDto {
     private final String username;
 
 
-    public BoardResponseUsersResponseDto(BoardUser boardUser){
+    public BoardResponseUsersResponseDto(BoardUser boardUser) {
         this.userId = boardUser.getUser().getId();
         this.username = boardUser.getUser().getUsername();
     }

@@ -20,6 +20,7 @@ import java.time.format.DateTimeFormatter;
 @SQLDelete(sql = "UPDATE card SET deleted_at=CURRENT_TIMESTAMP where id=?")
 @Where(clause = "deleted_at IS NULL")
 @Table(name="card", indexes = @Index(name = "idx_card_deleted_at", columnList = "deleted_at"))
+
 public class Card extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

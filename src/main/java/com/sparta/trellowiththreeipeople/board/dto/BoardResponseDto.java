@@ -21,7 +21,7 @@ public class BoardResponseDto {
             Board board,
             List<BoardResponseUsersResponseDto> usersResponseDto,
             List<BoardResponseBarResponseDto> barResponseDto
-            ) {
+    ) {
         this.boardId = board.getBoardId();
         this.boardName = board.getBoardName();
         this.boardInfo = board.getBoardInfo();

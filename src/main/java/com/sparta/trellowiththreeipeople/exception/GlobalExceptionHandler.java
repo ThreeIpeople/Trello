@@ -51,15 +51,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<String> UserNotFoundException(UserNotFoundException e) {
         log.error(e.getMessage());
-        return ResponseEntity.status(ExceptionStatus.NOT_FOUND_USER.getStatusCode())
-                .body(ExceptionStatus.NOT_FOUND_USER.getMessage());
+        return ResponseEntity.status(e.getStatusCode())
+                .body(e.getMessage());
     }
 
     @ExceptionHandler(BoardNotFoundException.class)
     public ResponseEntity<String> BoardNotFoundException(BoardNotFoundException e) {
         log.error(e.getMessage());
-        return ResponseEntity.status(ExceptionStatus.NOT_FOUND_BOARD.getStatusCode())
-                .body(ExceptionStatus.NOT_FOUND_BOARD.getMessage());
+        return ResponseEntity.status(e.getStatusCode())
+                .body(e.getMessage());
     }
 
     @ExceptionHandler(BadRequestException.class)
@@ -72,22 +72,22 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BoardUserNotFoundException.class)
     public ResponseEntity<String> BoardUserNotFoundException(BoardUserNotFoundException e) {
         log.error(e.getMessage());
-        return ResponseEntity.status(ExceptionStatus.NOT_FOUND_BOARD_USER.getStatusCode())
-                .body(ExceptionStatus.NOT_FOUND_BOARD_USER.getMessage());
+        return ResponseEntity.status(e.getStatusCode())
+                .body(e.getMessage());
     }
 
     @ExceptionHandler(BoardUserExistException.class)
     public ResponseEntity<String> BoardUserExistException(BoardUserExistException e) {
         log.error(e.getMessage());
-        return ResponseEntity.status(ExceptionStatus.EXIST_BoardUser.getStatusCode())
-                .body(ExceptionStatus.EXIST_BoardUser.getMessage());
+        return ResponseEntity.status(e.getStatusCode())
+                .body(e.getMessage());
     }
 
     @ExceptionHandler(AuthNotExistException.class)
     public ResponseEntity<String> AuthNotExistException(AuthNotExistException e) {
         log.error(e.getMessage());
-        return ResponseEntity.status(ExceptionStatus.NOT_EXIST_AUTH.getStatusCode())
-                .body(ExceptionStatus.NOT_EXIST_AUTH.getMessage());
+        return ResponseEntity.status(e.getStatusCode())
+                .body(e.getMessage());
     }
 
 }

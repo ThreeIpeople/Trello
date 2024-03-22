@@ -3,8 +3,8 @@ package com.sparta.trellowiththreeipeople.board.repository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sparta.trellowiththreeipeople.board.entity.Board;
 import com.sparta.trellowiththreeipeople.board.entity.BoardUser;
-import com.sparta.trellowiththreeipeople.board.entity.QBoard;
 import com.sparta.trellowiththreeipeople.board.entity.QBoardUser;
+import com.sparta.trellowiththreeipeople.user.entity.QUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -17,18 +17,16 @@ import java.util.stream.Collectors;
 public class BoardUserRepositoryQueryImpl implements BoardUserRepositoryQuery {
 
     private final JPAQueryFactory queryFactory;
+    private static QBoardUser boardUser = QBoardUser.boardUser;
+    private static QUser user = QUser.user;
 
     @Override
-    public List<Board> findBoardUserByUserIdAndFetchBoards(Long userId) {
-        QBoardUser boardUser = QBoardUser.boardUser;
-        QBoard board = QBoard.board;
-
+    public List<Board> findBoardListByUserIdFetchBoardUser(Long userId) {
         List<BoardUser> boardUsers = queryFactory.selectFrom(boardUser)
-    .leftJoin(boardUser.board, board)
+                .leftJoin(boardUser.user, user)
                 .where(boardUser.user.id.eq(userId))
                 .fetchJoin()
                 .fetch();
-
         return boardUsers.stream()
                 .map(BoardUser::getBoard)
                 .collect(Collectors.toList());
@@ -42,8 +40,9 @@ public class BoardUserRepositoryQueryImpl implements BoardUserRepositoryQuery {
                 .where(boardUser.board.boardId.eq(boardId))
                 .fetch();
     }
+
     @Override
-    public Optional<BoardUser> findBoardUserByBoardIdAndUserId(Long boardId, Long userId){
+    public Optional<BoardUser> findBoardUserByBoardIdAndUserId(Long boardId, Long userId) {
         QBoardUser boardUser = QBoardUser.boardUser;
 
         return Optional.ofNullable(queryFactory.selectFrom(boardUser)

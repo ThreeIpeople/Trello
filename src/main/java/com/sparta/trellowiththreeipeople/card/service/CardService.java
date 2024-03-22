@@ -25,10 +25,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CardService{
+public class CardService {
     private final CardRepository cardRepository;
     private final BarRepository barRepository;
     private final UserRepository userRepository;
+
     private final BoardUserRepository boardUserRepository;
 
     //카드 생성
@@ -47,6 +48,7 @@ public class CardService{
         return cardList;
     }
 
+<
 
     //선택한 카드 조회
     @Transactional(readOnly = true)
@@ -70,6 +72,7 @@ public class CardService{
         return new CardResponse(card);
 
     }
+
 
     public void deleteCard(Long cardId,Long userId,Long boardId) {
         Card card = cardRepository.findById(cardId).orElseThrow(()->new IllegalArgumentException("유저를 찾을수 없습니다."));

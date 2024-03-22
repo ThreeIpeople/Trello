@@ -14,7 +14,7 @@ import org.hibernate.annotations.Where;
 @AllArgsConstructor
 @Table(name = "board_user")
 @Entity
-@SQLDelete(sql = "UPDATE board_user SET deleted_at=CURRENT_TIMESTAMP where id=?")
+@SQLDelete(sql = "UPDATE board_user SET deleted_at=CURRENT_TIMESTAMP where board_userid=?")
 @Where(clause = "deleted_at IS NULL")
 public class BoardUser extends BaseEntity {
 

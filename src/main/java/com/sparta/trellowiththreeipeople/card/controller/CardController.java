@@ -23,8 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/boards/{boardId}/bars/{barId}")
-public class CardController{
+public class CardController {
     private final CardService cardService;
+
     @PostMapping("/cards")
     public ResponseEntity<String> createCard(
         @PathVariable Long boardId,
@@ -36,6 +37,7 @@ public class CardController{
         return ResponseEntity.created(URI.create("/api/boards/"+ boardId+"/bars/"+barId+"/cards/"+cardId))
             .body("카드가 생성 되었습니다.");
     }
+
     //전체 카드 조회
     @GetMapping("/cards")
     public ResponseEntity<List<CardDTO>> getAllCards(
@@ -45,6 +47,7 @@ public class CardController{
         List<CardDTO> cardList = cardService.getAllCards(boardId,userDetails.getUserId());
         return ResponseEntity.ok().body(cardList);
     }
+
     //카드 선택조회
     @GetMapping("/cards/{cardId}")
     public ResponseEntity<CardResponse> getCard(
@@ -56,6 +59,7 @@ public class CardController{
         CardResponse cardResponse = cardService.getCard(cardId,barId,boardId,userDetails.getUserId());
         return ResponseEntity.ok().body(cardResponse);
     }
+
     @PutMapping("/cards/{cardId}")
     public ResponseEntity<CardResponse> updateCard(
             @PathVariable Long cardId,
@@ -65,6 +69,7 @@ public class CardController{
         CardResponse cardResponse = cardService.updateCard(cardId, cardRequest,userDetails.getUserId(),boardId);
         return ResponseEntity.ok().body(cardResponse);
     }
+
     @DeleteMapping("/cards/{cardId}")
     public ResponseEntity<String> deleteCard(
         @PathVariable Long cardId,
