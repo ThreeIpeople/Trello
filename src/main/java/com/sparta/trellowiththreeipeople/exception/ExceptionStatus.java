@@ -17,7 +17,6 @@ public enum ExceptionStatus {
     NOT_FOUND_BOARD_USER(HttpStatus.NOT_FOUND.value(), "보드유저를 찾을 수 없습니다.");
 
 
-
     private final Integer statusCode;
     private final String message;
 }

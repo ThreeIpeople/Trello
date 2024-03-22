@@ -13,10 +13,11 @@ import com.sparta.trellowiththreeipeople.comment.dto.response.UpdateCommentRespo
 import com.sparta.trellowiththreeipeople.comment.entity.Comment;
 import com.sparta.trellowiththreeipeople.comment.repository.CommentRepository;
 import com.sparta.trellowiththreeipeople.user.entity.User;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -30,7 +31,7 @@ public class CommentService {
 
     @Transactional
     public CommentResponseDto createComment(Long boardId, Long barId, Long cardId,
-        CreateCommentRequestDto requestDto, User user) {
+                                            CreateCommentRequestDto requestDto, User user) {
         Card card = getCard(boardId, barId, cardId);
 
         Comment comment = new Comment(card, requestDto, user);
@@ -44,8 +45,8 @@ public class CommentService {
         Card card = getCard(boardId, barId, cardId);
 
         return findComments(card).stream()
-            .map(comment -> new CommentResponseDto(comment))
-            .toList();
+                .map(comment -> new CommentResponseDto(comment))
+                .toList();
     }
 
     public CommentResponseDto getComment(Long boardId, Long barId, Long cardId, Long commentId) {
@@ -55,7 +56,7 @@ public class CommentService {
 
     @Transactional
     public UpdateCommentResponseDto updateComment(Long boardId, Long barId, Long cardId,
-        Long commentId, UpdateCommentRequestDto requestDto, User user) {
+                                                  Long commentId, UpdateCommentRequestDto requestDto, User user) {
         Card card = getCard(boardId, barId, cardId);
 
         Comment comment = findComment(commentId, card);
@@ -86,17 +87,17 @@ public class CommentService {
 
     private Board findBoard(Long boardId) {
         return boardRepository.findById(boardId)
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않은 보드입니다"));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않은 보드입니다"));
     }
 
     private Bar findBar(Long barId) {
         return barRepository.findById(barId)
-            .orElseThrow(() -> new IllegalArgumentException("존재 하지 않은 컬럼입니다"));
+                .orElseThrow(() -> new IllegalArgumentException("존재 하지 않은 컬럼입니다"));
     }
 
     private Card findCard(Long cardId) {
         return cardRepository.findById(cardId)
-            .orElseThrow(() -> new IllegalArgumentException("존재 하지 않은 카드입니다"));
+                .orElseThrow(() -> new IllegalArgumentException("존재 하지 않은 카드입니다"));
     }
 
     private List<Comment> findComments(Card card) {
@@ -105,7 +106,7 @@ public class CommentService {
 
     private Comment findComment(Long commentId, Card card) {
         return commentRepository.findByIdAndCard(commentId, card)
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않은 댓글입니다"));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않은 댓글입니다"));
     }
 
     private void isOwner(Comment comment, User user) {

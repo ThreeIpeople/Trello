@@ -14,7 +14,7 @@ public class CardDTO {
     private String content;
     private LocalDateTime deadline;
 
-    public CardDTO(Long id, String title, String content,LocalDateTime deadline) {
+    public CardDTO(Long id, String title, String content, LocalDateTime deadline) {
         this.id = id;
         this.title = title;
         this.content = content;

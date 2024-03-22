@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 public class CardResponse {
     private String title;
     private String content;
-    public CardResponse(Card card){
+
+    public CardResponse(Card card) {
         this.title = card.getTitle();
         this.content = card.getContent();
     }

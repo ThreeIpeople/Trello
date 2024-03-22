@@ -27,7 +27,7 @@ public class BoardController {
         Long boardId = boardService.save(requestDto, userDetails.getUser()
         );
 
-        return ResponseEntity.created(URI.create("/api/boards/"+ boardId))
+        return ResponseEntity.created(URI.create("/api/boards/" + boardId))
                 .body("보드가 정상적으로 생성되었습니다.");
 
     }
@@ -58,7 +58,7 @@ public class BoardController {
     ) {
         Long updatedBoardId = boardService.updateBoard(boardId, requestDto, userDetails.getUser());
 
-        return ResponseEntity.created(URI.create("api/boards/"+updatedBoardId))
+        return ResponseEntity.created(URI.create("api/boards/" + updatedBoardId))
                 .body("보드가 수정되었습니다.");
     }
 

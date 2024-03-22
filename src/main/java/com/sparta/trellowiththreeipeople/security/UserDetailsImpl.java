@@ -20,7 +20,7 @@ public class UserDetailsImpl implements UserDetails {
         return user;
     }
 
-    public Long getUserId(){
+    public Long getUserId() {
         return user.getId();
     }
 

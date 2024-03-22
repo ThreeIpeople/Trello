@@ -19,7 +19,7 @@ import java.time.format.DateTimeFormatter;
 @NoArgsConstructor
 @SQLDelete(sql = "UPDATE card SET deleted_at=CURRENT_TIMESTAMP where id=?")
 @Where(clause = "deleted_at IS NULL")
-@Table(name="card")
+@Table(name = "card")
 
 public class Card extends BaseEntity {
     @Id
