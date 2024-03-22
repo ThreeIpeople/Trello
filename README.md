@@ -22,7 +22,10 @@ https://documenter.getpostman.com/view/32380793/2sA35A85a1
 ## Contributing
 
 도메인 별 담당
-회원가입, 로그인, 댓글 : 박용민
-보드 : 김민상
-바 : 구동현
-카드 : 윤종일
+<table>
+  <tbody>
+    <tr>
+      <td align="center"><a href="https://github.com/eondi"><img src="https://avatars.githubusercontent.com/u/87860163?v=4"width=100px;" alt=""/><br /><sub><b>팀장 : 김민상 </b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/pastjung"><img src="https://avatars.githubusercontent.com/u/148612321?v=4" width="100px;" alt=""/><br /><sub><b>팀원 : 구동현 </b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/beunchoi"><img src="https://avatars.githubusercontent.com/u/38320524?v=4" width="100px;" alt=""/><br /><sub><b> 팀원 : 박용민 </b></sub></a><br /></td>
+            <td align="center"><a href="https://github.com/KIM-TABLE-NEXT"><img src="https://avatars.githubusercontent.com/u/47919911?v=4" width="100px;" alt=""/><br /><sub><b> 팀원 : 윤종일 </b></sub></a><br /></td>
