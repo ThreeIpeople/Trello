@@ -5,6 +5,12 @@ TodoS
 
 Trello 와 같은 협업 일정관리 서비스 API 구현 미니 프로젝트
 
+## DirectoryTree
+
+![image](https://github.com/ThreeIpeople/TrelloWithThreeIpeople/assets/129644629/382c48e2-581b-45f0-bc98-0de61bd956a2)
+
+도메인 디렉토리 > 컨트롤러, 서비스 (comment>controller, service)로 디렉토리 설정
+
 ## API Specification
 
 https://documenter.getpostman.com/view/32380793/2sA35A85a1
