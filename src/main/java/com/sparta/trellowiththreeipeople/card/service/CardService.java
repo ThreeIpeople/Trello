@@ -1,6 +1,8 @@
 package com.sparta.trellowiththreeipeople.card.service;
 
 
+import static com.sparta.trellowiththreeipeople.exception.ExceptionStatus.NOT_FOUND_BOARD_USER;
+
 import com.sparta.trellowiththreeipeople.bar.entity.Bar;
 import com.sparta.trellowiththreeipeople.bar.repository.BarRepository;
 import com.sparta.trellowiththreeipeople.board.entity.BoardUser;
@@ -13,15 +15,13 @@ import com.sparta.trellowiththreeipeople.card.repository.CardRepository;
 import com.sparta.trellowiththreeipeople.exception.BoardUserNotFoundException;
 import com.sparta.trellowiththreeipeople.user.entity.User;
 import com.sparta.trellowiththreeipeople.user.repository.UserRepository;
+import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Objects;
-
-import static com.sparta.trellowiththreeipeople.exception.ExceptionStatus.NOT_FOUND_BOARD_USER;
 
 @Service
 @RequiredArgsConstructor
@@ -52,13 +52,15 @@ public class CardService {
 
     //선택한 카드 조회
     @Transactional(readOnly = true)
+    @Cacheable(value = "CardResponse",key = "#cardId", cacheManager = "cacheManager")
     public CardResponse getCard(Long cardId, Long barId, Long boardId, Long userId) {
         Card card = cardRepository.findById(cardId).orElseThrow(() -> new IllegalArgumentException("유저를 찾을수 없습니다."));
         getBoardUser(boardId, userId);
         if (!Objects.equals(card.getBarId(), barId)) {
             throw new IllegalArgumentException("카드 아이디가 해당 카드의 바와 일치하지 않습니다.");
         }
-        return new CardResponse(card);
+        System.out.println("[id:" + cardId + "] Service 에서 연산을 수행합니다");
+        return CardResponse.of(card);
     }
 
     //카드 수정 메서드
@@ -70,7 +72,7 @@ public class CardService {
             throw new AccessDeniedException("카드를 삭제할 권한이 없습니다.");
         }
         card.updateCard(cardRequest);
-        return new CardResponse(card);
+        return CardResponse.of(card);
 
     }
 

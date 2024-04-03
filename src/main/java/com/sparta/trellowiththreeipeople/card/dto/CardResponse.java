@@ -8,11 +8,20 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class CardResponse {
-    private String title;
-    private String content;
 
-    public CardResponse(Card card) {
-        this.title = card.getTitle();
-        this.content = card.getContent();
+    Long cardId;
+    String title;
+    String content;
+
+
+
+    public CardResponse(long id, String title, String content) {
+        this.cardId = id;
+        this.title = title;
+        this.content = content;
+    }
+
+    public static CardResponse of(Card card) {
+        return new CardResponse(card.getId(), card.getTitle(), card.getContent());
     }
 }

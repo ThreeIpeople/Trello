@@ -1,15 +1,14 @@
 package com.sparta.trellowiththreeipeople.bar.repository;
 
+import static com.sparta.trellowiththreeipeople.bar.entity.QBar.bar;
+
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sparta.trellowiththreeipeople.bar.dto.BarResponseDto;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
-
 import java.time.LocalDateTime;
 import java.util.List;
-
-import static com.sparta.trellowiththreeipeople.bar.entity.QBar.bar;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor

@@ -4,13 +4,12 @@ import com.sparta.trellowiththreeipeople.board.dto.*;
 import com.sparta.trellowiththreeipeople.board.service.BoardService;
 import com.sparta.trellowiththreeipeople.security.UserDetailsImpl;
 import jakarta.validation.Valid;
+import java.net.URI;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,7 +18,7 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<String> inputBoard(
             @RequestBody BoardRequestDto requestDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails
@@ -27,9 +26,9 @@ public class BoardController {
         Long boardId = boardService.save(requestDto, userDetails.getUser()
         );
 
-        return ResponseEntity.created(URI.create("/api/boards/" + boardId))
-                .body("보드가 정상적으로 생성되었습니다.");
-
+//        return ResponseEntity.created(URI.create("/api/boards/" + boardId))
+//
+        return ResponseEntity.created(URI.create("/api/boards/" + boardId)).build();
     }
 
     @GetMapping("")
@@ -42,12 +41,13 @@ public class BoardController {
     }
 
     @GetMapping("{boardId}")
+   // @Cacheable(cacheNames = "boardCache",value = "boardCache", key = "#boardId")
     public ResponseEntity<BoardResponseDto> getBoardByBoardId(
             @PathVariable Long boardId,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         BoardResponseDto responseDto = boardService.getBoardByBoardId(boardId, userDetails.getUser());
-        return ResponseEntity.ok().body(responseDto);
+        return ResponseEntity.ok(responseDto);
     }
 
     @PutMapping("{boardId}")
@@ -63,13 +63,13 @@ public class BoardController {
     }
 
     @DeleteMapping("{boardId}")
-    public ResponseEntity<String> deleteBoard(
+    public ResponseEntity<Void> deleteBoard(
             @PathVariable Long boardId,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         boardService.deleteBoard(boardId, userDetails.getUser());
 
-        return ResponseEntity.ok().body("성공적으로 보드 삭제가 되었습니다.");
+        return ResponseEntity.ok().build();//.body("성공적으로 보드 삭제가 되었습니다.");
     }
 
     @PatchMapping("{boardId}/invite")

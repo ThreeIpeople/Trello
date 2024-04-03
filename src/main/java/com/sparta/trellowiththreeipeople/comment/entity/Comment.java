@@ -6,12 +6,11 @@ import com.sparta.trellowiththreeipeople.comment.dto.request.UpdateCommentReques
 import com.sparta.trellowiththreeipeople.common.BaseEntity;
 import com.sparta.trellowiththreeipeople.user.entity.User;
 import jakarta.persistence.*;
+import java.util.Objects;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-
-import java.util.Objects;
 
 @Getter
 @Entity

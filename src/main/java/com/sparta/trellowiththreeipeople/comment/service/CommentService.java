@@ -13,11 +13,10 @@ import com.sparta.trellowiththreeipeople.comment.dto.response.UpdateCommentRespo
 import com.sparta.trellowiththreeipeople.comment.entity.Comment;
 import com.sparta.trellowiththreeipeople.comment.repository.CommentRepository;
 import com.sparta.trellowiththreeipeople.user.entity.User;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional(readOnly = true)

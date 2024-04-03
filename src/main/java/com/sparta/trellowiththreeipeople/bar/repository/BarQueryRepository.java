@@ -1,9 +1,8 @@
 package com.sparta.trellowiththreeipeople.bar.repository;
 
 import com.sparta.trellowiththreeipeople.bar.dto.BarResponseDto;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BarQueryRepository {

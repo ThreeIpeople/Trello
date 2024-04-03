@@ -4,14 +4,13 @@ import com.sparta.trellowiththreeipeople.board.entity.Board;
 import com.sparta.trellowiththreeipeople.card.entity.Card;
 import com.sparta.trellowiththreeipeople.common.BaseEntity;
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLRestriction;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter

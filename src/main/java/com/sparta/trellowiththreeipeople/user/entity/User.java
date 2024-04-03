@@ -3,11 +3,10 @@ package com.sparta.trellowiththreeipeople.user.entity;
 import com.sparta.trellowiththreeipeople.common.BaseEntity;
 import com.sparta.trellowiththreeipeople.user.dto.request.CreateUserRequestDto;
 import jakarta.persistence.*;
+import java.util.Objects;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-
-import java.util.Objects;
 
 @Entity
 @Getter

@@ -6,13 +6,12 @@ import com.sparta.trellowiththreeipeople.comment.dto.response.CommentResponseDto
 import com.sparta.trellowiththreeipeople.comment.dto.response.UpdateCommentResponseDto;
 import com.sparta.trellowiththreeipeople.comment.service.CommentService;
 import com.sparta.trellowiththreeipeople.security.UserDetailsImpl;
+import java.net.URI;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

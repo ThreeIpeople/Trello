@@ -2,32 +2,53 @@ package com.sparta.trellowiththreeipeople.board.dto;
 
 import com.sparta.trellowiththreeipeople.board.entity.Board;
 import com.sparta.trellowiththreeipeople.board.entity.BoardColorEnum;
+import java.util.List;
 import lombok.Getter;
 
-import java.util.List;
+
 
 @Getter
-public class BoardResponseDto {
+public class BoardResponseDto  {
 
-    private final Long boardId;
-    private final String boardName;
-    private final String boardInfo;
-    private final BoardColorEnum colorEnum;
-    private final List<BoardResponseUsersResponseDto> users;
-    private final List<BoardResponseBarResponseDto> bars;
+    private Long boardId;
+    private String boardName;
+    private String boardInfo;
+    private BoardColorEnum colorEnum;
+    private List<BoardResponseUsersResponseDto> users;
+    private List<BoardResponseBarResponseDto> bars;
 
+     public BoardResponseDto(Long boardId,
+         String boardName,
+         String boardInfo,
+         BoardColorEnum colorEnum,
+         List<BoardResponseUsersResponseDto> users,
+         List<BoardResponseBarResponseDto> bars
+     ) {
+
+         this.boardId = boardId;
+         this.boardName = boardName;
+         this.boardInfo = boardInfo;
+         this.colorEnum = colorEnum;
+         this.users = users;
+         this.bars = bars;
+     }
 
     public BoardResponseDto(
-            Board board,
-            List<BoardResponseUsersResponseDto> usersResponseDto,
-            List<BoardResponseBarResponseDto> barResponseDto
+            Board board
     ) {
         this.boardId = board.getBoardId();
         this.boardName = board.getBoardName();
         this.boardInfo = board.getBoardInfo();
         this.colorEnum = board.getColorEnum();
-        this.users = usersResponseDto;
-        this.bars = barResponseDto;
+
+    }
+
+    public void addUsers(List<BoardResponseUsersResponseDto> users) {
+        this.users = users;
+    }
+
+    public void addBars(List<BoardResponseBarResponseDto> bars) {
+        this.bars = bars;
     }
 
 }

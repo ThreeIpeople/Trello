@@ -5,7 +5,6 @@ import com.sparta.trellowiththreeipeople.board.dto.BoardRequestDto;
 import com.sparta.trellowiththreeipeople.board.dto.BoardResponseDto;
 import com.sparta.trellowiththreeipeople.board.dto.BoardUpdateRequestDto;
 import com.sparta.trellowiththreeipeople.user.entity.User;
-
 import java.util.List;
 
 

@@ -5,12 +5,11 @@ import com.sparta.trellowiththreeipeople.board.entity.Board;
 import com.sparta.trellowiththreeipeople.board.entity.BoardUser;
 import com.sparta.trellowiththreeipeople.board.entity.QBoardUser;
 import com.sparta.trellowiththreeipeople.user.entity.QUser;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor

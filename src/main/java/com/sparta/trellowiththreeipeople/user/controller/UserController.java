@@ -5,13 +5,12 @@ import com.sparta.trellowiththreeipeople.user.dto.request.CreateUserRequestDto;
 import com.sparta.trellowiththreeipeople.user.dto.request.UpdateUserRequestDto;
 import com.sparta.trellowiththreeipeople.user.service.UserService;
 import jakarta.validation.Valid;
+import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor

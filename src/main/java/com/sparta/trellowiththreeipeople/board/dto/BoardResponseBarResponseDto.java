@@ -1,9 +1,8 @@
 package com.sparta.trellowiththreeipeople.board.dto;
 
 import com.sparta.trellowiththreeipeople.bar.entity.Bar;
-import lombok.Getter;
-
 import java.util.List;
+import lombok.Getter;
 
 @Getter
 public class BoardResponseBarResponseDto {

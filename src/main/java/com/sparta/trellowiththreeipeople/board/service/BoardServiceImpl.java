@@ -1,5 +1,7 @@
 package com.sparta.trellowiththreeipeople.board.service;
 
+import static com.sparta.trellowiththreeipeople.exception.ExceptionStatus.*;
+
 import com.sparta.trellowiththreeipeople.board.dto.*;
 import com.sparta.trellowiththreeipeople.board.entity.Board;
 import com.sparta.trellowiththreeipeople.board.entity.BoardUser;
@@ -9,13 +11,10 @@ import com.sparta.trellowiththreeipeople.card.entity.Card;
 import com.sparta.trellowiththreeipeople.exception.*;
 import com.sparta.trellowiththreeipeople.user.entity.User;
 import com.sparta.trellowiththreeipeople.user.repository.UserRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-
-import static com.sparta.trellowiththreeipeople.exception.ExceptionStatus.*;
 
 @Service
 @RequiredArgsConstructor
@@ -48,7 +47,11 @@ public class BoardServiceImpl implements BoardService {
                 .map(bar -> new BoardResponseBarResponseDto(bar, createCardListDto(bar.getCards())))
                 .toList();
 
-        return new BoardResponseDto(board, users, bars);
+        BoardResponseDto responseDto = new BoardResponseDto(board);
+        responseDto.addBars(bars);
+        responseDto.addUsers(users);
+
+        return responseDto;
     }
 
     @Override
@@ -118,7 +121,8 @@ public class BoardServiceImpl implements BoardService {
                 () -> new AuthNotExistException(NOT_EXIST_AUTH));
     }
 
-    private Board getBoard(Long boardId) {
+
+    public Board getBoard(Long boardId) {
         return boardRepository.findBoardByBoardId(boardId).orElseThrow(
                 () -> new BoardNotFoundException(NOT_FOUND_BOARD));
     }

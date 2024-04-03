@@ -5,14 +5,13 @@ import com.sparta.trellowiththreeipeople.card.dto.CardRequest;
 import com.sparta.trellowiththreeipeople.common.BaseEntity;
 import com.sparta.trellowiththreeipeople.user.entity.User;
 import jakarta.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Entity
 @Getter

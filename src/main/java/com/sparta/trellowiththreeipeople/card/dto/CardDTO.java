@@ -1,9 +1,8 @@
 package com.sparta.trellowiththreeipeople.card.dto;
 
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor

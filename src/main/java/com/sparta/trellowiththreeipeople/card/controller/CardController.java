@@ -6,13 +6,12 @@ import com.sparta.trellowiththreeipeople.card.dto.CardRequest;
 import com.sparta.trellowiththreeipeople.card.dto.CardResponse;
 import com.sparta.trellowiththreeipeople.card.service.CardService;
 import com.sparta.trellowiththreeipeople.security.UserDetailsImpl;
+import java.net.URI;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -43,8 +42,10 @@ public class CardController {
         return ResponseEntity.ok().body(cardList);
     }
 
+    //여기다가 테스트 를 처음 해봤었음
     //카드 선택조회
     @GetMapping("/cards/{cardId}")
+    //@Cacheable(value = "CardResponse",key = "#cardId", cacheManager = "cacheManager")
     public ResponseEntity<CardResponse> getCard(
             @PathVariable Long boardId,
             @PathVariable Long barId,
@@ -52,7 +53,8 @@ public class CardController {
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         CardResponse cardResponse = cardService.getCard(cardId, barId, boardId, userDetails.getUserId());
-        return ResponseEntity.ok().body(cardResponse);
+        return ResponseEntity.ok(cardResponse);
+
     }
 
     @PutMapping("/cards/{cardId}")
